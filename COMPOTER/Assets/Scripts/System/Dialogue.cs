@@ -50,19 +50,17 @@ public class Dialogue : MonoBehaviour
 
     IEnumerator TypeLine()
     {
-        if (typingSound != null)
-        {
-            audioSource.clip = typingSound;
-            audioSource.Play(); // Start playing sound
-        }
-
         foreach (char c in lines[index].ToCharArray())
         {
             textComponent.text += c;
+
+            if (typingSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(typingSound); // Play sound for each letter
+            }
+
             yield return new WaitForSeconds(textSpeed);
         }
-
-        audioSource.Stop(); // Stop sound when typing is done
     }
 
     void NextLine()
