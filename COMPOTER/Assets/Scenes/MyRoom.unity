@@ -2241,6 +2241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1032344693}
   - component: {fileID: 1032344694}
+  - component: {fileID: 1032344695}
   m_Layer: 0
   m_Name: CutsceneManager
   m_TagString: Untagged
@@ -2282,6 +2283,22 @@ PlayableDirector:
     value: {fileID: 1731766908}
   m_ExposedReferences:
     m_References: []
+--- !u!114 &1032344695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032344692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15f6c682048f6648acb0de0c25175fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playableDirector: {fileID: 1032344694}
+  playerMovement: {fileID: 3701846194418053432}
+  targetCamera: {fileID: 1389780566327241481}
+  targetRotation: {x: 0, y: 0, z: 0}
 --- !u!1001 &1142617092
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@
 - Project name: COMPOTER
 - Unity version: Unity 2022.3.48f1
 - Active game object:
-  - Name: DialogueBox
-  - Tag: Untagged
+  - Name: Main Camera
+  - Tag: MainCamera
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
