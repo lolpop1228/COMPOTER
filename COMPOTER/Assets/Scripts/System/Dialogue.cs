@@ -18,11 +18,6 @@ public class Dialogue : MonoBehaviour
     {
         textComponent.text = string.Empty;
         StartDialogue();
-
-        if (playerMovement != null)
-        {
-            playerMovement.enabled = false;
-        }
     }
 
     void Update()
@@ -44,6 +39,11 @@ public class Dialogue : MonoBehaviour
 
     void StartDialogue()
     {
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = false;
+        }
+
         index = 0;
         StartCoroutine(TypeLine());
     }
