@@ -8,9 +8,10 @@ public class Dialogue : MonoBehaviour
     public TextMeshProUGUI textComponent;
     public string[] lines;
     public float textSpeed;
+    public float lineDelay = 1.5f; // Delay before the next line starts
     public PlayerMovement playerMovement;
-    public AudioSource audioSource; // Audio source for typing sound
-    public AudioClip typingSound; // Audio clip reference
+    public AudioSource audioSource;
+    public AudioClip typingSound;
 
     private int index;
 
@@ -18,23 +19,6 @@ public class Dialogue : MonoBehaviour
     {
         textComponent.text = string.Empty;
         StartDialogue();
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-                audioSource.Stop(); // Stop sound when skipping
-            }
-        }
     }
 
     void StartDialogue()
@@ -56,11 +40,15 @@ public class Dialogue : MonoBehaviour
 
             if (typingSound != null && audioSource != null)
             {
-                audioSource.PlayOneShot(typingSound); // Play sound for each letter
+                audioSource.PlayOneShot(typingSound);
             }
 
             yield return new WaitForSeconds(textSpeed);
         }
+
+        // Wait for a moment before showing the next line
+        yield return new WaitForSeconds(lineDelay);
+        NextLine();
     }
 
     void NextLine()
@@ -79,7 +67,14 @@ public class Dialogue : MonoBehaviour
 
     private void OnDisable()
     {
-        playerMovement.enabled = true;
-        audioSource.Stop(); // Ensure the sound stops when dialogue is closed
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = true;
+        }
+
+        if (audioSource != null)
+        {
+            audioSource.Stop();
+        }
     }
 }

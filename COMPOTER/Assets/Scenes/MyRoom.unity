@@ -2292,6 +2292,10 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: -4373773081643550543, guid: af76ad1c343b9bd4ca6ec1297263cad0, type: 2}
     value: {fileID: 1731766908}
+  - key: {fileID: -5336194859071406816, guid: af76ad1c343b9bd4ca6ec1297263cad0, type: 2}
+    value: {fileID: 492897449}
+  - key: {fileID: -2161755472415907764, guid: af76ad1c343b9bd4ca6ec1297263cad0, type: 2}
+    value: {fileID: 1895409700}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &1032344695
@@ -2382,7 +2386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 422b1178d5882524db89ca4dcbad523e, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 422b1178d5882524db89ca4dcbad523e, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2395,9 +2399,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 422b1178d5882524db89ca4dcbad523e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1745816925}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 422b1178d5882524db89ca4dcbad523e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1745816928}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 422b1178d5882524db89ca4dcbad523e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1745816929}
@@ -2993,61 +2994,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1b929a3f37e44a84fbadff8056ba28e4, type: 3}
   m_PrefabInstance: {fileID: 1917818828}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1476328447
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1476328448}
-  - component: {fileID: 1476328449}
-  m_Layer: 0
-  m_Name: IsekaiCutscene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1476328448
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476328447}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 319.1618, y: 212.9287, z: -271.82312}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!320 &1476328449
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476328447}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: f9183464368b1ad47a4c3f9adbbac9c9, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 3441911476070862187, guid: f9183464368b1ad47a4c3f9adbbac9c9, type: 2}
-    value: {fileID: 1731766908}
-  - key: {fileID: -4608927211762440237, guid: f9183464368b1ad47a4c3f9adbbac9c9, type: 2}
-    value: {fileID: 1745816929}
-  - key: {fileID: 6391480171565890605, guid: f9183464368b1ad47a4c3f9adbbac9c9, type: 2}
-    value: {fileID: 1252447396}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &1480611004
 GameObject:
   m_ObjectHideFlags: 0
@@ -4733,6 +4679,59 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &1717902101
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1717902102}
+  - component: {fileID: 1717902103}
+  m_Layer: 0
+  m_Name: IsekaiCutsceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1717902102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717902101}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.9639966, y: -5.793385, z: 18.289856}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &1717902103
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717902101}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: beebb423d4ac0e7459eb5f30f2c55f8b, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 7583671490704248653, guid: beebb423d4ac0e7459eb5f30f2c55f8b, type: 2}
+    value: {fileID: 1731766908}
+  - key: {fileID: -8002126386819951937, guid: beebb423d4ac0e7459eb5f30f2c55f8b, type: 2}
+    value: {fileID: 1745816929}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1731766906
 GameObject:
   m_ObjectHideFlags: 0
@@ -4759,7 +4758,7 @@ Transform:
   m_GameObject: {fileID: 1731766906}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.79, y: 1.652, z: 3.64}
+  m_LocalPosition: {x: 1.8100002, y: 1.77, z: 3.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4768,7 +4767,7 @@ Transform:
   - {fileID: 551346618}
   - {fileID: 492897453}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0.05999904, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!95 &1731766908
 Animator:
   serializedVersion: 5
@@ -4817,20 +4816,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 997602262961349003, guid: 422b1178d5882524db89ca4dcbad523e, type: 3}
---- !u!114 &1745816928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745816922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2059c6a021cc5f446ad40b7e480506b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playableDirector: {fileID: 1476328449}
-  player: {fileID: 8187941536131572298}
 --- !u!95 &1745816929
 Animator:
   serializedVersion: 5
@@ -4886,7 +4871,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -480.19, y: 464}
+  m_AnchoredPosition: {x: -524.01, y: 493.7}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1765755623
@@ -5083,6 +5068,7 @@ MonoBehaviour:
   - '"I just woke up from a very good sleep."'
   - '"Let''s play some video games on my PC for a bit."'
   textSpeed: 0.05
+  lineDelay: 1.5
   playerMovement: {fileID: 3701846194418053432}
   audioSource: {fileID: 1895409705}
   typingSound: {fileID: 8300000, guid: 4035eed3ffe360e45b7364754756e55c, type: 3}
@@ -12984,4 +12970,4 @@ SceneRoots:
   - {fileID: 641592429}
   - {fileID: 1032344693}
   - {fileID: 1252447397}
-  - {fileID: 1476328448}
+  - {fileID: 1717902102}

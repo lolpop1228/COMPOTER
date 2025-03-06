@@ -51,7 +51,7 @@ public class OpenCutscene : MonoBehaviour
 
         if (objectToEnable2 != null)
         {
-            objectToEnable2.SetActive(true);
+            objectToEnable2.SetActive(false);
         }
 
         if (objectToEnable3 != null)
