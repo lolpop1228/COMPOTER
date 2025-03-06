@@ -7,12 +7,13 @@ using UnityEngine.Video;
 
 public class TurnPCOn : MonoBehaviour, IInteractable
 {
-    public PlayableDirector playableDirector;
-    public GameObject player;
+    public VideoPlayer videoPlayer;
 
     public void Interact()
     {
-        playableDirector.Play();
-        player.SetActive(false);
+        if (videoPlayer != null)
+        {
+            videoPlayer.Play();
+        }
     }
 }

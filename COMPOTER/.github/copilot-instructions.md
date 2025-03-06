@@ -2,7 +2,7 @@
 - Project name: COMPOTER
 - Unity version: Unity 2022.3.48f1
 - Active game object:
-  - Name: CutsceneManager
+  - Name: System_unit
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Interactable
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
