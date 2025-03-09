@@ -766,7 +766,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 100663295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1458,13 +1458,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1959523855}
+  - component: {fileID: 1959523856}
   m_Layer: 0
   m_Name: EnableToLoadNextScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1959523855
 Transform:
   m_ObjectHideFlags: 0
@@ -1480,6 +1481,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1959523856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959523854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdccbd10546a71d4fa715290cd2dd926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: MyRoomCutscene
 --- !u!1 &1961411904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,6 +1667,8 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 1166912049305924065, guid: 7b05cc45d212eb141b8f9c5c686a69f8, type: 2}
     value: {fileID: 1323521011}
+  - key: {fileID: -1490200383695022548, guid: 7b05cc45d212eb141b8f9c5c686a69f8, type: 2}
+    value: {fileID: 1959523854}
   m_ExposedReferences:
     m_References: []
 --- !u!136 &224000558883525813
