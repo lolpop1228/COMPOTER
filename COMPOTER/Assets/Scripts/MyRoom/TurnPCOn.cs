@@ -29,6 +29,8 @@ public class TurnPCOn : MonoBehaviour, IInteractable
             hasPlayed = true;          
         }
 
+        gameObject.layer = LayerMask.NameToLayer("Default");
+
         StartTimer(timeDuration);
     }
 
