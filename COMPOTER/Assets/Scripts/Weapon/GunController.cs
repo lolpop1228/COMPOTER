@@ -8,8 +8,17 @@ public class GunController : MonoBehaviour
     public float fireRate = 0.5f;
     public Transform muzzlePoint;
     public ParticleSystem muzzleFlash;
+    private AudioSource audioSource;
+    public AudioClip fireSound;
+    private Animator animator;
 
     private float nextTimeToFire;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
@@ -22,6 +31,17 @@ public class GunController : MonoBehaviour
 
     void Shoot()
     {
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Fire");
+        }
+
+        if (audioSource != null && fireSound != null)
+        {
+            audioSource.PlayOneShot(fireSound);
+        }
+
         muzzleFlash.Play();
 
         GameObject bullet = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
