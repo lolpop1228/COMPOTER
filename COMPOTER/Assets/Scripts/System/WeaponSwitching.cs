@@ -9,7 +9,7 @@ public class WeaponSwitching : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        SelectWeapon();
     }
 
     // Update is called once per frame

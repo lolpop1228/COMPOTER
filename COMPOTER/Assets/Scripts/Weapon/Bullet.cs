@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("Bullet collided with: " + collision.gameObject.name);
         Target target = collision.gameObject.GetComponent<Target>();
         if (target != null )
         {
