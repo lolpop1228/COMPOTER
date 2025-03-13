@@ -11,9 +11,15 @@ public class Bullet : MonoBehaviour
     {
         Debug.Log("Bullet collided with: " + collision.gameObject.name);
         Target target = collision.gameObject.GetComponent<Target>();
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if (target != null )
         {
             target.TakeDamage(damage);
+        }
+
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
         }
 
         if (impactEffect != null)
