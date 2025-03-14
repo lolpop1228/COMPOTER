@@ -6,9 +6,9 @@
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground
   - Layers:
-    - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player
+    - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable
 - Active game object:
-  - Name: Weapon_02
-  - Tag: Untagged
-  - Layer: Default
+  - Name: PlayerController
+  - Tag: Player
+  - Layer: Player
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
