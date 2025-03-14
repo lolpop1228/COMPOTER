@@ -7,11 +7,26 @@ public class Bullet : MonoBehaviour
     public GameObject impactEffect;
     public float damage = 10f;
 
+    private void Start()
+    {
+        // Ignore collision with the player
+        GameObject player = GameObject.Find("PlayerController");
+        if (player != null)
+        {
+            Collider playerCollider = player.GetComponent<Collider>();
+            Collider bulletCollider = GetComponent<Collider>();
+
+            if (playerCollider != null && bulletCollider != null)
+            {
+                Physics.IgnoreCollision(bulletCollider, playerCollider);
+            }
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Bullet collided with: " + collision.gameObject.name);
         Target target = collision.gameObject.GetComponent<Target>();
-        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        ProjectileEnemy enemy = collision.gameObject.GetComponent<ProjectileEnemy>();
         if (target != null )
         {
             target.TakeDamage(damage);

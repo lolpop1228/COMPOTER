@@ -6,16 +6,17 @@ public class WeaponSwitching : MonoBehaviour
 {
     public int selectedWeapon = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
         SelectWeapon();
     }
 
-    // Update is called once per frame
     void Update()
     {
         int previousSelectedWeapon = selectedWeapon;
+
+        // Check if the current weapon is reloading
+        if (IsWeaponReloading()) return;
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
@@ -70,5 +71,16 @@ public class WeaponSwitching : MonoBehaviour
                 weapon.gameObject.SetActive(false);
             i++;
         }
+    }
+
+    // Function to check if the current weapon is reloading
+    bool IsWeaponReloading()
+    {
+        GunController currentGun = transform.GetChild(selectedWeapon).GetComponent<GunController>();
+        if (currentGun != null)
+        {
+            return currentGun.isReloading; // Prevent weapon switch if reloading
+        }
+        return false;
     }
 }

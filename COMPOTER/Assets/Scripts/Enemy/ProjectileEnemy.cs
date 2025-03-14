@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class ProjectileEnemy : MonoBehaviour
 {
     public NavMeshAgent agent;          // NavMeshAgent for movement
     public Transform player;           // Reference to the player
