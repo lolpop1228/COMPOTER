@@ -16,8 +16,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        HideMouseCursor();
 
         sensX = PlayerPrefs.GetFloat("SensX", 100f);
         sensY = PlayerPrefs.GetFloat("SensY", 100f);
@@ -57,5 +56,17 @@ public class CameraMovement : MonoBehaviour
     {
         sensY = newSensY;
         PlayerPrefs.SetFloat("SensY", sensY); // Save the new sensitivity
+    }
+
+    public void HideMouseCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void ShowMouseCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
