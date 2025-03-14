@@ -5,6 +5,8 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject mainPauseMenu;
+    public GameObject settingsMenu;
     public MonoBehaviour[] scriptToDisable;
 
     public bool isPaused;
@@ -60,5 +62,17 @@ public class PauseMenu : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void Settings()
+    {
+        mainPauseMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
+    public void Return()
+    {
+        mainPauseMenu.SetActive(true);
+        settingsMenu.SetActive(false);
     }
 }

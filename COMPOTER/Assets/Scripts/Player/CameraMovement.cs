@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -10,10 +11,25 @@ public class CameraMovement : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    public Slider sensXSlider;
+    public Slider sensYSlider;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        sensX = PlayerPrefs.GetFloat("SensX", 100f);
+        sensY = PlayerPrefs.GetFloat("SensY", 100f);
+
+        if (sensXSlider && sensYSlider)
+        {
+            sensXSlider.value = sensX;
+            sensYSlider.value = sensY;
+
+            sensXSlider.onValueChanged.AddListener(UpdateSensX);
+            sensYSlider.onValueChanged.AddListener(UpdateSensY);
+        }
     }
 
     private void Update()
@@ -29,5 +45,17 @@ public class CameraMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
 
+    }
+
+    public void UpdateSensX(float newSensX)
+    {
+        sensX = newSensX;
+        PlayerPrefs.SetFloat("SensX", sensX); // Save the new sensitivity
+    }
+
+    public void UpdateSensY(float newSensY)
+    {
+        sensY = newSensY;
+        PlayerPrefs.SetFloat("SensY", sensY); // Save the new sensitivity
     }
 }
