@@ -29,6 +29,8 @@ public class Bullet : MonoBehaviour
         Debug.Log("Bullet collided with: " + collision.gameObject.name);
         Target target = collision.gameObject.GetComponent<Target>();
         ProjectileEnemy enemy = collision.gameObject.GetComponent<ProjectileEnemy>();
+        MeleeEnemy meleeEnemy = collision.gameObject.GetComponent<MeleeEnemy>();
+
         if (target != null )
         {
             target.TakeDamage(damage);
@@ -37,6 +39,11 @@ public class Bullet : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
+        }
+
+        if (meleeEnemy != null)
+        {
+            meleeEnemy.TakeDamage(damage);
         }
 
         if (impactEffect != null)
