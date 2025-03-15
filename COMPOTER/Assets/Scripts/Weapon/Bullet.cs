@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        Destroy(gameObject ,5f);
+
         // Ignore collision with the player
         GameObject player = GameObject.Find("PlayerController");
         if (player != null)

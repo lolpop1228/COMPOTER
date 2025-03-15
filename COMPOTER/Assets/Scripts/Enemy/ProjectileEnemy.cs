@@ -1,40 +1,49 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class ProjectileEnemy : MonoBehaviour
 {
-    public NavMeshAgent agent;          // NavMeshAgent for movement
-    public Transform player;           // Reference to the player
-    public LayerMask groundLayer, playerLayer; // LayerMasks for ground and player
-    public float patrolRange = 10f;    // Range for random patrol points
-    public float detectRange = 15f;    // Range to detect the player
-    public float attackRange = 5f;     // Range to attack the player
-    public float timeBetweenAttacks = 1f; // Time between attacks
-    public GameObject projectile;      // Projectile to attack the player
+    public NavMeshAgent agent;
+    public Transform player;
+    public LayerMask groundLayer, playerLayer;
+    public float patrolRange = 10f;
+    public float detectRange = 15f;
+    public float attackRange = 5f;
+    public float timeBetweenAttacks = 1f;
+    public GameObject projectile;
     public float bulletSpeed = 100f;
 
-    private Vector3 patrolPoint;       // Current patrol point
-    private bool patrolPointSet;       // Flag to check if patrol point is set
-    private bool alreadyAttacked;      // Flag to check if the enemy already attacked
+    private Vector3 patrolPoint;
+    private bool patrolPointSet;
+    private bool alreadyAttacked;
 
     public Animator animator;
     public string patrolAnim;
     public string attackAnim;
     public string chaseAnim;
+    public string reloadAnim;
 
-    //Health
+    // Ammo System
+    public int maxAmmo = 10;
+    private int currentAmmo;
+    public float reloadTime = 2f;
+    private bool isReloading = false;
+
+    // Health System
     public float health = 100f;
 
     private void Start()
     {
-        // Ensure the NavMeshAgent is assigned
         if (!agent) agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        currentAmmo = maxAmmo;
     }
 
     private void Update()
     {
-        // Check for player within detection and attack ranges
+        if (isReloading) return;
+
         bool playerInDetectRange = Physics.CheckSphere(transform.position, detectRange, playerLayer);
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
@@ -46,10 +55,7 @@ public class ProjectileEnemy : MonoBehaviour
     public void TakeDamage(float amount)
     {
         health -= amount;
-        if (health <= 0f)
-        {
-            Die();
-        }
+        if (health <= 0f) Die();
     }
 
     void Die()
@@ -66,54 +72,60 @@ public class ProjectileEnemy : MonoBehaviour
             agent.SetDestination(patrolPoint);
             animator.Play(patrolAnim);
 
-            // Check if the enemy reached the patrol point
             if (Vector3.Distance(transform.position, patrolPoint) < 1f)
-            {
                 patrolPointSet = false;
-            }
         }
     }
 
     private void SearchPatrolPoint()
     {
-        // Generate a random patrol point within the patrol range
         float randomZ = Random.Range(-patrolRange, patrolRange);
         float randomX = Random.Range(-patrolRange, patrolRange);
-
         patrolPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        // Check if the point is on the ground
         if (Physics.Raycast(patrolPoint, -Vector3.up, 2f, groundLayer))
-        {
             patrolPointSet = true;
-        }
     }
 
     private void ChasePlayer()
     {
-        // Set the destination to the player's position
         agent.SetDestination(player.position);
         animator.Play(chaseAnim);
     }
 
     private void AttackPlayer()
     {
-        // Stop moving
         agent.SetDestination(transform.position);
         animator.Play(attackAnim);
-
-        // Face the player
         transform.LookAt(player);
 
-        if (!alreadyAttacked)
+        if (!alreadyAttacked && currentAmmo > 0)
         {
-            // Attack logic (e.g., shoot a projectile)
-            Rigidbody rb = Instantiate(projectile, transform.position + transform.forward, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            Shoot();
         }
+        else if (currentAmmo <= 0 && !isReloading)
+        {
+            StartCoroutine(Reload());
+        }
+    }
+
+    private void Shoot()
+    {
+        Rigidbody rb = Instantiate(projectile, transform.position + transform.forward, Quaternion.identity).GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
+
+        currentAmmo--;
+        alreadyAttacked = true;
+        Invoke(nameof(ResetAttack), timeBetweenAttacks);
+    }
+
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+        animator.Play(reloadAnim);
+        yield return new WaitForSeconds(reloadTime);
+        currentAmmo = maxAmmo;
+        isReloading = false;
     }
 
     private void ResetAttack()
@@ -123,15 +135,10 @@ public class ProjectileEnemy : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Draw the patrol range in blue
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, patrolRange);
-
-        // Draw the detect range in yellow
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectRange);
-
-        // Draw the attack range in red
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
