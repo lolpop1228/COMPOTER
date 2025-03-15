@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     public Transform cameraTransform;
     public float shakeDuration = 0.1f;
     public float shakeMagnitude = 0.1f;
+    public HealthBar healthBar;
 
     private Vector3 originalCamPostion;
 
@@ -18,14 +20,14 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        UpdateHealthUI();
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     public void PlayerTakeDamage(float damage)
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
-        UpdateHealthUI();
+        healthBar.SetHealth(currentHealth);
 
         if (cameraTransform != null)
         {
@@ -34,15 +36,8 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0f)
         {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             Debug.Log("Dead");
-        }
-    }
-
-    void UpdateHealthUI()
-    {
-        if (healthText != null)
-        {
-            healthText.text = "Health: " + currentHealth.ToString("F0");
         }
     }
 
