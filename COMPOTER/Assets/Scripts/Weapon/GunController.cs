@@ -97,7 +97,9 @@ public class GunController : MonoBehaviour
 
         muzzleFlash.Play();
 
-        GameObject bullet = Instantiate(bulletPrefab, muzzlePoint.position, muzzlePoint.rotation);
+        // Adjust spawn position slightly forward to prevent collision with player
+        Vector3 spawnPosition = muzzlePoint.position + muzzlePoint.forward * 0.5f;
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, muzzlePoint.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         if (rb != null)
@@ -156,7 +158,7 @@ public class GunController : MonoBehaviour
         cameraTransform.localPosition = originalPosition;
     }
 
-    void UpdateAmmoUI()
+    public void UpdateAmmoUI()
     {
         if (ammoText != null)
         {
@@ -172,5 +174,11 @@ public class GunController : MonoBehaviour
     void OnDisable()
     {
         ammmoTextObject.SetActive(false);
+    }
+
+    public void AddReserveAmmo(int amount)
+    {
+        reserveAmmo += amount;
+        UpdateAmmoUI();
     }
 }

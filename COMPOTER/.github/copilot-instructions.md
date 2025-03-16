@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable
 - Active game object:
-  - Name: Crosshair
-  - Tag: Untagged
-  - Layer: Default
+  - Name: PlayerController
+  - Tag: Player
+  - Layer: Player
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

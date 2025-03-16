@@ -8,7 +8,6 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f;
     public float currentHealth;
-    public TextMeshProUGUI healthText;
     public Transform cameraTransform;
     public float shakeDuration = 0.1f;
     public float shakeMagnitude = 0.1f;
@@ -58,5 +57,12 @@ public class PlayerHealth : MonoBehaviour
         }
 
         cameraTransform.localPosition = originalPosition;
+    }
+
+    public void HealPlayer(float healAmount)
+    {
+        currentHealth += healAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        healthBar.SetHealth(currentHealth);
     }
 }
