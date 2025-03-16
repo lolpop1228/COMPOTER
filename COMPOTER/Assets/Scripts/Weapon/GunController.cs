@@ -21,7 +21,7 @@ public class GunController : MonoBehaviour
 
     [Header("Effects")]
     public ParticleSystem muzzleFlash;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     public AudioClip fireSound;
     public AudioClip reloadSound;
     private Animator animator;
