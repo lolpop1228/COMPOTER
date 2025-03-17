@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
-public class MeleeEnemy : MonoBehaviour
+public class TeleportEnemy : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask groundLayer, playerLayer;
     public float patrolRange = 10f;
     public float detectRange = 15f;
-    public float attackRange = 2f;
+    public float attackRange = 5f;
     public float timeBetweenAttacks = 1f;
-    public float attackDamage = 20f;
+    public GameObject projectile;
+    public float bulletSpeed = 100f;
 
     private Vector3 patrolPoint;
     private bool patrolPointSet;
@@ -20,24 +22,47 @@ public class MeleeEnemy : MonoBehaviour
     public string patrolAnim;
     public string attackAnim;
     public string chaseAnim;
+    public string reloadAnim;
+
+    // Ammo System
+    public int maxAmmo = 10;
+    private int currentAmmo;
+    public float reloadTime = 2f;
+    private bool isReloading = false;
 
     // Health System
     public float health = 100f;
+
+    //Teleport
+    float teleportCooldown = 5f;
+    float lastTeleportTime = -5f;
 
     private void Start()
     {
         if (!agent) agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        currentAmmo = maxAmmo;
     }
 
     private void Update()
     {
+        if (isReloading) return;
+
         bool playerInDetectRange = Physics.CheckSphere(transform.position, detectRange, playerLayer);
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
-        if (!playerInDetectRange && !playerInAttackRange) Patrol();
-        if (playerInDetectRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange) AttackPlayer();
+        if(playerInDetectRange && !playerInAttackRange && Time.time >= lastTeleportTime + teleportCooldown)
+        {
+            Teleport();
+        }
+        else if (playerInDetectRange && playerInAttackRange)
+        {
+            AttackPlayer();
+        }
+        else
+        {
+            Patrol();
+        }
     }
 
     public void TakeDamage(float amount)
@@ -49,6 +74,14 @@ public class MeleeEnemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+    }
+
+    void Teleport()
+    {
+        lastTeleportTime = Time.time;
+        transform.position = player.position - player.forward * 2f;
+        transform.LookAt(player);
+        AttackPlayer();
     }
 
     private void Patrol()
@@ -83,18 +116,37 @@ public class MeleeEnemy : MonoBehaviour
 
     private void AttackPlayer()
     {
-        // Stop moving
         agent.SetDestination(transform.position);
+        animator.Play(attackAnim);
         transform.LookAt(player);
 
-        if (!alreadyAttacked)
+        if (!alreadyAttacked && currentAmmo > 0)
         {
-            // Play attack animation **every time the enemy attacks**
-            animator.Play(attackAnim);
-
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            Shoot();
         }
+        else if (currentAmmo <= 0 && !isReloading)
+        {
+            StartCoroutine(Reload());
+        }
+    }
+
+    private void Shoot()
+    {
+        Rigidbody rb = Instantiate(projectile, transform.position + transform.forward, Quaternion.identity).GetComponent<Rigidbody>();
+        rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
+
+        currentAmmo--;
+        alreadyAttacked = true;
+        Invoke(nameof(ResetAttack), timeBetweenAttacks);
+    }
+
+    private IEnumerator Reload()
+    {
+        isReloading = true;
+        animator.Play(reloadAnim);
+        yield return new WaitForSeconds(reloadTime);
+        currentAmmo = maxAmmo;
+        isReloading = false;
     }
 
     private void ResetAttack()

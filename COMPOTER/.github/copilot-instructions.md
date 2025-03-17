@@ -4,7 +4,7 @@
 - Active scene:
   - Name: TestScene
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Enemy, ThrowObject
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable
 - Active game object:
