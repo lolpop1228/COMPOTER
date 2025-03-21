@@ -33,11 +33,19 @@ public class ProjectileEnemy : MonoBehaviour
     // Health System
     public float health = 100f;
 
+    // Bullet Spawn Point
+    public Transform firePoint;
+
     private void Start()
     {
         if (!agent) agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         currentAmmo = maxAmmo;
+
+        if (firePoint == null)
+        {
+            Debug.LogError("FirePoint is not assigned in " + gameObject.name);
+        }
     }
 
     private void Update()
@@ -111,8 +119,10 @@ public class ProjectileEnemy : MonoBehaviour
 
     private void Shoot()
     {
-        Rigidbody rb = Instantiate(projectile, transform.position + transform.forward, Quaternion.identity).GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
+        if (firePoint == null) return; // Prevents errors if firePoint is not assigned
+
+        Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
+        rb.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
 
         currentAmmo--;
         alreadyAttacked = true;
@@ -141,5 +151,11 @@ public class ProjectileEnemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        if (firePoint != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(firePoint.position, 0.1f);
+        }
     }
 }
