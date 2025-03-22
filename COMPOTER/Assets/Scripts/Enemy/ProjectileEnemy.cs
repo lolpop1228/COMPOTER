@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System.Security.Cryptography;
 
 public class ProjectileEnemy : MonoBehaviour
 {
@@ -36,6 +37,10 @@ public class ProjectileEnemy : MonoBehaviour
     // Bullet Spawn Point
     public Transform firePoint;
 
+    //Drop
+    public GameObject healthBox;
+    public GameObject ammoBox;
+
     private void Start()
     {
         if (!agent) agent = GetComponent<NavMeshAgent>();
@@ -66,8 +71,20 @@ public class ProjectileEnemy : MonoBehaviour
         if (health <= 0f) Die();
     }
 
+    void DropItem(GameObject item)
+    {
+        if (item != null)
+        {
+            Vector3 dropPosition = transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f));
+            GameObject droppedItem = Instantiate(item, dropPosition, Quaternion.identity);
+            Destroy(droppedItem, 5f);
+        }
+    }
+
     void Die()
     {
+        DropItem(healthBox);
+        DropItem(ammoBox);
         Destroy(gameObject);
     }
 
