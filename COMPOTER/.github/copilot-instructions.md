@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable, EnemyArea
 - Active game object:
-  - Name: Level
+  - Name: PostProcessing
   - Tag: Untagged
-  - Layer: Ground
+  - Layer: PostProcessing
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
