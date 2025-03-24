@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable, EnemyArea
 - Active game object:
-  - Name: PostProcessing
+  - Name: Point Light (14)
   - Tag: Untagged
-  - Layer: PostProcessing
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

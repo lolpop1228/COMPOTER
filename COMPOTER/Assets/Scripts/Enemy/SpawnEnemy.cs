@@ -5,7 +5,6 @@ using UnityEngine;
 public class SpawnEnemy : MonoBehaviour
 {
     public GameObject enemySpawner;
-    public Animator doorAnim;
 
     void Start()
     {
@@ -16,7 +15,6 @@ public class SpawnEnemy : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             enemySpawner.SetActive(true);
-            doorAnim.Play("Open");
             Destroy(gameObject);
         }
     }

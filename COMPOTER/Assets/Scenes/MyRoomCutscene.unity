@@ -5500,7 +5500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdccbd10546a71d4fa715290cd2dd926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: MyRoom
+  sceneToLoad: Level1
 --- !u!1001 &1828833475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12878,6 +12878,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+  maxSlopeAngle: 0
   orientation: {fileID: 7717429223488975008}
   cameraHolder: {fileID: 8308569387399242286}
   bobbingSpeed: 14
@@ -13170,6 +13171,8 @@ MonoBehaviour:
   sensX: 400
   sensY: 400
   orientation: {fileID: 7717429223488975008}
+  sensXSlider: {fileID: 0}
+  sensYSlider: {fileID: 0}
 --- !u!23 &5940025003511972538
 MeshRenderer:
   m_ObjectHideFlags: 0
