@@ -7,7 +7,7 @@ public class Breakable : MonoBehaviour
     [SerializeField] GameObject intactStuff;
     [SerializeField] GameObject brokenStuff;
     [SerializeField] AudioClip breakSound;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     BoxCollider bc;
 
