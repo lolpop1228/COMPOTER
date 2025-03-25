@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
-using System.Security.Cryptography;
 
 public class ProjectileEnemy : MonoBehaviour
 {
@@ -41,11 +40,20 @@ public class ProjectileEnemy : MonoBehaviour
     public GameObject healthBox;
     public GameObject ammoBox;
 
+    // Audio
+    private AudioSource audioSource;
+    public AudioClip fireSound;
+    public AudioClip patrolSound;
+    public AudioClip chaseSound;
+
+    private string currentState = "";
+
     private void Start()
     {
         if (!agent) agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         currentAmmo = maxAmmo;
+        audioSource = GetComponent<AudioSource>();
 
         if (firePoint == null)
         {
@@ -60,32 +68,18 @@ public class ProjectileEnemy : MonoBehaviour
         bool playerInDetectRange = Physics.CheckSphere(transform.position, detectRange, playerLayer);
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
-        if (!playerInDetectRange && !playerInAttackRange) Patrol();
-        if (playerInDetectRange && !playerInAttackRange) ChasePlayer();
-        if (playerInAttackRange) AttackPlayer();
+        if (!playerInDetectRange && !playerInAttackRange)
+            Patrol();
+        else if (playerInDetectRange && !playerInAttackRange)
+            ChasePlayer();
+        else if (playerInAttackRange)
+            AttackPlayer();
     }
 
     public void TakeDamage(float amount)
     {
         health -= amount;
         if (health <= 0f) Die();
-    }
-
-    void DropItem(GameObject item)
-    {
-        if (item != null)
-        {
-            Vector3 dropPosition = transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f));
-            GameObject droppedItem = Instantiate(item, dropPosition, Quaternion.identity);
-            Destroy(droppedItem, 5f);
-        }
-    }
-
-    void Die()
-    {
-        DropItem(healthBox);
-        DropItem(ammoBox);
-        Destroy(gameObject);
     }
 
     private void Patrol()
@@ -95,7 +89,7 @@ public class ProjectileEnemy : MonoBehaviour
         if (patrolPointSet)
         {
             agent.SetDestination(patrolPoint);
-            animator.Play(patrolAnim);
+            ChangeState(patrolAnim, patrolSound);
 
             if (Vector3.Distance(transform.position, patrolPoint) < 1f)
                 patrolPointSet = false;
@@ -115,13 +109,13 @@ public class ProjectileEnemy : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
-        animator.Play(chaseAnim);
+        ChangeState(chaseAnim, chaseSound);
     }
 
     private void AttackPlayer()
     {
         agent.SetDestination(transform.position);
-        animator.Play(attackAnim);
+        ChangeState(attackAnim, null);
         transform.LookAt(player);
 
         if (!alreadyAttacked && currentAmmo > 0)
@@ -143,6 +137,10 @@ public class ProjectileEnemy : MonoBehaviour
 
         currentAmmo--;
         alreadyAttacked = true;
+        
+        // Play the fire sound here
+        audioSource.PlayOneShot(fireSound);
+
         Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
 
@@ -158,6 +156,41 @@ public class ProjectileEnemy : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    private void Die()
+    {
+        DropItem(healthBox);
+        DropItem(ammoBox);
+        Destroy(gameObject);
+    }
+
+    private void DropItem(GameObject item)
+    {
+        if (item != null)
+        {
+            Vector3 dropPosition = transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f));
+            GameObject droppedItem = Instantiate(item, dropPosition, Quaternion.identity);
+            Destroy(droppedItem, 5f);
+        }
+    }
+
+    private void ChangeState(string newState, AudioClip sound)
+    {
+        if (currentState != newState)
+        {
+            currentState = newState;
+            animator.Play(newState);
+            PlaySound(sound);
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(clip);
+        }
     }
 
     private void OnDrawGizmosSelected()
