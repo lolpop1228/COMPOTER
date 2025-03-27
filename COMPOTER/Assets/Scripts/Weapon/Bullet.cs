@@ -30,6 +30,7 @@ public class Bullet : MonoBehaviour
         Target target = collision.gameObject.GetComponent<Target>();
         ProjectileEnemy enemy = collision.gameObject.GetComponent<ProjectileEnemy>();
         TeleportEnemy teleportEnemy = collision.gameObject.GetComponent<TeleportEnemy>();
+        PSUBoss pSUBoss = collision.gameObject.GetComponent<PSUBoss>();
 
         if (target != null )
         {
@@ -44,6 +45,11 @@ public class Bullet : MonoBehaviour
         if (teleportEnemy != null)
         {
             teleportEnemy.TakeDamage(damage);
+        }
+
+        if (pSUBoss != null)
+        {
+            pSUBoss.TakeDamage(damage);
         }
 
         if (impactEffect != null)
