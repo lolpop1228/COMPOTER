@@ -5,29 +5,56 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
-    public float runSpeed;
-    private float currentSpeed;
+    private float moveSpeed;
+    public float walkSpeed;
+    public float sprintSpeed;
+    public float slideSpeed;
+
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
+
+    public float speedIncreaseMultiplier;
+    public float slopeIncreaseMultiplier;
 
     public float groundDrag;
 
+    [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
 
+    [Header("Crouching")]
+    public float crouchSpeed;
+    public float crouchYScale;
+    private float startYScale;
+
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
+    private bool wasGrounded; // For detecting landings
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
+    private bool exitingSlope;
+    
+    [Header("Sounds")]
+    public AudioSource audioSource;
+    public AudioClip walkSound;
+    public AudioClip sprintSound;
+    public AudioClip crouchSound;
+    public AudioClip jumpSound;
+    public AudioClip landSound;
+
+    private float footstepTimer;
+    public float footstepRate = 0.5f;
 
     public Transform orientation;
 
@@ -38,91 +65,47 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
-    // ===== Added Head Bobbing Variables =====
-    [Header("Head Bobbing")]
-    public Transform cameraHolder; // Assign the player's camera transform
-    public float bobbingSpeed = 14f; // Speed of the bobbing
-    public float bobbingAmount = 0.05f; // How much the camera moves up and down
-    private float defaultYPos; // Original Y position of the camera
-    private float timer; // Timer for sine wave function
-    public float bobLerpSpeed = 8f;
-    private float bobbingIntensity = 0f;
-    // ========================================
+    public MovementState state;
+    public enum MovementState
+    {
+        walking,
+        sprinting,
+        crouching,
+        sliding,
+        air
+    }
 
-    [Header("Footstep Sounds")]
-    public AudioSource footstepSource; // Assign in the Inspector
-    public AudioClip[] footstepClips;  // Assign footstep sounds in Inspector
-    public float walkStepInterval = 0.5f; // Time between steps when walking
-    public float runStepInterval = 0.3f;  // Time between steps when running
-    private float footstepTimer = 0f; // Timer for footstep sounds
-
-    [Header("Jump & Landing Sounds")]
-    public AudioSource audioSource; // Assign the same AudioSource as footstepSource or a separate one
-    public AudioClip jumpSound;  // Assign a jump sound in Inspector
-    public AudioClip landSound;  // Assign a landing sound in Inspector
-
-    private bool wasGrounded; // Track previous grounded state for landing sound
-
-
+    public bool sliding;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
         readyToJump = true;
 
-        // Set the default speed to moveSpeed (walking)
-        currentSpeed = moveSpeed;
-
-        // ===== Store the camera's default position =====
-        if (cameraHolder != null)
-        {
-            defaultYPos = cameraHolder.localPosition.y;
-        }
-        // ===============================================
+        startYScale = transform.localScale.y;
     }
 
     private void Update()
     {
-        // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        // Ground check
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         MyInput();
         SpeedControl();
+        StateHandler();
+        HandleMovementSounds();
 
         // Handle drag
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
+        rb.drag = grounded ? groundDrag : 0;
 
-        // Toggle sprinting
-        if (Input.GetKey(sprintKey))
-        {
-            currentSpeed = runSpeed; // Sprint speed
-        }
-        else
-        {
-            currentSpeed = moveSpeed; // Walk speed
-        }
-
-        // ===== Apply head bobbing effect =====
-        HandleHeadBobbing();
-        // =====================================
-
-        HandleFootsteps();
-
-        // Play landing sound when hitting the ground after being in the air
+        // Landing sound
         if (!wasGrounded && grounded)
         {
-            if (audioSource != null && landSound != null)
-                audioSource.PlayOneShot(landSound);
+            PlaySound(landSound);
         }
-
-        // Update grounded state for next frame
         wasGrounded = grounded;
-
-
     }
 
     private void FixedUpdate()
@@ -135,131 +118,187 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // when to jump
+        // Jumping
         if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
-
             Jump();
-
             Invoke(nameof(ResetJump), jumpCooldown);
         }
+
+        // Crouching
+        if (Input.GetKeyDown(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            PlaySound(crouchSound);
+        }
+
+        if (Input.GetKeyUp(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        }
+    }
+
+    private void StateHandler()
+    {
+        if (sliding)
+        {
+            state = MovementState.sliding;
+            desiredMoveSpeed = (OnSlope() && rb.velocity.y < 0.1f) ? slideSpeed : sprintSpeed;
+        }
+        else if (Input.GetKey(crouchKey))
+        {
+            state = MovementState.crouching;
+            desiredMoveSpeed = crouchSpeed;
+        }
+        else if (grounded && Input.GetKey(sprintKey))
+        {
+            state = MovementState.sprinting;
+            desiredMoveSpeed = sprintSpeed;
+        }
+        else if (grounded)
+        {
+            state = MovementState.walking;
+            desiredMoveSpeed = walkSpeed;
+        }
+        else
+        {
+            state = MovementState.air;
+        }
+
+        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(SmoothlyLerpMoveSpeed());
+        }
+        else
+        {
+            moveSpeed = desiredMoveSpeed;
+        }
+
+        lastDesiredMoveSpeed = desiredMoveSpeed;
+    }
+
+    private IEnumerator SmoothlyLerpMoveSpeed()
+    {
+        float time = 0;
+        float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
+        float startValue = moveSpeed;
+
+        while (time < difference)
+        {
+            moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
+
+            if (OnSlope())
+            {
+                float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                float slopeAngleIncrease = 1 + (slopeAngle / 90f);
+                time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
+            }
+            else
+            {
+                time += Time.deltaTime * speedIncreaseMultiplier;
+            }
+
+            yield return null;
+        }
+
+        moveSpeed = desiredMoveSpeed;
     }
 
     private void MovePlayer()
     {
-        // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        //on slope
-        if (OnSlope())
+        if (OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
+            if (rb.velocity.y > 0)
+                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+        }
+        else if (grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
+        else if (!grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
 
-        // on ground
-        if (grounded)
-            rb.AddForce(moveDirection.normalized * currentSpeed * 10f, ForceMode.Force);
-
-        // in air
-        else if (!grounded)
-            rb.AddForce(moveDirection.normalized * currentSpeed * 10f * airMultiplier, ForceMode.Force);
+        rb.useGravity = !OnSlope();
     }
 
     private void SpeedControl()
     {
-        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        // limit velocity if needed
-        if (flatVel.magnitude > currentSpeed)
+        if (OnSlope() && !exitingSlope)
         {
-            Vector3 limitedVel = flatVel.normalized * currentSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            if (rb.velocity.magnitude > moveSpeed)
+                rb.velocity = rb.velocity.normalized * moveSpeed;
+        }
+        else
+        {
+            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            if (flatVel.magnitude > moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            }
         }
     }
 
     private void Jump()
     {
-        // reset y velocity
+        exitingSlope = true;
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-
-        // Play jump sound
-        if (audioSource != null && jumpSound != null)
-            audioSource.PlayOneShot(jumpSound);
-
+        PlaySound(jumpSound);
     }
 
     private void ResetJump()
     {
         readyToJump = true;
+        exitingSlope = false;
     }
 
-    private bool OnSlope()
+    public bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
-
         return false;
     }
 
-    private Vector3 GetSlopeMoveDirection()
+    public Vector3 GetSlopeMoveDirection(Vector3 direction)
     {
-        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
-    }
- 
-    // ===== Head Bobbing Function =====
-    private void HandleHeadBobbing()
-    {
-        if (cameraHolder == null) return;
-
-        // Check if the player is moving
-        if (grounded && (horizontalInput != 0 || verticalInput != 0))
-        {
-            float bobSpeed = (currentSpeed == runSpeed) ? bobbingSpeed * 1.5f : bobbingSpeed;
-
-            timer += Time.deltaTime * bobSpeed;
-
-            // Smoothly increase bobbing intensity when moving
-            bobbingIntensity = Mathf.Lerp(bobbingIntensity, 1f, Time.deltaTime * bobLerpSpeed);
-
-            float newY = defaultYPos + Mathf.Sin(timer) * bobbingAmount * bobbingIntensity;
-            cameraHolder.localPosition = new Vector3(cameraHolder.localPosition.x, newY, cameraHolder.localPosition.z);
-        }
-        else
-        {
-            // Smoothly reduce bobbing when stopping
-            bobbingIntensity = Mathf.Lerp(bobbingIntensity, 0f, Time.deltaTime * bobLerpSpeed);
-
-            cameraHolder.localPosition = new Vector3(cameraHolder.localPosition.x, Mathf.Lerp(cameraHolder.localPosition.y, defaultYPos, Time.deltaTime * bobLerpSpeed), cameraHolder.localPosition.z);
-        }
+        return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
 
-    private void HandleFootsteps()
+    private void HandleMovementSounds()
     {
-        if (!grounded || (horizontalInput == 0 && verticalInput == 0))
+        if (grounded && moveDirection.magnitude > 0)
         {
-            footstepTimer = 0; // Reset timer when not moving
-            return;
-        }
+            float currentFootstepRate = state == MovementState.sprinting ? footstepRate * 0.5f : footstepRate;
 
-        // Determine step interval based on movement speed
-        float stepInterval = (currentSpeed == runSpeed) ? runStepInterval : walkStepInterval;
-
-        // Increment timer and play footstep sound if interval is met
-        footstepTimer += Time.deltaTime;
-        if (footstepTimer >= stepInterval)
-        {
-            footstepTimer = 0; // Reset timer
-
-            if (footstepSource != null && footstepClips.Length > 0)
+            if (footstepTimer <= 0)
             {
-                footstepSource.PlayOneShot(footstepClips[Random.Range(0, footstepClips.Length)]);
+                PlaySound(walkSound);
+                footstepTimer = currentFootstepRate;
             }
+            else
+            {
+                footstepTimer -= Time.deltaTime;
+            }
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 }

@@ -5134,7 +5134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25384b77016131a40b6d4ada2ea341cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swayAmount: 0.05
+  swayAmount: 0.1
   swaySpeed: 5
   returnSpeed: 10
 --- !u!114 &1143937948601485121
@@ -5990,33 +5990,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52d4261673519a4e94fc61d2f7256e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  runSpeed: 7
-  groundDrag: 5
+  walkSpeed: 7
+  sprintSpeed: 10
+  slideSpeed: 30
+  speedIncreaseMultiplier: 1.5
+  slopeIncreaseMultiplier: 2.5
+  groundDrag: 4
   jumpForce: 10
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 3.5
+  crouchYScale: 0.5
   jumpKey: 32
   sprintKey: 304
+  crouchKey: 306
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1088
   maxSlopeAngle: 40
-  orientation: {fileID: 4137265473088504329}
-  cameraHolder: {fileID: 5765826201507326018}
-  bobbingSpeed: 14
-  bobbingAmount: 0.03
-  bobLerpSpeed: 8
-  footstepSource: {fileID: 937226359694706751}
-  footstepClips:
-  - {fileID: 8300000, guid: 6c55998353e231d48911f7afd45d2720, type: 3}
-  - {fileID: 8300000, guid: 4c22718dfabd13d498537044c3df808b, type: 3}
-  walkStepInterval: 0.5
-  runStepInterval: 0.3
   audioSource: {fileID: 937226359694706751}
+  walkSound: {fileID: 8300000, guid: 6c55998353e231d48911f7afd45d2720, type: 3}
+  sprintSound: {fileID: 8300000, guid: 4c22718dfabd13d498537044c3df808b, type: 3}
+  crouchSound: {fileID: 8300000, guid: 8dd846573884a884f850b227391e307f, type: 3}
   jumpSound: {fileID: 8300000, guid: 12caadb1b697fe446a493645164ad639, type: 3}
   landSound: {fileID: 8300000, guid: 8dd846573884a884f850b227391e307f, type: 3}
+  footstepRate: 0.6
+  orientation: {fileID: 4137265473088504329}
+  state: 0
+  sliding: 0
 --- !u!224 &2008425526292829010
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7267,6 +7269,7 @@ GameObject:
   - component: {fileID: 2000901402336701919}
   - component: {fileID: 8729543507895255248}
   - component: {fileID: 2049809778867622988}
+  - component: {fileID: 8729543507895255249}
   m_Layer: 9
   m_Name: PlayerController
   m_TagString: Player
@@ -20728,7 +20731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5500644678650159844, guid: 7f6fd07bbb18dd447aee631583f01a37, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5500644678650159844, guid: 7f6fd07bbb18dd447aee631583f01a37, type: 3}
       propertyPath: m_LocalPosition.z
@@ -21852,6 +21855,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   interactUI: {fileID: 5794840379669387643}
+--- !u!114 &8729543507895255249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3221178976445711762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f81ef03477be124aa4459e9c14628ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 4137265473088504329}
+  playerObj: {fileID: 4997080941133856754}
+  maxSlideTime: 0.75
+  slideForce: 200
+  slideYScale: 0.5
+  slideKey: 306
+  slidingAudioSource: {fileID: 937226359694706751}
+  slidingSound: {fileID: 8300000, guid: 12caadb1b697fe446a493645164ad639, type: 3}
 --- !u!114 &8744579969326292284
 MonoBehaviour:
   m_ObjectHideFlags: 0
