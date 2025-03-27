@@ -8,6 +8,7 @@ public class HomingMissle : MonoBehaviour
     public float speed = 5f; 
     public float rotateSpeed = 0.1f;
     public AudioClip explosionSound;
+    public float damage = 20f;
 
     public GameObject impactEffect;
     private Rigidbody rb;
@@ -42,6 +43,12 @@ public class HomingMissle : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.PlayerTakeDamage(damage);
+        }
+
         if (impactEffect != null)
         {
             // Instantiate impact effect
