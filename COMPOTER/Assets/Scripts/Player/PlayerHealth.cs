@@ -42,13 +42,13 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator ShakeCamera()
     {
-        Vector3 originalPosition = cameraTransform.localPosition;
+        Vector3 originalPosition = cameraTransform.localPosition; // Save the initial position before shaking
         float elapsed = 0f;
 
         while (elapsed < shakeDuration)
         {
-            float x = Random.Range(-1f,1f) * shakeMagnitude;
-            float y = Random.Range(-1f,1f) * shakeMagnitude;
+            float x = Random.Range(-1f, 1f) * shakeMagnitude;
+            float y = Random.Range(-1f, 1f) * shakeMagnitude;
 
             cameraTransform.localPosition = originalPosition + new Vector3(x, y, 0);
             elapsed += Time.deltaTime;
@@ -56,8 +56,10 @@ public class PlayerHealth : MonoBehaviour
             yield return null;
         }
 
+        // Ensure the camera returns exactly to its original position
         cameraTransform.localPosition = originalPosition;
     }
+
 
     public void HealPlayer(float healAmount)
     {

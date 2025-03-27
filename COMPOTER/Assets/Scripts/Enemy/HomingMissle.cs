@@ -2,22 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomingMissle : MonoBehaviour
+public class HomingMissile : MonoBehaviour
 {
-    public Transform target;
-    public float speed = 5f; 
+    public float speed = 5f;
     public float rotateSpeed = 0.1f;
     public AudioClip explosionSound;
     public float damage = 20f;
-
     public GameObject impactEffect;
+
+    private Transform target;
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
-        // Ensure the explosionSound is assigned
+        // Find player by tag
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            target = player.transform;
+        }
+        else
+        {
+            Debug.LogError("Player not found! Make sure the player has the 'Player' tag.");
+        }
+
         if (explosionSound == null)
         {
             Debug.LogError("Explosion sound not assigned.");
@@ -29,14 +39,13 @@ public class HomingMissle : MonoBehaviour
         if (target != null)
         {
             // Rotate missile towards the target
-            Vector3 direction = target.position - transform.position;
-            direction.Normalize();
+            Vector3 direction = (target.position - transform.position).normalized;
 
-            // Rotate the missile using a smooth lerp between its current forward direction and the target direction
+            // Smoothly rotate towards the target
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
-            // Move the missile forward
+            // Move forward
             rb.velocity = transform.forward * speed;
         }
     }
@@ -56,20 +65,25 @@ public class HomingMissle : MonoBehaviour
 
             // Play the explosion sound from the impact effect
             AudioSource impactAudioSource = effect.GetComponent<AudioSource>();
-            if (impactAudioSource != null && explosionSound != null)
+            if (impactAudioSource == null)
             {
+                impactAudioSource = effect.AddComponent<AudioSource>();  // Add AudioSource if missing
+            }
+
+            if (explosionSound != null)
+            {
+                impactAudioSource.spatialBlend = 1.0f;  // 3D sound
+                impactAudioSource.volume = 1.0f;        // Max volume
                 impactAudioSource.PlayOneShot(explosionSound);
             }
             else
             {
-                Debug.LogWarning("No AudioSource or explosionSound on impact effect.");
+                Debug.LogWarning("No explosion sound assigned.");
             }
 
-            // Destroy the impact effect after some time
             Destroy(effect, 5f);
         }
 
-        // Destroy the missile object after the collision
         Destroy(gameObject);
     }
 }
