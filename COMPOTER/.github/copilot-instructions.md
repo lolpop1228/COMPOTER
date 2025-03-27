@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable, EnemyArea
 - Active game object:
-  - Name: Level
+  - Name: Point Light (21)
   - Tag: Untagged
-  - Layer: Ground
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
