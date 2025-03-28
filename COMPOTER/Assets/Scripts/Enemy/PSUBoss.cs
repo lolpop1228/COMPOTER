@@ -50,6 +50,8 @@ public class PSUBoss : MonoBehaviour
 
     private string currentState = "";
 
+    public GameObject Trap;
+
     private void Start()
     {
         if (!agent) agent = GetComponent<NavMeshAgent>();
@@ -66,6 +68,8 @@ public class PSUBoss : MonoBehaviour
         {
             bossHealthBar.SetMaxHealth(maxHealth);
         }
+
+        Trap.SetActive(false);
     }
 
     private void Update()
@@ -91,6 +95,11 @@ public class PSUBoss : MonoBehaviour
         if (bossHealthBar != null)
         {
             bossHealthBar.SetHealth(currentHealth);
+        }
+
+        if (currentHealth <= maxHealth * 0.5f)
+        {
+            Trap.SetActive(true);
         }
 
         if (currentHealth <= 0f) Die();

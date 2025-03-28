@@ -17,6 +17,7 @@ public class Sliding : MonoBehaviour
 
     public float slideYScale;
     private float startYScale;
+    private Vector3 originalCameraPosition;
 
     [Header("Input")]
     public KeyCode slideKey = KeyCode.LeftControl;
@@ -33,6 +34,8 @@ public class Sliding : MonoBehaviour
         pm = GetComponent<PlayerMovement>();
 
         startYScale = playerObj.localScale.y;
+        originalCameraPosition = Camera.main.transform.localPosition;
+
     }
 
     private void Update()
@@ -98,6 +101,8 @@ public class Sliding : MonoBehaviour
         pm.sliding = false;
 
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
+
+        Camera.main.transform.localPosition = originalCameraPosition;
 
         // Stop sliding sound
         if (slidingAudioSource)
