@@ -38,7 +38,7 @@ public class PSUBoss : MonoBehaviour
     // Bullet Spawn Point
     public Transform firePoint;
 
-    //Drop
+    // Drop
     public GameObject healthBox;
     public GameObject ammoBox;
 
@@ -49,9 +49,12 @@ public class PSUBoss : MonoBehaviour
     public AudioClip chaseSound;
 
     private string currentState = "";
-
-    public GameObject Trap;
     public GameObject BossHpBar;
+
+    // Rapid Spawn Prefab
+    public GameObject spawnPrefab;
+    public float spawnInterval = 0.1f;  // Interval between prefab spawns when health is below 50%
+    private bool isSpawning = false;
 
     private void Start()
     {
@@ -69,8 +72,6 @@ public class PSUBoss : MonoBehaviour
         {
             bossHealthBar.SetMaxHealth(maxHealth);
         }
-
-        Trap.SetActive(false);
     }
 
     private void Update()
@@ -86,6 +87,12 @@ public class PSUBoss : MonoBehaviour
             ChasePlayer();
         else if (playerInAttackRange)
             AttackPlayer();
+
+        // Start spawning prefab if health is below 50%
+        if (currentHealth < maxHealth / 2 && !isSpawning)
+        {
+            StartCoroutine(SpawnPrefabAtPlayer());
+        }
     }
 
     public void TakeDamage(float amount)
@@ -96,11 +103,6 @@ public class PSUBoss : MonoBehaviour
         if (bossHealthBar != null)
         {
             bossHealthBar.SetHealth(currentHealth);
-        }
-
-        if (currentHealth <= maxHealth * 0.5f)
-        {
-            Trap.SetActive(true);
         }
 
         if (currentHealth <= 0f) Die();
@@ -154,7 +156,7 @@ public class PSUBoss : MonoBehaviour
 
     private void Shoot()
     {
-        if (firePoint == null) return; // Prevents errors if firePoint is not assigned
+        if (firePoint == null) return;
 
         Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
 
@@ -231,4 +233,18 @@ public class PSUBoss : MonoBehaviour
             Gizmos.DrawSphere(firePoint.position, 0.1f);
         }
     }
+
+    private IEnumerator SpawnPrefabAtPlayer()
+    {
+        isSpawning = true;
+
+        while (currentHealth < maxHealth / 2)
+        {
+            Instantiate(spawnPrefab, player.position, Quaternion.identity);
+            yield return new WaitForSeconds(spawnInterval);
+        }
+
+        isSpawning = false;
+    }
 }
+

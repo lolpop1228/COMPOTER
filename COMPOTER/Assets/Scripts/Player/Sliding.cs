@@ -11,11 +11,11 @@ public class Sliding : MonoBehaviour
     private PlayerMovement pm;
 
     [Header("Sliding")]
-    public float maxSlideTime;
-    public float slideForce;
+    public float maxSlideTime = 2f; // Max time the player can slide
+    public float slideForce = 5f; // Force applied during sliding
     private float slideTimer;
 
-    public float slideYScale;
+    public float slideYScale = 0.5f; // Y scale for sliding to make the player smaller
     private float startYScale;
     private Vector3 originalCameraPosition;
 
@@ -35,7 +35,6 @@ public class Sliding : MonoBehaviour
 
         startYScale = playerObj.localScale.y;
         originalCameraPosition = Camera.main.transform.localPosition;
-
     }
 
     private void Update()
@@ -60,6 +59,7 @@ public class Sliding : MonoBehaviour
     {
         pm.sliding = true;
 
+        // Shrink player for the sliding effect
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
 
@@ -78,20 +78,19 @@ public class Sliding : MonoBehaviour
     {
         Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // sliding normal
-        if(!pm.OnSlope() || rb.velocity.y > -0.1f)
+        // Normal sliding when not on a slope or not falling
+        if (!pm.OnSlope() || rb.velocity.y > -0.1f)
         {
             rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
-
-            slideTimer -= Time.deltaTime;
+            slideTimer -= Time.deltaTime; // Reduce the timer as time passes
         }
-
-        // sliding down a slope
         else
         {
+            // Sliding down a slope
             rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
         }
 
+        // Stop sliding after max time is reached
         if (slideTimer <= 0)
             StopSlide();
     }
@@ -100,8 +99,10 @@ public class Sliding : MonoBehaviour
     {
         pm.sliding = false;
 
+        // Reset player scale to normal
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
 
+        // Reset camera position
         Camera.main.transform.localPosition = originalCameraPosition;
 
         // Stop sliding sound
