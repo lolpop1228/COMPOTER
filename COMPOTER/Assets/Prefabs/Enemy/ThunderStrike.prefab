@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d57f72f8c2f2b7c41834daa2686c81b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0.5
+  delay: 0.8
   radius: 4
   force: 700
   explosionEffect: {fileID: 4769700670324858029, guid: 61b8285df7c6d484e969c27134438728, type: 3}
-  damage: 50
+  damage: 30
   explosionSound: {fileID: 8300000, guid: c2153dcd0edd22f40bdebf613271bae7, type: 3}
 --- !u!82 &7008961014637699076
 AudioSource:

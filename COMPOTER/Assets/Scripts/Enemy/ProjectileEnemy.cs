@@ -51,7 +51,6 @@ public class ProjectileEnemy : MonoBehaviour
     private void Start()
     {
         if (!agent) agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
         currentAmmo = maxAmmo;
         audioSource = GetComponent<AudioSource>();
 
