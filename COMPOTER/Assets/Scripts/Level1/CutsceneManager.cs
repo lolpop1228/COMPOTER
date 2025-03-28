@@ -10,13 +10,16 @@ public class CutsceneManager : MonoBehaviour
     public TextMeshProUGUI tutorialText;      // Reference to the TextMeshProUGUI component for tutorial messages
     public float delayBeforeUI = 2f;          // Delay before the UI appears, in seconds
 
-    private bool hasMoved = false;  // Flag to check if the player has pressed WASD
-    private bool hasJumped = false;  // Flag to check if the player has pressed Spacebar
+    private bool hasMoved = false;
+    private bool hasJumped = false;
+    private bool hasCrouched = false;
+    private bool hasSprinted = false;
+    private bool hasSlided = false;
 
     void Start()
     {
         // Ensure the tutorial UI is initially hidden
-        tutorialUI.SetActive(false); // Hide UI initially
+        tutorialUI.SetActive(false);
 
         // Start playing the cutscene
         playableDirector.Play();
@@ -24,7 +27,7 @@ public class CutsceneManager : MonoBehaviour
 
     void Update()
     {
-        // Check if the cutscene has finished playing
+        // Check if the cutscene has finished playing (assuming we check time or state)
         if (playableDirector.state == PlayState.Paused && !tutorialUI.activeSelf)
         {
             // Once the cutscene finishes, show the tutorial UI with fade-in after a delay
@@ -36,13 +39,34 @@ public class CutsceneManager : MonoBehaviour
                           Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D)))
         {
             hasMoved = true;
-            tutorialText.text = "Press Spacebar to jump";
+            tutorialText.text = "Press Spacebar to JUMP";
         }
 
         if (!hasJumped && Input.GetKeyDown(KeyCode.Space))
         {
             hasJumped = true;
-            tutorialText.text = "Well done! Tutorial Complete";
+            tutorialText.text = "Hold Left CTRL to CROUCH";
+        }
+
+        if (!hasCrouched && Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            hasCrouched = true;
+            tutorialText.text = "Hold Left Shift and a Movement Key to SPRINT";
+        }
+
+        if (!hasSprinted && Input.GetKey(KeyCode.LeftShift) && 
+            (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+        {
+            hasSprinted = true;
+            tutorialText.text = "Press Left Shift, Left Ctrl and a Movement Key to SLIDE";
+        }
+
+        if (!hasSlided && Input.GetKey(KeyCode.LeftControl) && 
+            Input.GetKey(KeyCode.LeftShift) && 
+            (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+        {
+            hasSlided = true;
+            tutorialText.text = "Objective: Investigate the place";
         }
     }
 
