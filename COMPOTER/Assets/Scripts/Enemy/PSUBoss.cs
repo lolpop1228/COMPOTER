@@ -51,6 +51,7 @@ public class PSUBoss : MonoBehaviour
     private string currentState = "";
 
     public GameObject Trap;
+    public GameObject BossHpBar;
 
     private void Start()
     {
