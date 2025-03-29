@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -12,19 +13,13 @@ public class PlayerHealth : MonoBehaviour
     public float shakeMagnitude = 0.1f;
     public HealthBar healthBar;
 
-    private Vector3 originalCamPosition;
+    private Vector3 originalCamPostion;
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-
-        // Store the initial camera position
-        if (cameraTransform != null)
-        {
-            originalCamPosition = cameraTransform.localPosition;
-        }
     }
 
     public void PlayerTakeDamage(float damage)
@@ -47,25 +42,24 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator ShakeCamera()
     {
-        if (cameraTransform == null) yield break;
-
+        Vector3 originalPosition = cameraTransform.localPosition; // Save the initial position before shaking
         float elapsed = 0f;
 
-        // Shake the camera
         while (elapsed < shakeDuration)
         {
             float x = Random.Range(-1f, 1f) * shakeMagnitude;
             float y = Random.Range(-1f, 1f) * shakeMagnitude;
 
-            cameraTransform.localPosition = originalCamPosition + new Vector3(x, y, 0);
+            cameraTransform.localPosition = originalPosition + new Vector3(x, y, 0);
             elapsed += Time.deltaTime;
 
             yield return null;
         }
 
         // Ensure the camera returns exactly to its original position
-        cameraTransform.localPosition = originalCamPosition;
+        cameraTransform.localPosition = originalPosition;
     }
+
 
     public void HealPlayer(float healAmount)
     {
