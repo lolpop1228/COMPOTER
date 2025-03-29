@@ -55,6 +55,7 @@ public class PSUBoss : MonoBehaviour
     public GameObject spawnPrefab;
     public float spawnInterval = 0.1f;  // Interval between prefab spawns when health is below 50%
     private bool isSpawning = false;
+    public Transform spawnTransform;  // Add this field to assign a spawn position
 
     private void Start()
     {
@@ -71,6 +72,15 @@ public class PSUBoss : MonoBehaviour
         if (bossHealthBar != null)
         {
             bossHealthBar.SetMaxHealth(maxHealth);
+        }
+    }
+
+    void OnEnable()
+    {
+        if (spawnTransform != null)
+        {
+            transform.position = spawnTransform.position;
+            currentHealth = maxHealth;
         }
     }
 
