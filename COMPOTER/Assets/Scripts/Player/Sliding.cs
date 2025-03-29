@@ -17,7 +17,10 @@ public class Sliding : MonoBehaviour
 
     public float slideYScale = 0.5f; // Y scale for sliding to make the player smaller
     private float startYScale;
-    private Vector3 originalCameraPosition;
+
+    [Header("Cooldown")]
+    public float slideCooldown = 1.5f; // Cooldown duration before sliding again
+    private bool canSlide = true;
 
     [Header("Input")]
     public KeyCode slideKey = KeyCode.LeftControl;
@@ -34,7 +37,6 @@ public class Sliding : MonoBehaviour
         pm = GetComponent<PlayerMovement>();
 
         startYScale = playerObj.localScale.y;
-        originalCameraPosition = Camera.main.transform.localPosition;
     }
 
     private void Update()
@@ -42,22 +44,39 @@ public class Sliding : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
+        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0) && canSlide)
+        {
             StartSlide();
+        }
+
+        if (pm.sliding)
+        {
+            slideTimer -= Time.deltaTime; // Reduce slide timer
+
+            if (slideTimer <= 0)
+            {
+                StopSlide(); // Stop slide when max time is reached
+            }
+        }
 
         if (Input.GetKeyUp(slideKey) && pm.sliding)
+        {
             StopSlide();
+        }
     }
 
     private void FixedUpdate()
     {
         if (pm.sliding)
+        {
             SlidingMovement();
+        }
     }
 
     private void StartSlide()
     {
         pm.sliding = true;
+        canSlide = false; // Prevent sliding again immediately
 
         // Shrink player for the sliding effect
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
@@ -82,17 +101,12 @@ public class Sliding : MonoBehaviour
         if (!pm.OnSlope() || rb.velocity.y > -0.1f)
         {
             rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
-            slideTimer -= Time.deltaTime; // Reduce the timer as time passes
         }
         else
         {
             // Sliding down a slope
             rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
         }
-
-        // Stop sliding after max time is reached
-        if (slideTimer <= 0)
-            StopSlide();
     }
 
     private void StopSlide()
@@ -102,13 +116,18 @@ public class Sliding : MonoBehaviour
         // Reset player scale to normal
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
 
-        // Reset camera position
-        Camera.main.transform.localPosition = originalCameraPosition;
-
         // Stop sliding sound
         if (slidingAudioSource)
         {
             slidingAudioSource.Stop();
         }
+
+        StartCoroutine(SlideCooldownTimer()); // Start cooldown timer
+    }
+
+    private IEnumerator SlideCooldownTimer()
+    {
+        yield return new WaitForSeconds(slideCooldown);
+        canSlide = true; // Allow sliding again after cooldown
     }
 }

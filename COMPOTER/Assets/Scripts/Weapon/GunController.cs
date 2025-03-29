@@ -36,6 +36,7 @@ public class GunController : MonoBehaviour
     public GameObject ammmoTextObject;
 
     private float nextTimeToFire;
+    private Vector3 originalCameraPosition; // Save the original camera position
 
     private void Start()
     {
@@ -43,6 +44,12 @@ public class GunController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         currentAmmo = maxAmmo;
         UpdateAmmoUI();
+
+        // Save the original camera position for camera shake reset
+        if (cameraTransform != null)
+        {
+            originalCameraPosition = cameraTransform.localPosition;
+        }
     }
 
     private void Update()
@@ -141,7 +148,7 @@ public class GunController : MonoBehaviour
     {
         if (cameraTransform == null) yield break;
 
-        Vector3 originalPosition = cameraTransform.localPosition;
+        Vector3 originalPosition = originalCameraPosition; // Use saved original position
         float elapsedTime = 0f;
 
         while (elapsedTime < shakeDuration)
@@ -155,7 +162,7 @@ public class GunController : MonoBehaviour
             yield return null;
         }
 
-        cameraTransform.localPosition = originalPosition;
+        cameraTransform.localPosition = originalPosition; // Reset to original position
     }
 
     public void UpdateAmmoUI()
