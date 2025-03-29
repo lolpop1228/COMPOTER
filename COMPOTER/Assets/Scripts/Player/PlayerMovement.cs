@@ -56,6 +56,11 @@ public class PlayerMovement : MonoBehaviour
     private float footstepTimer;
     public float footstepRate = 0.5f;
 
+    public Camera fpsCam;
+    public float sprintFov = 100;
+    private float normalFov;
+    public float changeFovSpeed = 8f;
+
     public Transform orientation;
 
     float horizontalInput;
@@ -85,6 +90,11 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+
+        if (fpsCam != null)
+        {
+            normalFov = fpsCam.fieldOfView;
+        }
     }
 
     private void Update()
@@ -96,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
         SpeedControl();
         StateHandler();
         HandleMovementSounds();
+        HandleFOV(); // New method for handling FOV changes
 
         // Handle drag
         rb.drag = grounded ? groundDrag : 0;
@@ -106,6 +117,12 @@ public class PlayerMovement : MonoBehaviour
             PlaySound(landSound);
         }
         wasGrounded = grounded;
+    }
+
+    private void HandleFOV()
+    {
+        float targetFOV = (state == MovementState.sprinting) ? sprintFov : normalFov;
+        fpsCam.fieldOfView = Mathf.Lerp(fpsCam.fieldOfView, targetFOV, Time.deltaTime * changeFovSpeed);
     }
 
     private void FixedUpdate()

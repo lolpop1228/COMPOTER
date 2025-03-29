@@ -11,25 +11,27 @@ public class Sliding : MonoBehaviour
     private PlayerMovement pm;
 
     [Header("Sliding")]
-    public float maxSlideTime = 2f; // Max time the player can slide
-    public float slideForce = 5f; // Force applied during sliding
+    public float maxSlideTime;
+    public float slideForce;
     private float slideTimer;
 
-    public float slideYScale = 0.5f; // Y scale for sliding to make the player smaller
+    public float slideYScale;
     private float startYScale;
 
-    [Header("Cooldown")]
-    public float slideCooldown = 1.5f; // Cooldown duration before sliding again
-    private bool canSlide = true;
+    [Header("Camera Effects")]
+    public Camera playerCamera;
+    public float slideFOV = 90f; // FOV when sliding
+    private float normalFOV; // Store the original FOV
+    public float fovChangeSpeed = 8f; // Speed of FOV transition
 
     [Header("Input")]
     public KeyCode slideKey = KeyCode.LeftControl;
     private float horizontalInput;
     private float verticalInput;
 
-    [Header("Sounds")]
-    public AudioSource slidingAudioSource; // AudioSource reference for sliding sound
-    public AudioClip slidingSound; // Sliding sound clip
+    // Audio
+    public AudioSource audioSource;
+    public AudioClip slideSound;
 
     private void Start()
     {
@@ -37,6 +39,10 @@ public class Sliding : MonoBehaviour
         pm = GetComponent<PlayerMovement>();
 
         startYScale = playerObj.localScale.y;
+
+        // Store the original camera FOV
+        if (playerCamera != null)
+            normalFOV = playerCamera.fieldOfView;
     }
 
     private void Update()
@@ -44,90 +50,62 @@ public class Sliding : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0) && canSlide)
-        {
+        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
             StartSlide();
-        }
-
-        if (pm.sliding)
-        {
-            slideTimer -= Time.deltaTime; // Reduce slide timer
-
-            if (slideTimer <= 0)
-            {
-                StopSlide(); // Stop slide when max time is reached
-            }
-        }
 
         if (Input.GetKeyUp(slideKey) && pm.sliding)
-        {
             StopSlide();
+
+        // Smoothly transition FOV
+        if (playerCamera != null)
+        {
+            float targetFOV = pm.sliding ? slideFOV : normalFOV;
+            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovChangeSpeed);
         }
     }
 
     private void FixedUpdate()
     {
         if (pm.sliding)
-        {
             SlidingMovement();
-        }
     }
 
     private void StartSlide()
     {
         pm.sliding = true;
-        canSlide = false; // Prevent sliding again immediately
 
-        // Shrink player for the sliding effect
+        audioSource.PlayOneShot(slideSound);
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
 
         slideTimer = maxSlideTime;
-
-        // Play sliding sound
-        if (slidingAudioSource && slidingSound)
-        {
-            slidingAudioSource.clip = slidingSound;
-            slidingAudioSource.loop = true; // Loop the sliding sound
-            slidingAudioSource.Play();
-        }
     }
 
     private void SlidingMovement()
     {
         Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // Normal sliding when not on a slope or not falling
+        // Sliding normal
         if (!pm.OnSlope() || rb.velocity.y > -0.1f)
         {
             rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
+            slideTimer -= Time.deltaTime;
         }
+        // Sliding down a slope
         else
         {
-            // Sliding down a slope
             rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
         }
+
+        if (slideTimer <= 0)
+            StopSlide();
     }
 
     private void StopSlide()
     {
         pm.sliding = false;
+        audioSource.Stop();
 
-        // Reset player scale to normal
         playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
-
-        // Stop sliding sound
-        if (slidingAudioSource)
-        {
-            slidingAudioSource.Stop();
-        }
-
-        StartCoroutine(SlideCooldownTimer()); // Start cooldown timer
-    }
-
-    private IEnumerator SlideCooldownTimer()
-    {
-        yield return new WaitForSeconds(slideCooldown);
-        canSlide = true; // Allow sliding again after cooldown
     }
 }
