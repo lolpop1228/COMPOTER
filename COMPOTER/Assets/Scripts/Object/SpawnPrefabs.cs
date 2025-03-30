@@ -7,7 +7,7 @@ public class SpawnPrefabs : MonoBehaviour
     public Transform[] spawnPoints; // Assign multiple spawn points
     public float spawnInterval = 10f;
 
-    void Start()
+    void OnEnable()
     {
         StartCoroutine(SpawnRoutine());
     }
