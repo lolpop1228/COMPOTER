@@ -30,7 +30,16 @@ public class Bullet : MonoBehaviour
         Target target = collision.gameObject.GetComponent<Target>();
         ProjectileEnemy enemy = collision.gameObject.GetComponent<ProjectileEnemy>();
         TeleportEnemy teleportEnemy = collision.gameObject.GetComponent<TeleportEnemy>();
-        PSUBoss pSUBoss = collision.gameObject.GetComponent<PSUBoss>();
+
+        // Find the highest parent in the hierarchy
+        Transform highestParent = collision.transform;
+        while (highestParent.parent != null)
+        {
+            highestParent = highestParent.parent;
+        }
+
+        // Try to get the PSUBoss script from the highest parent
+        PSUBoss pSUBoss = highestParent.GetComponent<PSUBoss>();
 
         if (target != null )
         {

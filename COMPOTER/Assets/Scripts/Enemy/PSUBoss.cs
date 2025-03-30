@@ -47,16 +47,19 @@ public class PSUBoss : MonoBehaviour
     public AudioClip fireSound;
     public AudioClip patrolSound;
     public AudioClip chaseSound;
+    public AudioClip reloadSound;
 
     private string currentState = "";
     public GameObject BossHpBar;
 
     // Rapid Spawn Prefab
     public GameObject spawnPrefab;
-    public float spawnInterval = 0.1f;  // Interval between prefab spawns when health is below 50%
+    public float spawnInterval = 0.1f;  
     private bool isSpawning = false;
-    public Transform spawnTransform;  // Add this field to assign a spawn position
-    
+    public Transform spawnTransform;
+    public float minAttackDistance = 3f; // Minimum distance the boss should maintain
+    public float maxAttackDistance = 7f; // Maximum attack distance before chasing again
+    public float strafeSpeed = 3f; // Speed for sideways movement 
 
     private void Start()
     {
@@ -93,11 +96,17 @@ public class PSUBoss : MonoBehaviour
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
         if (!playerInDetectRange && !playerInAttackRange)
+        {
             Patrol();
+        }
         else if (playerInDetectRange && !playerInAttackRange)
+        {
             ChasePlayer();
+        }
         else if (playerInAttackRange)
+        {
             AttackPlayer();
+        }
 
         // Start spawning prefab if health is below 50%
         if (currentHealth < maxHealth / 2 && !isSpawning)
@@ -151,9 +160,29 @@ public class PSUBoss : MonoBehaviour
 
     private void AttackPlayer()
     {
-        agent.SetDestination(player.position);
-        ChangeState(attackAnim, null);
-        transform.LookAt(player);
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (distanceToPlayer < minAttackDistance)
+        {
+            // Move backward to maintain distance
+            Vector3 directionAway = (transform.position - player.position).normalized;
+            Vector3 newPosition = transform.position + directionAway * strafeSpeed * Time.deltaTime;
+            agent.SetDestination(newPosition);
+        }
+        else if (distanceToPlayer > maxAttackDistance)
+        {
+            // Move closer if too far
+            agent.SetDestination(player.position);
+        }
+        else
+        {
+            // Strafe around the player while attacking
+            Vector3 strafeDirection = Quaternion.Euler(0, 90, 0) * (player.position - transform.position).normalized;
+            Vector3 strafePosition = transform.position + strafeDirection * strafeSpeed * Time.deltaTime;
+            agent.SetDestination(strafePosition);
+        }
+
+        transform.LookAt(player); // Keep aiming at the player
 
         if (!alreadyAttacked && currentAmmo > 0)
         {
@@ -169,22 +198,23 @@ public class PSUBoss : MonoBehaviour
     {
         if (firePoint == null) return;
 
-        Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
+        ChangeState(attackAnim, fireSound);
 
+        Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
+        
         currentAmmo--;
         alreadyAttacked = true;
         
-        // Play the fire sound here
-        audioSource.PlayOneShot(fireSound);
-
         Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
 
     private IEnumerator Reload()
     {
         isReloading = true;
-        animator.Play(reloadAnim);
+        ChangeState(reloadAnim, reloadSound);
+        
         yield return new WaitForSeconds(reloadTime);
+        
         currentAmmo = maxAmmo;
         isReloading = false;
     }
@@ -223,7 +253,7 @@ public class PSUBoss : MonoBehaviour
 
     private void PlaySound(AudioClip clip)
     {
-        if (clip != null && audioSource != null && !audioSource.isPlaying)
+        if (clip != null && audioSource != null)
         {
             audioSource.PlayOneShot(clip);
         }
@@ -258,4 +288,3 @@ public class PSUBoss : MonoBehaviour
         isSpawning = false;
     }
 }
-
