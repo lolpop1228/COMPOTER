@@ -2,38 +2,51 @@ using UnityEngine;
 
 public class ButtonInteraction : MonoBehaviour
 {
-    public GameObject cube;             // The cube you want to move
-    public Vector3 originalPosition;    // Store the original position of the cube
-    public float interactionRange = 3f; // Range at which the player can interact with the button
-    
-    private Transform player;           // The player's transform
-    
-    void Start()
-    {
-        // Store the original position of the cube at the start of the game
-        originalPosition = cube.transform.position;
+    public Transform player; // The player's transform
+    public Camera playerCamera; // Reference to the player's camera
+    public float maxDistance = 5f; // Maximum raycast distance
+    public string buttonTag = "Button"; // Tag of the button
+    public float interactionRange = 2f; // The range to trigger interaction
 
-        // Get the player's transform (assuming you have a player with a tag "Player")
-        player = GameObject.FindWithTag("Player").transform;
+    public GameObject cube; // Reference to the cube you want to reset
+    private Vector3 originalPosition; // Store the original position of the cube
+
+    private void Start()
+    {
+        // Store the original position of the cube at the start
+        if (cube != null)
+        {
+            originalPosition = cube.transform.position;
+        }
     }
 
-    void Update()
+    private void Update()
     {
-        // Check if the player is close to the button and presses the 'E' key
-        float distance = Vector3.Distance(player.position, transform.position);
+        // Cast a ray from the camera's viewpoint to detect the button
+        RaycastHit hit;
+        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (distance <= interactionRange)
+        if (Physics.Raycast(ray, out hit, maxDistance))
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            // Check if the ray hit an object with the "Button" tag
+            if (hit.collider.CompareTag(buttonTag))
             {
-                ResetCubePosition();
+                // Now check if the player is within the interaction range and presses the 'E' key
+                float distance = Vector3.Distance(player.position, transform.position);
+                if (distance <= interactionRange && Input.GetKeyDown(KeyCode.E))
+                {
+                    ResetCubePosition();
+                }
             }
         }
     }
 
-    // Reset the cube's position to the original position
+    // Function to reset the cube position to the original position
     void ResetCubePosition()
     {
-        cube.transform.position = originalPosition;
+        if (cube != null)
+        {
+            cube.transform.position = originalPosition; // Reset position of the cube
+        }
     }
 }
