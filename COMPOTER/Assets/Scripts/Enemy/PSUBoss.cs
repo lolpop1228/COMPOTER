@@ -10,19 +10,24 @@ public class PSUBoss : MonoBehaviour
     public float patrolRange = 10f;
     public float detectRange = 15f;
     public float attackRange = 5f;
+    public float meleeRange = 2f; // Added melee range
     public float timeBetweenAttacks = 1f;
+    public float meleeDamage = 20f; // Added melee damage
+    public float meleeCooldown = 2f; // Added melee cooldown
     public GameObject projectile;
     public float bulletSpeed = 100f;
 
     private Vector3 patrolPoint;
     private bool patrolPointSet;
     private bool alreadyAttacked;
+    private bool canMelee = true; // Added melee cooldown check
 
     public Animator animator;
     public string patrolAnim;
     public string attackAnim;
     public string chaseAnim;
     public string reloadAnim;
+    public string meleeAnim; // Added melee animation
 
     // Ammo System
     public int maxAmmo = 10;
@@ -47,19 +52,20 @@ public class PSUBoss : MonoBehaviour
     public AudioClip fireSound;
     public AudioClip patrolSound;
     public AudioClip chaseSound;
-    public AudioClip reloadSound;
+    public AudioClip meleeSound; // Added melee sound
 
     private string currentState = "";
     public GameObject BossHpBar;
 
     // Rapid Spawn Prefab
     public GameObject spawnPrefab;
-    public float spawnInterval = 0.1f;  
+    public float spawnInterval = 0.1f;
     private bool isSpawning = false;
     public Transform spawnTransform;
-    public float minAttackDistance = 3f; // Minimum distance the boss should maintain
-    public float maxAttackDistance = 7f; // Maximum attack distance before chasing again
-    public float strafeSpeed = 3f; // Speed for sideways movement 
+
+    public float knockbackForce = 10f;
+    public float knockbackUpwardForce = 5f;
+    public float knockbackDuration = 0.5f;
 
     private void Start()
     {
@@ -94,25 +100,93 @@ public class PSUBoss : MonoBehaviour
 
         bool playerInDetectRange = Physics.CheckSphere(transform.position, detectRange, playerLayer);
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
+        bool playerInMeleeRange = Physics.CheckSphere(transform.position, meleeRange, playerLayer);
 
         if (!playerInDetectRange && !playerInAttackRange)
         {
             Patrol();
+            ChangeState(patrolAnim, patrolSound); // Explicitly set patrol animation
         }
         else if (playerInDetectRange && !playerInAttackRange)
         {
             ChasePlayer();
+            ChangeState(chaseAnim, chaseSound); // Explicitly set chase animation
         }
-        else if (playerInAttackRange)
+        else if (playerInAttackRange && !playerInMeleeRange)
         {
             AttackPlayer();
+            // Attack animation set in Shoot()
+        }
+        else if (playerInMeleeRange)
+        {
+            MeleeAttack();
+            // Melee animation set in MeleeAttack()
         }
 
-        // Start spawning prefab if health is below 50%
         if (currentHealth < maxHealth / 2 && !isSpawning)
         {
             StartCoroutine(SpawnPrefabAtPlayer());
         }
+    }
+
+    private void MeleeAttack()
+    {
+        agent.SetDestination(transform.position);
+        transform.LookAt(player);
+
+        if (canMelee)
+        {
+            ChangeState(meleeAnim, meleeSound); // Explicitly set melee animation
+            canMelee = false;
+            Invoke(nameof(ResetMelee), meleeCooldown);
+            StartCoroutine(DelayedKnockback(0.2f));
+        }
+    }
+
+    private IEnumerator DelayedKnockback(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        
+        // Only apply if player is still in range after delay
+        if (Physics.CheckSphere(transform.position, meleeRange, playerLayer))
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.PlayerTakeDamage(meleeDamage);
+                ApplyKnockback();
+            }
+        }
+    }
+
+    private void ApplyKnockback()
+    {
+        Rigidbody playerRb = player.GetComponent<Rigidbody>();
+        if (playerRb != null)
+        {
+            Vector3 knockbackDirection = (player.position - transform.position).normalized;
+            knockbackDirection.y = knockbackUpwardForce / knockbackForce;
+            
+            playerRb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+            StartCoroutine(HandleKnockback(playerRb));
+        }
+    }
+    private IEnumerator HandleKnockback(Rigidbody playerRb)
+    {
+        // Optional: You can add visual/audio effects here at knockback start
+        
+        yield return new WaitForSeconds(knockbackDuration);
+        
+        // Optional: Reset velocity or add effects at knockback end
+        if (playerRb != null)
+        {
+            playerRb.velocity = Vector3.zero;
+        }
+    }
+
+    private void ResetMelee()
+    {
+        canMelee = true;
     }
 
     public void TakeDamage(float amount)
@@ -160,29 +234,9 @@ public class PSUBoss : MonoBehaviour
 
     private void AttackPlayer()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
-        if (distanceToPlayer < minAttackDistance)
-        {
-            // Move backward to maintain distance
-            Vector3 directionAway = (transform.position - player.position).normalized;
-            Vector3 newPosition = transform.position + directionAway * strafeSpeed * Time.deltaTime;
-            agent.SetDestination(newPosition);
-        }
-        else if (distanceToPlayer > maxAttackDistance)
-        {
-            // Move closer if too far
-            agent.SetDestination(player.position);
-        }
-        else
-        {
-            // Strafe around the player while attacking
-            Vector3 strafeDirection = Quaternion.Euler(0, 90, 0) * (player.position - transform.position).normalized;
-            Vector3 strafePosition = transform.position + strafeDirection * strafeSpeed * Time.deltaTime;
-            agent.SetDestination(strafePosition);
-        }
-
-        transform.LookAt(player); // Keep aiming at the player
+        agent.SetDestination(player.position);
+        ChangeState(attackAnim, null); // Explicitly set attack animation
+        transform.LookAt(player);
 
         if (!alreadyAttacked && currentAmmo > 0)
         {
@@ -198,13 +252,12 @@ public class PSUBoss : MonoBehaviour
     {
         if (firePoint == null) return;
 
-        ChangeState(attackAnim, null); // Play attack animation but no sound override
-        PlaySound(fireSound); // Play fire sound every time the boss shoots
-
         Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
 
         currentAmmo--;
         alreadyAttacked = true;
+        
+        audioSource.PlayOneShot(fireSound);
 
         Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
@@ -212,12 +265,20 @@ public class PSUBoss : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
-        ChangeState(reloadAnim, reloadSound);
-        
+        ChangeState(reloadAnim, null); // Explicitly set reload animation
         yield return new WaitForSeconds(reloadTime);
-        
         currentAmmo = maxAmmo;
         isReloading = false;
+        
+        // Return to appropriate state after reload
+        if (Physics.CheckSphere(transform.position, attackRange, playerLayer))
+        {
+            ChangeState(attackAnim, null);
+        }
+        else
+        {
+            ChangeState(chaseAnim, chaseSound);
+        }
     }
 
     private void ResetAttack()
@@ -244,17 +305,21 @@ public class PSUBoss : MonoBehaviour
 
     private void ChangeState(string newState, AudioClip sound)
     {
-        if (currentState != newState)
+        if (currentState != newState && !string.IsNullOrEmpty(newState))
         {
             currentState = newState;
             animator.Play(newState);
-            PlaySound(sound);
+            
+            if (sound != null && audioSource != null && !audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(sound);
+            }
         }
     }
 
     private void PlaySound(AudioClip clip)
     {
-        if (clip != null && audioSource != null)
+        if (clip != null && audioSource != null && !audioSource.isPlaying)
         {
             audioSource.PlayOneShot(clip);
         }
@@ -268,6 +333,8 @@ public class PSUBoss : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, meleeRange); // Draw melee range
 
         if (firePoint != null)
         {

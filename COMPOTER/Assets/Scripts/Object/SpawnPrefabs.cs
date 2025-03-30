@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SpawnPrefabs : MonoBehaviour
 {
@@ -7,8 +8,11 @@ public class SpawnPrefabs : MonoBehaviour
     public Transform[] spawnPoints; // Assign multiple spawn points
     public float spawnInterval = 10f;
 
+    private List<GameObject> spawnedObjects = new List<GameObject>(); // Track spawned objects
+
     void OnEnable()
     {
+        ClearPreviousSpawns(); // Clear old spawns when the scene reloads
         StartCoroutine(SpawnRoutine());
     }
 
@@ -31,11 +35,24 @@ public class SpawnPrefabs : MonoBehaviour
             Transform chosenSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
             // Instantiate the chosen prefab at the chosen spawn point
-            Instantiate(prefabToSpawn, chosenSpawnPoint.position, chosenSpawnPoint.rotation);
+            GameObject spawned = Instantiate(prefabToSpawn, chosenSpawnPoint.position, chosenSpawnPoint.rotation);
+            spawnedObjects.Add(spawned); // Track the spawned object
         }
         else
         {
             Debug.LogWarning("Prefabs or Spawn Points are not assigned!");
         }
+    }
+
+    void ClearPreviousSpawns()
+    {
+        foreach (GameObject obj in spawnedObjects)
+        {
+            if (obj != null)
+            {
+                Destroy(obj);
+            }
+        }
+        spawnedObjects.Clear(); // Clear the list
     }
 }
