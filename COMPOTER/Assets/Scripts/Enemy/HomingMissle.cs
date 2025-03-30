@@ -72,9 +72,16 @@ public class HomingMissile : MonoBehaviour
 
         // Deal damage to the player
         PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+        DestructibleObject destructibleObject = collision.gameObject.GetComponent<DestructibleObject>();
+
         if (playerHealth != null)
         {
             playerHealth.PlayerTakeDamage(damage);
+        }
+
+        if (destructibleObject != null)
+        {
+            destructibleObject.TakeDamage(damage);
         }
 
         // Instantiate explosion effect

@@ -198,13 +198,14 @@ public class PSUBoss : MonoBehaviour
     {
         if (firePoint == null) return;
 
-        ChangeState(attackAnim, fireSound);
+        ChangeState(attackAnim, null); // Play attack animation but no sound override
+        PlaySound(fireSound); // Play fire sound every time the boss shoots
 
         Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
-        
+
         currentAmmo--;
         alreadyAttacked = true;
-        
+
         Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
 
