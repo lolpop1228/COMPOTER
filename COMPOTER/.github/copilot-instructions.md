@@ -2,12 +2,13 @@
 - Project name: COMPOTER
 - Unity version: Unity 2022.3.48f1
 - Active scene:
+  - Name: GunFight1
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Enemy, ThrowObject, Breaker, Box, Button
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable, EnemyArea, Pillar
 - Active game object:
-  - Name: rocket (1)
-  - Tag: Untagged
-  - Layer: Default
+  - Name: PlayerController
+  - Tag: Player
+  - Layer: Player
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

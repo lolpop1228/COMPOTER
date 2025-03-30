@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BossClear : MonoBehaviour
 {
+    public GameObject bossBar;
+    public GameObject dropSpawn;
     public Animator animator;
     public string animToPlay;
 
@@ -21,6 +23,8 @@ public class BossClear : MonoBehaviour
             if (animator != null)
             {
                 animator.Play(animToPlay);
+                bossBar.SetActive(false);
+                dropSpawn.SetActive(false);
             }
         }
     }
