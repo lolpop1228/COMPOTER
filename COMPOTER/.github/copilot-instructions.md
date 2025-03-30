@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable, EnemyArea, Pillar
 - Active game object:
-  - Name: BossLevel
+  - Name: SpawnPrefabs
   - Tag: Untagged
   - Layer: Ground
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
