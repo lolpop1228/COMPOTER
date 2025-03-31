@@ -3450,6 +3450,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1722713534922984776}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
       objectReference: {fileID: 0}
@@ -28121,6 +28125,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1722713534922984776}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
       objectReference: {fileID: 0}
@@ -32388,6 +32396,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1722713534922984776}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
       objectReference: {fileID: 0}
@@ -34531,6 +34543,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1722713534922984776}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
@@ -38257,6 +38273,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1722713534922984776}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
       objectReference: {fileID: 0}
@@ -39740,6 +39760,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1722713534922984776}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: chaseSpeed
       value: 10
       objectReference: {fileID: 0}
@@ -40687,6 +40711,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1722713534922984776}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: Attack
+      objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
