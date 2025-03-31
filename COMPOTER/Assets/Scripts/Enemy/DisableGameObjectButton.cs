@@ -5,6 +5,13 @@ using UnityEngine;
 public class DisableGameObjectButton : MonoBehaviour
 {
     public MonoBehaviour[] scriptsToDisable; // Array to hold scripts to disable
+    private AudioSource audioSource;
+    public AudioClip disableSound;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -16,6 +23,11 @@ public class DisableGameObjectButton : MonoBehaviour
                 {
                     script.enabled = false; // Disable script instead of GameObject
                 }
+            }
+
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(disableSound);
             }
         }
     }

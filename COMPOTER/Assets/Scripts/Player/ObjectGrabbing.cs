@@ -26,10 +26,6 @@ public class GravityGun : MonoBehaviour
         if (isHolding && grabbedObject != null)
         {
             MoveObject();
-
-            // Scroll to adjust hold distance
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            holdDistance = Mathf.Clamp(holdDistance + scroll * scrollSpeed, minDistance, maxDistance);
         }
 
         if (Input.GetMouseButtonDown(1) && isHolding) // Right-click to throw
