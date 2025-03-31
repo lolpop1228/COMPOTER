@@ -674,33 +674,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 2531167847677786952}
+  patrolRange: 10
+  detectRange: 15
+  attackRange: 5
+  chaseSpeed: 6
+  patrolSpeed: 3
+  timeBetweenAttacks: 1
+  projectile: {fileID: 878140907975776315, guid: 40afbd7a497015a499bab77334dfa1bb, type: 3}
+  bulletSpeed: 100
+  maxAmmo: 10
+  reloadTime: 2
+  aimOffset: 0.5
   player: {fileID: 0}
+  firePoint: {fileID: 1525397493791261096}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   playerLayer:
     serializedVersion: 2
     m_Bits: 512
-  patrolRange: 10
-  detectRange: 15
-  attackRange: 5
-  timeBetweenAttacks: 1
-  projectile: {fileID: 878140907975776315, guid: 40afbd7a497015a499bab77334dfa1bb, type: 3}
-  bulletSpeed: 100
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
   animator: {fileID: 8822466368308751911}
   patrolAnim: Patrol
   attackAnim: 
   chaseAnim: Chase
   reloadAnim: 
-  maxAmmo: 10
-  reloadTime: 2
-  health: 100
-  firePoint: {fileID: 1525397493791261096}
-  healthBox: {fileID: 6046256341737066099, guid: fb9c76397479ceb46a3eeb6e0500dd9f, type: 3}
-  ammoBox: {fileID: 5922664689929116487, guid: 00e2861806362e24d9a96a39b82f4bdb, type: 3}
+  maxHealth: 100
   fireSound: {fileID: 8300000, guid: 68a6a5550c5475e49a6232994d1dd7c7, type: 3}
   patrolSound: {fileID: 8300000, guid: d2c8b2a2827e4b04c933096360750cc1, type: 3}
   chaseSound: {fileID: 8300000, guid: d2c8b2a2827e4b04c933096360750cc1, type: 3}
+  reloadSound: {fileID: 0}
+  healthBox: {fileID: 6046256341737066099, guid: fb9c76397479ceb46a3eeb6e0500dd9f, type: 3}
+  ammoBox: {fileID: 5922664689929116487, guid: 00e2861806362e24d9a96a39b82f4bdb, type: 3}
+  dropChance: 0.3
 --- !u!195 &2531167847677786952
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1700,6 +1708,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1103036124633937412}
   - component: {fileID: 8822466368308751911}
+  - component: {fileID: 2567347214106128778}
   m_Layer: 0
   m_Name: NormalRobot (1)
   m_TagString: Untagged
@@ -1745,6 +1754,69 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2567347214106128778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6903833406640751725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 5087910561953811923}
+  - {fileID: 4719001016301946373}
+  - {fileID: 391641381217245506}
+  - {fileID: 8152077178495073811}
+  - {fileID: 2499019473891510246}
+  - {fileID: 5153120594795219329}
+  - {fileID: 1283599951964782026}
+  - {fileID: 1005870839562047914}
+  - {fileID: 4044954129582392559}
+  - {fileID: 4599392033808551110}
+  - {fileID: 4735846231053251139}
+  - {fileID: 2848256599972740048}
+  - {fileID: 2783847263566424014}
+  - {fileID: 950376360447382460}
+  - {fileID: 5260903986829515078}
+  - {fileID: 7042345767995733841}
+  - {fileID: 2328265110347593071}
+  - {fileID: 5389446643611040732}
+  - {fileID: 6074645243308506471}
+  - {fileID: 7086665748810316043}
+  - {fileID: 5143799961047537481}
+  - {fileID: 1886689738280375886}
+  - {fileID: 7172458713098183815}
+  - {fileID: 5797106471836292535}
+  - {fileID: 5903147142001475755}
+  - {fileID: 1941210087353978370}
+  - {fileID: 2942585956185858768}
+  - {fileID: 7003629636679708031}
+  - {fileID: 6569322091420708717}
+  - {fileID: 3264272834834466024}
+  - {fileID: 6855704340899067641}
+  - {fileID: 1089609210377497961}
+  - {fileID: 5645479114418031412}
+  - {fileID: 6145375400866802792}
+  - {fileID: 6701308328363760897}
+  - {fileID: 8985407211281124290}
+  - {fileID: 6397886879986413709}
+  - {fileID: 8854462712094188965}
+  - {fileID: 1116340492904409156}
+  - {fileID: 247787642872363054}
+  - {fileID: 950204790220026487}
+  - {fileID: 9143172295440442531}
+  - {fileID: 8851840762260644610}
+  - {fileID: 3231871439344650521}
 --- !u!1 &7196762122092247567
 GameObject:
   m_ObjectHideFlags: 0

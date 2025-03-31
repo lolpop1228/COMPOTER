@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable, EnemyArea, Pillar
 - Active game object:
-  - Name: Level
+  - Name: TeleportDude
   - Tag: Untagged
-  - Layer: Ground
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
