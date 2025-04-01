@@ -6,7 +6,7 @@ public class LookAtButton : MonoBehaviour
     public Camera playerCamera; // Reference to the player's camera
     public GameObject uiPanel;  // The UI panel that will appear
     public float maxDistance = 3f; // Maximum distance to detect the button
-    public string buttonTag = "Button"; // Tag for identifying the button
+    public string buttonTag = "Button";
 
     private void Update()
     {
@@ -16,10 +16,10 @@ public class LookAtButton : MonoBehaviour
         // Cast a ray from the camera's viewpoint to detect the button
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
-            // Check if the ray hit an object with the "Button" tag
+            // Check if the ray hit an object with the tag
             if (hit.collider.CompareTag(buttonTag))
             {
-                // Show the UI panel if the player is looking at the button
+                // Show the UI panel if the player is looking at the object
                 if (!uiPanel.activeSelf)
                 {
                     uiPanel.SetActive(true);
@@ -27,7 +27,7 @@ public class LookAtButton : MonoBehaviour
             }
             else
             {
-                // Hide the UI panel if the player is not looking at the button
+                // Hide the UI panel if the player is not looking at the object
                 if (uiPanel.activeSelf)
                 {
                     uiPanel.SetActive(false);
@@ -36,7 +36,7 @@ public class LookAtButton : MonoBehaviour
         }
         else
         {
-            // Hide the UI panel if no button is being looked at
+            // Hide the UI panel if no object is being looked at
             if (uiPanel.activeSelf)
             {
                 uiPanel.SetActive(false);
