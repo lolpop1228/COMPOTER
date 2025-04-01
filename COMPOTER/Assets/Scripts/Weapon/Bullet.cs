@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -9,7 +7,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject ,5f);
+        Destroy(gameObject, 5f);
 
         // Ignore collision with the player
         GameObject player = GameObject.Find("PlayerController");
@@ -24,43 +22,18 @@ public class Bullet : MonoBehaviour
             }
         }
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Bullet collided with: " + collision.gameObject.name);
-        Target target = collision.gameObject.GetComponent<Target>();
-        ProjectileEnemy enemy = collision.gameObject.GetComponent<ProjectileEnemy>();
-        TeleportEnemy teleportEnemy = collision.gameObject.GetComponent<TeleportEnemy>();
+        
+        // Find the second-highest parent in hierarchy
+        Transform secondHighestParent = FindSecondHighestParent(collision.transform);
+        
+        // Check for all possible target types
+        CheckForTargets(collision.gameObject, secondHighestParent.gameObject);
 
-        // Get the second-highest parent in the hierarchy
-        Transform secondHighestParent = collision.transform;
-        if (secondHighestParent.parent != null && secondHighestParent.parent.parent != null)
-        {
-            secondHighestParent = secondHighestParent.parent;
-        }
-
-        // Try to get the PSUBoss script from the second-highest parent
-        PSUBoss pSUBoss = secondHighestParent.GetComponent<PSUBoss>();
-
-        if (target != null )
-        {
-            target.TakeDamage(damage);
-        }
-
-        if (enemy != null)
-        {
-            enemy.TakeDamage(damage);
-        }
-
-        if (teleportEnemy != null)
-        {
-            teleportEnemy.TakeDamage(damage);
-        }
-
-        if (pSUBoss != null)
-        {
-            pSUBoss.TakeDamage(damage);
-        }
-
+        // Spawn impact effect
         if (impactEffect != null)
         {
             GameObject effect = Instantiate(impactEffect, transform.position, Quaternion.identity);
@@ -68,5 +41,48 @@ public class Bullet : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private Transform FindSecondHighestParent(Transform childTransform)
+    {
+        Transform current = childTransform;
+        Transform parent = current.parent;
+        
+        // If no parent or only one parent exists, return the original transform
+        if (parent == null || parent.parent == null)
+            return current;
+        
+        // Walk up the hierarchy until we find the second-highest parent
+        while (parent.parent != null)
+        {
+            current = parent;
+            parent = parent.parent;
+        }
+        
+        return current;
+    }
+
+    private void CheckForTargets(GameObject immediateCollision, GameObject secondHighestParent)
+    {
+        // Check immediate collision first
+        Target target = immediateCollision.GetComponent<Target>();
+        ProjectileEnemy enemy = immediateCollision.GetComponent<ProjectileEnemy>();
+        TeleportEnemy teleportEnemy = immediateCollision.GetComponent<TeleportEnemy>();
+        PSUBoss pSUBoss = immediateCollision.GetComponent<PSUBoss>();
+
+        // If nothing found on immediate collision, check second-highest parent
+        if (target == null && enemy == null && teleportEnemy == null && pSUBoss == null)
+        {
+            target = secondHighestParent.GetComponent<Target>();
+            enemy = secondHighestParent.GetComponent<ProjectileEnemy>();
+            teleportEnemy = secondHighestParent.GetComponent<TeleportEnemy>();
+            pSUBoss = secondHighestParent.GetComponent<PSUBoss>();
+        }
+
+        // Apply damage to whatever we found
+        if (target != null) target.TakeDamage(damage);
+        if (enemy != null) enemy.TakeDamage(damage);
+        if (teleportEnemy != null) teleportEnemy.TakeDamage(damage);
+        if (pSUBoss != null) pSUBoss.TakeDamage(damage);
     }
 }

@@ -4,85 +4,133 @@ using System.Collections;
 
 public class ProjectileEnemy : MonoBehaviour
 {
+    [Header("Movement Settings")]
     public NavMeshAgent agent;
-    public Transform player;
-    public LayerMask groundLayer, playerLayer;
     public float patrolRange = 10f;
     public float detectRange = 15f;
     public float attackRange = 5f;
+    public float chaseSpeed = 6f;
+    public float patrolSpeed = 3f;
+
+    [Header("Attack Settings")]
     public float timeBetweenAttacks = 1f;
     public GameObject projectile;
     public float bulletSpeed = 100f;
-
-    private Vector3 patrolPoint;
-    private bool patrolPointSet;
-    private bool alreadyAttacked;
-
-    public Animator animator;
-    public string patrolAnim;
-    public string attackAnim;
-    public string chaseAnim;
-    public string reloadAnim;
-
-    // Ammo System
     public int maxAmmo = 10;
-    private int currentAmmo;
     public float reloadTime = 2f;
-    private bool isReloading = false;
+    public float aimOffset = 0.5f; // Vertical offset for shooting
 
-    // Health System
-    public float health = 100f;
-
-    // Bullet Spawn Point
+    [Header("References")]
+    public Transform player;
     public Transform firePoint;
+    public LayerMask groundLayer;
+    public LayerMask playerLayer;
+    public LayerMask obstacleMask;
 
-    //Drop
-    public GameObject healthBox;
-    public GameObject ammoBox;
+    [Header("Visual Effects")]
+    public Animator animator;
+    public string patrolAnim = "Patrol";
+    public string attackAnim = "Attack";
+    public string chaseAnim = "Chase";
+    public string reloadAnim = "Reload";
 
-    // Audio
+    [Header("Health Settings")]
+    public float maxHealth = 100f;
+    private float currentHealth;
+
+    [Header("Audio")]
     private AudioSource audioSource;
     public AudioClip fireSound;
     public AudioClip patrolSound;
     public AudioClip chaseSound;
+    public AudioClip reloadSound;
 
-    private string currentState = "";
+    [Header("Drops")]
+    public GameObject healthBox;
+    public GameObject ammoBox;
+    [Range(0f, 1f)] public float dropChance = 0.3f;
+
+    // Private variables
+    private Vector3 patrolPoint;
+    private bool patrolPointSet;
+    private bool alreadyAttacked;
+    private int currentAmmo;
+    private bool isReloading;
+    private string currentState;
+    private float lastLOSCheckTime;
+    private bool hasLineOfSight;
+    private const float LOSCheckInterval = 0.2f;
 
     private void Start()
     {
         if (!agent) agent = GetComponent<NavMeshAgent>();
         currentAmmo = maxAmmo;
-        audioSource = GetComponent<AudioSource>();
+        if (!audioSource) audioSource = GetComponent<AudioSource>();
 
         if (firePoint == null)
         {
             Debug.LogError("FirePoint is not assigned in " + gameObject.name);
+            firePoint = transform;
         }
+
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj) player = playerObj.transform;
+        }
+
+        currentHealth = maxHealth;
     }
 
     private void Update()
     {
         if (isReloading) return;
 
+        // Optimized LOS checking with interval
+        if (Time.time - lastLOSCheckTime > LOSCheckInterval)
+        {
+            hasLineOfSight = HasLineOfSight();
+            lastLOSCheckTime = Time.time;
+        }
+
         bool playerInDetectRange = Physics.CheckSphere(transform.position, detectRange, playerLayer);
         bool playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, playerLayer);
 
         if (!playerInDetectRange && !playerInAttackRange)
+        {
             Patrol();
+        }
         else if (playerInDetectRange && !playerInAttackRange)
+        {
             ChasePlayer();
-        else if (playerInAttackRange)
+        }
+        else if (playerInAttackRange && hasLineOfSight)
+        {
             AttackPlayer();
+        }
     }
 
-    public void TakeDamage(float amount)
+    private bool HasLineOfSight()
     {
-        health -= amount;
-        if (health <= 0f) Die();
+        if (player == null) return false;
+
+        Vector3 rayOrigin = transform.position + Vector3.up * aimOffset;
+        Vector3 targetPosition = player.position + Vector3.up * aimOffset;
+        Vector3 direction = (targetPosition - rayOrigin).normalized;
+        float distance = Vector3.Distance(rayOrigin, targetPosition);
+
+        Debug.DrawRay(rayOrigin, direction * distance, Color.green, LOSCheckInterval);
+
+        if (Physics.Raycast(rayOrigin, direction, out RaycastHit hit, distance, obstacleMask))
+        {
+            return false; // Obstacle in the way
+        }
+        return true;
     }
 
     private void Patrol()
     {
+        agent.speed = patrolSpeed;
         if (!patrolPointSet) SearchPatrolPoint();
 
         if (patrolPointSet)
@@ -107,6 +155,7 @@ public class ProjectileEnemy : MonoBehaviour
 
     private void ChasePlayer()
     {
+        agent.speed = chaseSpeed;
         agent.SetDestination(player.position);
         ChangeState(chaseAnim, chaseSound);
     }
@@ -115,7 +164,7 @@ public class ProjectileEnemy : MonoBehaviour
     {
         agent.SetDestination(transform.position);
         ChangeState(attackAnim, null);
-        transform.LookAt(player);
+        FaceTarget();
 
         if (!alreadyAttacked && currentAmmo > 0)
         {
@@ -127,26 +176,37 @@ public class ProjectileEnemy : MonoBehaviour
         }
     }
 
+    private void FaceTarget()
+    {
+        if (player == null) return;
+        
+        Vector3 direction = (player.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
+    }
+
     private void Shoot()
     {
-        if (firePoint == null) return; // Prevents errors if firePoint is not assigned
+        if (firePoint == null || !hasLineOfSight) return;
 
-        Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
-        rb.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
+        GameObject bullet = Instantiate(projectile, firePoint.position, firePoint.rotation);
+        if (bullet.TryGetComponent(out Rigidbody rb))
+        {
+            Vector3 aimDirection = (player.position + Vector3.up * aimOffset - firePoint.position).normalized;
+            rb.AddForce(aimDirection * bulletSpeed, ForceMode.Impulse);
+        }
 
         currentAmmo--;
         alreadyAttacked = true;
         
-        // Play the fire sound here
         audioSource.PlayOneShot(fireSound);
-
         Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
 
     private IEnumerator Reload()
     {
         isReloading = true;
-        animator.Play(reloadAnim);
+        ChangeState(reloadAnim, reloadSound);
         yield return new WaitForSeconds(reloadTime);
         currentAmmo = maxAmmo;
         isReloading = false;
@@ -157,10 +217,19 @@ public class ProjectileEnemy : MonoBehaviour
         alreadyAttacked = false;
     }
 
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0f) 
+        {
+            Die();
+        }
+    }
+
     private void Die()
     {
-        DropItem(healthBox);
-        DropItem(ammoBox);
+        if (Random.value <= dropChance) DropItem(healthBox);
+        if (Random.value <= dropChance) DropItem(ammoBox);
         Destroy(gameObject);
     }
 
@@ -169,8 +238,7 @@ public class ProjectileEnemy : MonoBehaviour
         if (item != null)
         {
             Vector3 dropPosition = transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f));
-            GameObject droppedItem = Instantiate(item, dropPosition, Quaternion.identity);
-            Destroy(droppedItem, 5f);
+            Instantiate(item, dropPosition, Quaternion.identity);
         }
     }
 
@@ -200,11 +268,5 @@ public class ProjectileEnemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-
-        if (firePoint != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(firePoint.position, 0.1f);
-        }
     }
 }

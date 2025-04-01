@@ -6190,6 +6190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18673b0cfcc80bf449909a7cd3a7c852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossBar: {fileID: 3687576793699632399}
+  dropSpawn: {fileID: 112743029}
   animator: {fileID: 1942558861}
   animToPlay: Close
 --- !u!1 &1058252108
@@ -8571,7 +8573,7 @@ PrefabInstance:
       objectReference: {fileID: 3687576793699632399}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: maxHealth
-      value: 6000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: meleeAnim
@@ -8679,19 +8681,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1300465970009104049, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1300465970009104049, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1300465970009104049, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1300465970009104049, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1300465970009104049, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8699,7 +8701,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1300465970009104049, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 1300465970009104049, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -8771,11 +8773,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3652495746833852282, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_Speed
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3652495746833852282, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_Acceleration
-      value: 12
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4146465784274155078, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

@@ -14,12 +14,23 @@ public class NormalTurret : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
+    private AudioSource audioSource;
+    public AudioClip fireSound;
+
+    [Header("Obstacle Detection")]
+    public LayerMask obstacleMask; // Set this in inspector to include walls/obstacles
+    public float lineOfSightOffset = 0.5f; // Raise the raycast origin to avoid ground collisions
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Update()
     {
         FindTarget();
 
-        if (target != null)
+        if (target != null && HasLineOfSight())
         {
             RotateTowardsTarget();
 
@@ -48,6 +59,26 @@ public class NormalTurret : MonoBehaviour
         }
     }
 
+    bool HasLineOfSight()
+    {
+        if (target == null) return false;
+
+        Vector3 rayOrigin = firePoint.position + Vector3.up * lineOfSightOffset;
+        Vector3 direction = (target.position + Vector3.up * lineOfSightOffset) - rayOrigin;
+        float distance = Vector3.Distance(rayOrigin, target.position);
+
+        // Debug draw the ray
+        Debug.DrawRay(rayOrigin, direction.normalized * distance, Color.red);
+
+        // Check if there's an obstacle between turret and target
+        if (!Physics.Raycast(rayOrigin, direction.normalized, distance, obstacleMask))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     void RotateTowardsTarget()
     {
         Vector3 direction = (target.position - transform.position).normalized;
@@ -65,6 +96,18 @@ public class NormalTurret : MonoBehaviour
             {
                 rb.velocity = firePoint.forward * bulletSpeed;
             }
+
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(fireSound);
+            }
         }
+    }
+
+    // Visualize detection range in editor
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 }
