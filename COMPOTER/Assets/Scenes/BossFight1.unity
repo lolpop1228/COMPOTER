@@ -4089,6 +4089,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1594817040537611355, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: sceneToGo
+      value: GunFight3
+      objectReference: {fileID: 0}
     - target: {fileID: 2098801649753067592, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
       propertyPath: m_Name
       value: Portal
@@ -8573,7 +8577,7 @@ PrefabInstance:
       objectReference: {fileID: 3687576793699632399}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 6500
       objectReference: {fileID: 0}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: meleeAnim
@@ -8914,6 +8918,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3778449106490955158, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
+      propertyPath: slideCooldown
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 5373472497385658073, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
       propertyPath: m_Name
       value: PlayerHolderWithGuns
@@ -8973,6 +8981,18 @@ PrefabInstance:
     - target: {fileID: 8046282896630698616, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274017313586434624, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
+      propertyPath: sprintFov
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274017313586434624, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
+      propertyPath: walkSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274017313586434624, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
+      propertyPath: maxSlopeAngle
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 9126450199106628353, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
       propertyPath: sensXSlider

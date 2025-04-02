@@ -69,14 +69,18 @@ public class Bullet : MonoBehaviour
         ProjectileEnemy enemy = immediateCollision.GetComponent<ProjectileEnemy>();
         TeleportEnemy teleportEnemy = immediateCollision.GetComponent<TeleportEnemy>();
         PSUBoss pSUBoss = immediateCollision.GetComponent<PSUBoss>();
+        GPUBoss gPUBoss= immediateCollision.GetComponent<GPUBoss>();
+        HomingTurret homingTurret = immediateCollision.GetComponent<HomingTurret>();
 
         // If nothing found on immediate collision, check second-highest parent
-        if (target == null && enemy == null && teleportEnemy == null && pSUBoss == null)
+        if (target == null && enemy == null && teleportEnemy == null && pSUBoss == null && gPUBoss == null && homingTurret == null)
         {
             target = secondHighestParent.GetComponent<Target>();
             enemy = secondHighestParent.GetComponent<ProjectileEnemy>();
             teleportEnemy = secondHighestParent.GetComponent<TeleportEnemy>();
             pSUBoss = secondHighestParent.GetComponent<PSUBoss>();
+            gPUBoss = secondHighestParent.GetComponent<GPUBoss>();
+            homingTurret = secondHighestParent.GetComponent<HomingTurret>();
         }
 
         // Apply damage to whatever we found
@@ -84,5 +88,7 @@ public class Bullet : MonoBehaviour
         if (enemy != null) enemy.TakeDamage(damage);
         if (teleportEnemy != null) teleportEnemy.TakeDamage(damage);
         if (pSUBoss != null) pSUBoss.TakeDamage(damage);
+        if (gPUBoss != null) gPUBoss.TakeDamage(damage);
+        if (homingTurret != null) homingTurret.TakeDamage(damage);
     }
 }

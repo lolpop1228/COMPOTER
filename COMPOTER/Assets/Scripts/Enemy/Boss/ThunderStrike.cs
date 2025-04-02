@@ -43,7 +43,7 @@ public class ThunderStrike : MonoBehaviour
     void Thunder()
     {
         // Instantiate explosion effect at the thunder strike's position
-        Instantiate(explosionEffect, transform.position, transform.rotation);
+        GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
 
         // Play the explosion sound
         if (audioSource != null && explosionSound != null)
@@ -73,5 +73,14 @@ public class ThunderStrike : MonoBehaviour
 
         // Destroy the ThunderStrike object after it explodes
         Destroy(gameObject, 1f);
+
+        // Destroy the explosion effect after it finishes (you can adjust the lifetime as needed)
+        Destroy(explosion, 2f); // Assuming the particle effect lasts 2 seconds
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow; // Set color of the gizmo
+        Gizmos.DrawWireSphere(transform.position, radius); // Draw the explosion radius
     }
 }
