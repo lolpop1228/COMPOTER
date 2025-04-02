@@ -4316,10 +4316,6 @@ GameObject:
   - component: {fileID: 874579030}
   - component: {fileID: 874579033}
   - component: {fileID: 874579034}
-  - component: {fileID: 874579036}
-  - component: {fileID: 874579037}
-  - component: {fileID: 874579038}
-  - component: {fileID: 874579039}
   m_Layer: 6
   m_Name: GPUBoss
   m_TagString: Untagged
@@ -4433,15 +4429,37 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   maxHealth: 6000
-  currentHealth: 0
   bossHealthBar: {fileID: 334084166}
   turretHolder: {fileID: 1275182538}
-  attackScripts:
-  - {fileID: 874579036}
-  - {fileID: 874579037}
-  - {fileID: 874579038}
-  - {fileID: 874579039}
   attackDuration: 10
+  mainAttackPrefabs:
+  - {fileID: 8954227257543614770, guid: 733ee222733420c419a8def31d02a1fa, type: 3}
+  - {fileID: 8954227257543614770, guid: 733ee222733420c419a8def31d02a1fa, type: 3}
+  mainAttackPoints:
+  - {fileID: 1990938212}
+  - {fileID: 1313400192}
+  - {fileID: 1395485558}
+  - {fileID: 590533093}
+  mainSpawnInterval: 3
+  leftAttackPrefabs:
+  - {fileID: 8954227257543614770, guid: 733ee222733420c419a8def31d02a1fa, type: 3}
+  leftAttackPoints:
+  - {fileID: 479132676}
+  - {fileID: 759357161}
+  - {fileID: 795186412}
+  - {fileID: 1985366589}
+  leftSpawnDelay: 1
+  rightAttackPrefabs:
+  - {fileID: 8954227257543614770, guid: 733ee222733420c419a8def31d02a1fa, type: 3}
+  rightAttackPoints:
+  - {fileID: 1985366589}
+  - {fileID: 795186412}
+  - {fileID: 759357161}
+  - {fileID: 479132676}
+  rightSpawnDelay: 1
+  bigAttackPrefab: {fileID: 5986720888193384468, guid: 9073ee7556d45054f862725b401a76c5, type: 3}
+  bigAttackPoint: {fileID: 905362793}
+  bigAttackPlatforms: {fileID: 1710460860}
 --- !u!95 &874579034
 Animator:
   serializedVersion: 5
@@ -4463,83 +4481,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &874579036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874579028}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6bcf38acad7f524e8e5cb602481d606, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPrefabs:
-  - {fileID: 8954227257543614770, guid: 733ee222733420c419a8def31d02a1fa, type: 3}
-  - {fileID: 8954227257543614770, guid: 733ee222733420c419a8def31d02a1fa, type: 3}
-  attackPoints:
-  - {fileID: 1990938212}
-  - {fileID: 1313400192}
-  - {fileID: 590533093}
-  - {fileID: 1395485558}
-  spawnInterval: 1.5
---- !u!114 &874579037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874579028}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a975b7ed1ac59dc49957a6d953cf9718, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPrefabs:
-  - {fileID: 8954227257543614770, guid: 733ee222733420c419a8def31d02a1fa, type: 3}
-  attackPoints:
-  - {fileID: 479132676}
-  - {fileID: 759357161}
-  - {fileID: 795186412}
-  - {fileID: 1985366589}
-  delayBetweenSpawns: 0.8
---- !u!114 &874579038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874579028}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fac40f0228dcc2499744d90d24396d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPrefabs:
-  - {fileID: 8954227257543614770, guid: 733ee222733420c419a8def31d02a1fa, type: 3}
-  attackPoints:
-  - {fileID: 1985366589}
-  - {fileID: 795186412}
-  - {fileID: 759357161}
-  - {fileID: 479132676}
-  delayBetweenSpawns: 0.8
---- !u!114 &874579039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874579028}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14479349b9e1e364c99573faebf8e97a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bigAttackPrefabs: {fileID: 5986720888193384468, guid: 9073ee7556d45054f862725b401a76c5, type: 3}
-  attackPoint: {fileID: 905362793}
-  platforms: {fileID: 1710460860}
-  warningUI: {fileID: 603256078}
 --- !u!1 &905362792
 GameObject:
   m_ObjectHideFlags: 0
@@ -10193,8 +10134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c922d1ee0b467c40be8ef2b02e440ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 30
-  rotationSpeed: 15
+  detectionRange: 40
+  rotationSpeed: 20
   fireRate: 0.5
   target: {fileID: 1722713534922984776}
   firePoint: {fileID: 521736768}
@@ -12181,8 +12122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c922d1ee0b467c40be8ef2b02e440ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 30
-  rotationSpeed: 15
+  detectionRange: 40
+  rotationSpeed: 20
   fireRate: 0.5
   target: {fileID: 1722713534922984776}
   firePoint: {fileID: 774612366}

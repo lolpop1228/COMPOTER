@@ -433,7 +433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3730047387093544898, guid: 32a272bb35bfbc648970c3056c52954c, type: 3}
       propertyPath: health
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3730047387093544898, guid: 32a272bb35bfbc648970c3056c52954c, type: 3}
       propertyPath: explosionForce
@@ -4678,7 +4678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3730047387093544898, guid: 32a272bb35bfbc648970c3056c52954c, type: 3}
       propertyPath: health
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3730047387093544898, guid: 32a272bb35bfbc648970c3056c52954c, type: 3}
       propertyPath: explosionForce
@@ -6255,7 +6255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3730047387093544898, guid: 32a272bb35bfbc648970c3056c52954c, type: 3}
       propertyPath: health
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3730047387093544898, guid: 32a272bb35bfbc648970c3056c52954c, type: 3}
       propertyPath: explosionForce
@@ -7613,7 +7613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3730047387093544898, guid: 32a272bb35bfbc648970c3056c52954c, type: 3}
       propertyPath: health
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3730047387093544898, guid: 32a272bb35bfbc648970c3056c52954c, type: 3}
       propertyPath: explosionForce
@@ -8572,12 +8572,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3687576793699632398}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
+      propertyPath: maxAmmo
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: BossHpBar
       value: 
       objectReference: {fileID: 3687576793699632399}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: maxHealth
-      value: 6500
+      value: 6000
       objectReference: {fileID: 0}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: meleeAnim
@@ -8591,6 +8595,10 @@ PrefabInstance:
       propertyPath: projectile
       value: 
       objectReference: {fileID: 6590905873790594678, guid: 1d1c83f0156882740bb4c60156f03e9c, type: 3}
+    - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: meleeDamage
       value: 10
@@ -8777,11 +8785,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3652495746833852282, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_Speed
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3652495746833852282, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_Acceleration
-      value: 10
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4131428817689029433, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
+      propertyPath: MinDistance
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4146465784274155078, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -8919,8 +8931,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3778449106490955158, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
+      propertyPath: maxSlideTime
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3778449106490955158, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
       propertyPath: slideCooldown
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5373472497385658073, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
       propertyPath: m_Name
