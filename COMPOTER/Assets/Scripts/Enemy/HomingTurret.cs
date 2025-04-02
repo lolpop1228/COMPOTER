@@ -15,6 +15,20 @@ public class HomingTurret : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
 
+    [Header("Audios")]
+    private AudioSource audioSource;
+    public AudioClip shootSound;
+
+    [Header("Health")]
+    public float maxHealth = 1000f;
+    public float currentHealth;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        currentHealth = maxHealth;
+    }
+
     private void Update()
     {
         FindTarget();
@@ -48,6 +62,19 @@ public class HomingTurret : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
+        if (currentHealth <= 0f) Die();
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
     void RotateTowardsTarget()
     {
         Vector3 direction = (target.position - transform.position).normalized;
@@ -60,6 +87,10 @@ public class HomingTurret : MonoBehaviour
         if (bulletPrefab != null && firePoint != null)
         {
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        }
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(shootSound);
         }
     }
 }
