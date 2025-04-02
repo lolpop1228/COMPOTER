@@ -7,23 +7,32 @@ public class GPUBoss : MonoBehaviour
     public float detectionRange = 25f;
     public LayerMask playerLayer;
     private Transform player;
-    bool playerDetected;
-    //Health
+    private bool playerDetected;
+    
+    // Health
     public float maxHealth = 6000;
     public float currentHealth;
     public BossHealthBar bossHealthBar;
 
-    // Start is called before the first frame update
+    // Child Object Monitoring
+    public GameObject turretHolder;
+
+    // Attacks
+    public MonoBehaviour[] attackScripts;
+    public float attackDuration = 10f;
+    private MonoBehaviour currentAttack;
+    private bool isAttacking = false; // Prevent multiple activations
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
     void Update()
     {
         DetectPlayer();
+        CheckChildObject();
     }
 
     void DetectPlayer()
@@ -61,6 +70,7 @@ public class GPUBoss : MonoBehaviour
 
         if (currentHealth <= 0f) Die();
     }
+
     void Die()
     {
         Destroy(gameObject);
@@ -69,13 +79,47 @@ public class GPUBoss : MonoBehaviour
     void OnPlayerDetected()
     {
         Debug.Log("Player detected! Boss is engaging.");
-        // Implement attack or chase behavior here
     }
 
     void OnPlayerLost()
     {
         Debug.Log("Player out of range. Boss disengaging.");
-        // Implement disengage or idle behavior here
+    }
+
+    void CheckChildObject()
+    {
+        if (turretHolder != null && turretHolder.transform.childCount <= 0 && !isAttacking)
+        {
+            BossActivate();
+        }
+    }
+
+    void BossActivate()
+    {
+        if (attackScripts.Length == 0) return;
+        
+        isAttacking = true; // Ensure the coroutine runs only once
+        StartCoroutine(ActivateRandomAttacks());
+    }
+
+    IEnumerator ActivateRandomAttacks()
+    {
+        while (true)
+        {
+            if (attackScripts.Length == 0) yield break;
+
+            if (currentAttack != null)
+            {
+                currentAttack.enabled = false;
+            }
+
+            currentAttack = attackScripts[Random.Range(0, attackScripts.Length)];
+            currentAttack.enabled = true;
+
+            Debug.Log($"Boss activated: {currentAttack.GetType().Name}");
+
+            yield return new WaitForSeconds(attackDuration);
+        }
     }
 
     void OnDrawGizmos()

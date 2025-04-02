@@ -4435,6 +4435,13 @@ MonoBehaviour:
   maxHealth: 6000
   currentHealth: 0
   bossHealthBar: {fileID: 334084166}
+  turretHolder: {fileID: 1275182538}
+  attackScripts:
+  - {fileID: 874579036}
+  - {fileID: 874579037}
+  - {fileID: 874579038}
+  - {fileID: 874579039}
+  attackDuration: 10
 --- !u!95 &874579034
 Animator:
   serializedVersion: 5
@@ -9023,7 +9030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1275182539
 Transform:
   m_ObjectHideFlags: 0
