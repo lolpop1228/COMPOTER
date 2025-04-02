@@ -9,6 +9,7 @@ public class GPUBoss : MonoBehaviour
     public float maxHealth = 6000f;
     public BossHealthBar bossHealthBar;
     public GameObject turretHolder;
+    private Animator animator;  // 🔹 Reference to Animator
 
     [Header("Attack Settings")]
     public float attackDuration = 10f;
@@ -43,7 +44,10 @@ public class GPUBoss : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        animator = GetComponent<Animator>();  // 🔹 Get Animator component
         currentHealth = maxHealth;
+
+        PlayIdleAnimation();  // 🔹 Start in idle state
     }
 
     void Update()
@@ -98,6 +102,7 @@ public class GPUBoss : MonoBehaviour
                 {
                     StopAllAttackRoutines();
                     isAttacking = false;
+                    PlayIdleAnimation();  // 🔹 Return to idle if out of range
                     yield break;
                 }
 
@@ -117,6 +122,7 @@ public class GPUBoss : MonoBehaviour
     #region Attack Pattern Functions
     void StartMainAttack()
     {
+        animator.Play("MainAttack");  // 🔹 Play attack animation
         mainAttackRoutine = StartCoroutine(MainAttackRoutine());
     }
 
@@ -145,11 +151,13 @@ public class GPUBoss : MonoBehaviour
 
     void StartLeftAttack()
     {
+        animator.Play("LeftAttack");  // 🔹 Play attack animation
         leftAttackRoutine = StartCoroutine(SideAttackRoutine(leftAttackPrefabs, leftAttackPoints, leftSpawnDelay));
     }
 
     void StartRightAttack()
     {
+        animator.Play("RightAttack");  // 🔹 Play attack animation
         rightAttackRoutine = StartCoroutine(SideAttackRoutine(rightAttackPrefabs, rightAttackPoints, rightSpawnDelay));
     }
 
@@ -171,6 +179,7 @@ public class GPUBoss : MonoBehaviour
 
     void StartBigAttack()
     {
+        animator.Play("BigAttack");  // 🔹 Play attack animation
         StartCoroutine(BigAttackRoutine());
     }
 
@@ -196,8 +205,14 @@ public class GPUBoss : MonoBehaviour
 
     void Die()
     {
+        animator.Play("Die");  // 🔹 Play death animation
         StopAllCoroutines();
-        Destroy(gameObject);
+        Destroy(gameObject, 3f); // 🔹 Destroy after animation
+    }
+
+    void PlayIdleAnimation()
+    {
+        animator.Play("Idle");  // 🔹 Play idle animation
     }
 
     void OnDrawGizmosSelected()
