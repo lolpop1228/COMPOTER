@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System.Linq;
 
 public class GPUBoss : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class GPUBoss : MonoBehaviour
     public float maxHealth = 6000f;
     public BossHealthBar bossHealthBar;
     public GameObject turretHolder;
-    private Animator animator;  // 🔹 Reference to Animator
+    private Animator animator;
 
     [Header("Attack Settings")]
     public float attackDuration = 10f;
@@ -41,13 +42,25 @@ public class GPUBoss : MonoBehaviour
     public Transform bigAttackPoint;
     public GameObject bigAttackPlatforms;
 
+        [Header("Item Drop Settings")]
+    public GameObject[] healthBoxPrefabs;  // Multiple health box prefabs
+    public GameObject[] ammoBoxPrefabs;    // Multiple ammo box prefabs
+    public Transform[] itemSpawnPoints;    // Multiple spawn points
+    public float minSpawnInterval = 15f;
+    public float maxSpawnInterval = 30f;
+    private Coroutine itemSpawnRoutine;
+
+    [Header("Attack Timing Settings")]
+    public float attackCooldown = 5f; // Delay between each attack
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        animator = GetComponent<Animator>();  // 🔹 Get Animator component
+        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
 
-        PlayIdleAnimation();  // 🔹 Start in idle state
+        PlayIdleAnimation();
+        itemSpawnRoutine = StartCoroutine(ItemSpawnRoutine()); // Start item spawn loop
     }
 
     void Update()
@@ -76,9 +89,8 @@ public class GPUBoss : MonoBehaviour
         while (true)
         {
             StopAllAttackRoutines();
+            int attackIndex = WeightedAttackSelection();
 
-            int attackIndex = Random.Range(0, 4);
-            
             switch (attackIndex)
             {
                 case 0:
@@ -95,21 +107,30 @@ public class GPUBoss : MonoBehaviour
                     break;
             }
 
-            float timer = 0f;
-            while (timer < attackDuration)
-            {
-                if (Vector3.Distance(transform.position, player.position) > detectionRange)
-                {
-                    StopAllAttackRoutines();
-                    isAttacking = false;
-                    PlayIdleAnimation();  // 🔹 Return to idle if out of range
-                    yield break;
-                }
+            yield return new WaitForSeconds(attackDuration); // Wait for attack duration
+            StopAllAttackRoutines(); // Ensure attack stops before cooldown
 
-                timer += Time.deltaTime;
-                yield return null;
+            yield return new WaitForSeconds(attackCooldown); // Wait before the next attack
+
+            if (Vector3.Distance(transform.position, player.position) > detectionRange)
+            {
+                isAttacking = false;
+                PlayIdleAnimation();
+                yield break;
             }
         }
+    }
+
+    int WeightedAttackSelection()
+    {
+        int[] weights = { 4, 4, 4, 5 };
+        int totalWeight = 4 + 4 + 4 + 5;
+        int randomValue = Random.Range(0, totalWeight);
+
+        if (randomValue < weights[0]) return 0;
+        if (randomValue < weights[0] + weights[1]) return 1;
+        if (randomValue < weights[0] + weights[1] + weights[2]) return 2;
+        return 3;
     }
 
     void StopAllAttackRoutines()
@@ -122,7 +143,8 @@ public class GPUBoss : MonoBehaviour
     #region Attack Pattern Functions
     void StartMainAttack()
     {
-        animator.Play("MainAttack");  // 🔹 Play attack animation
+        StopAllAttackRoutines();
+        animator.Play("MainAttack");
         mainAttackRoutine = StartCoroutine(MainAttackRoutine());
     }
 
@@ -130,18 +152,32 @@ public class GPUBoss : MonoBehaviour
     {
         while (true)
         {
-            if (mainAttackPrefabs.Length == 0 || mainAttackPoints.Length < 2) 
+            if (mainAttackPrefabs.Length == 0 || mainAttackPoints.Length < 2)
                 yield break;
 
+            Transform[] sortedPoints = mainAttackPoints
+                .OrderBy(point => Vector3.Distance(player.position, point.position))
+                .ToArray();
+
+            // Get the two closest points
+            Transform point1 = sortedPoints[0];
+            Transform point2 = sortedPoints[1];
+
+            // 50% chance to use the closest point, otherwise pick a random one
+            if (Random.value > 0.5f)
+            {
+                point1 = mainAttackPoints[Random.Range(0, mainAttackPoints.Length)];
+            }
+            if (Random.value > 0.5f)
+            {
+                point2 = mainAttackPoints[Random.Range(0, mainAttackPoints.Length)];
+            }
+
+            // Select random attack prefabs
             GameObject prefab1 = mainAttackPrefabs[Random.Range(0, mainAttackPrefabs.Length)];
             GameObject prefab2 = mainAttackPrefabs[Random.Range(0, mainAttackPrefabs.Length)];
 
-            Transform point1 = mainAttackPoints[Random.Range(0, mainAttackPoints.Length)];
-            Transform point2;
-            do {
-                point2 = mainAttackPoints[Random.Range(0, mainAttackPoints.Length)];
-            } while (point2 == point1);
-
+            // Instantiate at selected points
             Instantiate(prefab1, point1.position, point1.rotation);
             Instantiate(prefab2, point2.position, point2.rotation);
 
@@ -149,15 +185,34 @@ public class GPUBoss : MonoBehaviour
         }
     }
 
+
+    Transform GetNearestAttackPoint()
+    {
+        Transform nearest = mainAttackPoints[0];
+        float minDistance = Vector3.Distance(player.position, nearest.position);
+
+        foreach (Transform point in mainAttackPoints)
+        {
+            float distance = Vector3.Distance(player.position, point.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearest = point;
+            }
+        }
+
+        return nearest;
+    }
+
     void StartLeftAttack()
     {
-        animator.Play("LeftAttack");  // 🔹 Play attack animation
+        animator.Play("LeftAttack");
         leftAttackRoutine = StartCoroutine(SideAttackRoutine(leftAttackPrefabs, leftAttackPoints, leftSpawnDelay));
     }
 
     void StartRightAttack()
     {
-        animator.Play("RightAttack");  // 🔹 Play attack animation
+        animator.Play("RightAttack");
         rightAttackRoutine = StartCoroutine(SideAttackRoutine(rightAttackPrefabs, rightAttackPoints, rightSpawnDelay));
     }
 
@@ -179,7 +234,8 @@ public class GPUBoss : MonoBehaviour
 
     void StartBigAttack()
     {
-        animator.Play("BigAttack");  // 🔹 Play attack animation
+        StopAllAttackRoutines();
+        animator.Play("BigAttack");
         StartCoroutine(BigAttackRoutine());
     }
 
@@ -205,19 +261,41 @@ public class GPUBoss : MonoBehaviour
 
     void Die()
     {
-        animator.Play("Die");  // 🔹 Play death animation
+        animator.Play("Die");
         StopAllCoroutines();
-        Destroy(gameObject, 3f); // 🔹 Destroy after animation
+        Destroy(gameObject, 3f);
     }
 
     void PlayIdleAnimation()
     {
-        animator.Play("Idle");  // 🔹 Play idle animation
+        animator.Play("Idle");
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
+
+    // 🔹 Randomly Spawn Items
+    IEnumerator ItemSpawnRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
+
+            if (healthBoxPrefabs.Length == 0 || ammoBoxPrefabs.Length == 0 || itemSpawnPoints.Length == 0)
+                yield break;
+
+            // Pick a random item type (health or ammo)
+            GameObject[] selectedArray = (Random.value > 0.5f) ? healthBoxPrefabs : ammoBoxPrefabs;
+            GameObject itemToSpawn = selectedArray[Random.Range(0, selectedArray.Length)];
+
+            // Pick a random spawn point
+            Transform spawnPoint = itemSpawnPoints[Random.Range(0, itemSpawnPoints.Length)];
+
+            // Spawn the item
+            Instantiate(itemToSpawn, spawnPoint.position, spawnPoint.rotation);
+        }
     }
 }
