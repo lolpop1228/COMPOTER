@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables; // Needed for PlayableDirector
 
 public class ButtonInteraction : MonoBehaviour
 {
@@ -11,12 +12,29 @@ public class ButtonInteraction : MonoBehaviour
     public GameObject cube; // Reference to the cube you want to reset
     private Vector3 originalPosition; // Store the original position of the cube
 
+    public AudioSource audioSource; // Reference to the AudioSource component
+    public AudioClip interactionSound; // Sound to play when interaction occurs
+
+    public PlayableDirector playableDirector; // Reference to the PlayableDirector component for Timeline
+
     private void Start()
     {
         // Store the original position of the cube at the start
         if (cube != null)
         {
             originalPosition = cube.transform.position;
+        }
+
+        // Ensure audioSource is set
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
+        // Ensure playableDirector is set
+        if (playableDirector == null)
+        {
+            playableDirector = GetComponent<PlayableDirector>();
         }
     }
 
@@ -36,6 +54,8 @@ public class ButtonInteraction : MonoBehaviour
                 if (distance <= interactionRange && Input.GetKeyDown(KeyCode.E))
                 {
                     ResetCubePosition();
+                    PlayInteractionSound();
+                    PlayTimeline();
                 }
             }
         }
@@ -47,6 +67,24 @@ public class ButtonInteraction : MonoBehaviour
         if (cube != null)
         {
             cube.transform.position = originalPosition; // Reset position of the cube
+        }
+    }
+
+    // Function to play the interaction sound
+    void PlayInteractionSound()
+    {
+        if (audioSource != null && interactionSound != null)
+        {
+            audioSource.PlayOneShot(interactionSound); // Play the sound once
+        }
+    }
+
+    // Function to play the Timeline animation
+    void PlayTimeline()
+    {
+        if (playableDirector != null)
+        {
+            playableDirector.Play(); // Play the Timeline from the start
         }
     }
 }
