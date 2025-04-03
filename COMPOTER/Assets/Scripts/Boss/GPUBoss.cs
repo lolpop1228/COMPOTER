@@ -123,8 +123,8 @@ public class GPUBoss : MonoBehaviour
 
     int WeightedAttackSelection()
     {
-        int[] weights = { 4, 4, 4, 5 };
-        int totalWeight = 4 + 4 + 4 + 5;
+        int[] weights = { 4, 4, 4, 4 };
+        int totalWeight = 4 + 4 + 4 + 4;
         int randomValue = Random.Range(0, totalWeight);
 
         if (randomValue < weights[0]) return 0;
@@ -244,20 +244,33 @@ public class GPUBoss : MonoBehaviour
         Instantiate(bigAttackPrefab, bigAttackPoint.position, bigAttackPoint.rotation);
         bigAttackPlatforms.SetActive(true);
         
-        yield return new WaitForSeconds(10f);
-        
+        yield return new WaitForSeconds(5f); // Reduced platform active time
+
         bigAttackPlatforms.SetActive(false);
+
+        yield return new WaitForSeconds(attackCooldown); // Wait for attack cooldown before the next attack
+
+        StartAttackSequence(); // Start the next attack
     }
     #endregion
 
     public void TakeDamage(float amount)
     {
-        currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
-        bossHealthBar?.SetHealth(currentHealth);
+        // Check if the turret holder has no children before allowing damage
+        if (turretHolder.transform.childCount == 0)
+        {
+            currentHealth -= amount;
+            currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+            bossHealthBar?.SetHealth(currentHealth);
 
-        if (currentHealth <= 0f) Die();
+            if (currentHealth <= 0f) Die();
+        }
+        else
+        {
+            Debug.Log("Cannot take damage because turret holder has children.");
+        }
     }
+
 
     void Die()
     {

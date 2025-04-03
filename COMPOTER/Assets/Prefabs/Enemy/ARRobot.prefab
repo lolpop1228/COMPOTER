@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 2531167847677786952}
   - component: {fileID: 2275994442371763753}
   m_Layer: 0
-  m_Name: NormalRobot (1)
+  m_Name: ARRobot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -674,16 +674,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 2531167847677786952}
-  patrolRange: 10
-  detectRange: 15
-  attackRange: 5
+  patrolRange: 20
+  detectRange: 25
+  attackRange: 15
   chaseSpeed: 6
   patrolSpeed: 3
-  timeBetweenAttacks: 1
-  projectile: {fileID: 878140907975776315, guid: 40afbd7a497015a499bab77334dfa1bb, type: 3}
+  timeBetweenAttacks: 0.2
+  projectile: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
   bulletSpeed: 100
   maxAmmo: 10
-  reloadTime: 2
+  reloadTime: 0
   aimOffset: 0.5
   player: {fileID: 0}
   firePoint: {fileID: 1525397493791261096}
@@ -698,7 +698,7 @@ MonoBehaviour:
     m_Bits: 4160
   animator: {fileID: 8822466368308751911}
   patrolAnim: Patrol
-  attackAnim: Attack
+  attackAnim: QuickAttack
   chaseAnim: Chase
   reloadAnim: 
   maxHealth: 100
@@ -708,7 +708,7 @@ MonoBehaviour:
   reloadSound: {fileID: 0}
   healthBox: {fileID: 6046256341737066099, guid: fb9c76397479ceb46a3eeb6e0500dd9f, type: 3}
   ammoBox: {fileID: 5922664689929116487, guid: 00e2861806362e24d9a96a39b82f4bdb, type: 3}
-  dropChance: 0.3
+  dropChance: 0.5
 --- !u!195 &2531167847677786952
 NavMeshAgent:
   m_ObjectHideFlags: 0

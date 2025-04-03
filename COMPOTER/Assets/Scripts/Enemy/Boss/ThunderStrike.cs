@@ -8,28 +8,19 @@ public class ThunderStrike : MonoBehaviour
     public float radius = 5f;
     public float force = 700f;
     public GameObject explosionEffect;
-    public float damage = 50f; // Amount of damage to apply
-    public AudioClip explosionSound; // Reference to the explosion sound
+    public float damage = 50f;
+    public AudioClip explosionSound;
 
     private float countdown;
     private bool hasExploded = false;
+    private PlayerHealth playerHealth;
 
-    private PlayerHealth playerHealth; // Reference to PlayerHealth script
-    private AudioSource audioSource; // Reference to the AudioSource component
-
-    // Start is called before the first frame update
     void Start()
     {
         countdown = delay;
-
-        // Find PlayerHealth script in the scene dynamically
         playerHealth = FindObjectOfType<PlayerHealth>(); 
-
-        // Get the AudioSource component on the same GameObject
-        audioSource = GetComponent<AudioSource>(); 
     }
 
-    // Update is called once per frame
     void Update()
     {
         countdown -= Time.deltaTime;
@@ -42,45 +33,50 @@ public class ThunderStrike : MonoBehaviour
 
     void Thunder()
     {
-        // Instantiate explosion effect at the thunder strike's position
+        // Instantiate explosion effect
         GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
 
-        // Play the explosion sound
-        if (audioSource != null && explosionSound != null)
-        {
-            audioSource.PlayOneShot(explosionSound); // Play explosion sound once
-        }
+        // Play explosion sound without cutting it off
+        PlayExplosionSound();
 
-        // Find all nearby colliders within the explosion radius
+        // Apply explosion force and damage
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-
         foreach (Collider nearbyObject in colliders)
         {
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                // Apply explosion force to nearby objects with Rigidbody
                 rb.AddExplosionForce(force, transform.position, radius);
             }
 
-            // Check if the nearby object is the player and apply damage
             if (nearbyObject.CompareTag("Player") && playerHealth != null)
             {
-                // Apply damage to the player only once
                 playerHealth.PlayerTakeDamage(damage);
             }
         }
 
-        // Destroy the ThunderStrike object after it explodes
-        Destroy(gameObject, 1f);
+        // Destroy the ThunderStrike object after explosion
+        Destroy(gameObject, 0.5f);
+        Destroy(explosion, 2f);
+    }
 
-        // Destroy the explosion effect after it finishes (you can adjust the lifetime as needed)
-        Destroy(explosion, 2f); // Assuming the particle effect lasts 2 seconds
+    void PlayExplosionSound()
+    {
+        if (explosionSound != null)
+        {
+            GameObject soundObject = new GameObject("ExplosionSound");
+            AudioSource audioSource = soundObject.AddComponent<AudioSource>();
+            audioSource.clip = explosionSound;
+            audioSource.Play();
+
+            // Destroy the sound object after the clip finishes
+            Destroy(soundObject, explosionSound.length);
+        }
     }
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow; // Set color of the gizmo
-        Gizmos.DrawWireSphere(transform.position, radius); // Draw the explosion radius
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }
