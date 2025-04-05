@@ -50,6 +50,11 @@ public class ProjectileEnemy : MonoBehaviour
     public GameObject ammoBox;
     [Range(0f, 1f)] public float dropChance = 0.3f;
 
+    [Header("Explosion Settings")]
+    public GameObject explosionEffect;
+    public AudioClip explosionSound;
+
+
     // Private variables
     private Vector3 patrolPoint;
     private bool patrolPointSet;
@@ -228,11 +233,33 @@ public class ProjectileEnemy : MonoBehaviour
 
     private void Die()
     {
+        // Spawn explosion effect
+        if (explosionEffect != null)
+        {
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        }
+
+        // Drop items
         if (Random.value <= dropChance) DropItem(healthBox);
         if (Random.value <= dropChance) DropItem(ammoBox);
+
+        // Play explosion sound from a temporary object
+        if (explosionSound != null)
+        {
+            GameObject tempAudio = new GameObject("TempExplosionSound");
+            tempAudio.transform.position = transform.position;
+
+            AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
+            tempSource.clip = explosionSound;
+            tempSource.Play();
+
+            Destroy(tempAudio, explosionSound.length);
+        }
+
+        // Destroy the enemy
         Destroy(gameObject);
     }
-
+    
     private void DropItem(GameObject item)
     {
         if (item != null)

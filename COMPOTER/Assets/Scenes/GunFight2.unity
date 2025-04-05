@@ -3604,6 +3604,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
@@ -3611,6 +3615,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.1
@@ -3682,6 +3694,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
@@ -3689,6 +3705,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.1
@@ -4070,7 +4094,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3457711602879849066}
+  playerHealth: {fileID: 0}
   spawnPoint: {fileID: 1115316358}
+  damageAmount: 20
 --- !u!43 &281280208
 Mesh:
   m_ObjectHideFlags: 0
@@ -5472,6 +5498,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 3
       objectReference: {fileID: 0}
@@ -5479,6 +5509,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7758,6 +7796,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 8
       objectReference: {fileID: 0}
@@ -7765,6 +7807,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.5
@@ -9331,6 +9381,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
@@ -9339,8 +9397,16 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11618,6 +11684,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 8
       objectReference: {fileID: 0}
@@ -11625,6 +11695,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.5
@@ -13470,6 +13548,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
@@ -13477,6 +13559,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.1
@@ -14100,6 +14190,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
@@ -14107,6 +14201,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.1
@@ -15867,6 +15969,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 3
       objectReference: {fileID: 0}
@@ -15874,6 +15980,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18211,6 +18325,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 5
       objectReference: {fileID: 0}
@@ -18219,8 +18341,16 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18421,6 +18551,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 4
       objectReference: {fileID: 0}
@@ -18428,6 +18562,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.5
@@ -37026,6 +37168,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 14
       objectReference: {fileID: 0}
@@ -37033,6 +37179,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.5
@@ -37394,6 +37548,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3457711602879849066}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 4
       objectReference: {fileID: 0}
@@ -37401,6 +37559,14 @@ PrefabInstance:
       propertyPath: detectRange
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
       value: 0.5
@@ -37724,6 +37890,14 @@ PrefabInstance:
     - target: {fileID: 8046282896630698616, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274017313586434624, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
+      propertyPath: sprintFov
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274017313586434624, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
+      propertyPath: walkSpeed
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9126450199106628353, guid: 03a9920e871388f48b49a2b0164e0187, type: 3}
       propertyPath: sensXSlider

@@ -22,6 +22,11 @@ public class HomingTurret : MonoBehaviour
     [Header("Health")]
     public float maxHealth = 1000f;
     public float currentHealth;
+    [Header("Explosion Settings")]
+    public Transform explosionPoint;
+    public GameObject explosionEffect;
+    public AudioClip explosionSound;
+
 
     void Start()
     {
@@ -72,6 +77,29 @@ public class HomingTurret : MonoBehaviour
 
     void Die()
     {
+        // Use the explosionPoint position if it's assigned, otherwise fallback to turret position
+        Vector3 spawnPosition = explosionPoint != null ? explosionPoint.position : transform.position;
+
+        // Spawn explosion effect
+        if (explosionEffect != null)
+        {
+            Instantiate(explosionEffect, spawnPosition, Quaternion.identity);
+        }
+
+        // Play explosion sound from a temporary GameObject
+        if (explosionSound != null)
+        {
+            GameObject tempAudio = new GameObject("TempExplosionSound");
+            tempAudio.transform.position = spawnPosition;
+
+            AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
+            tempSource.clip = explosionSound;
+            tempSource.Play();
+
+            Destroy(tempAudio, explosionSound.length);
+        }
+
+        // Destroy the turret
         Destroy(gameObject);
     }
 
