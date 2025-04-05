@@ -42,7 +42,7 @@ public class GPUBoss : MonoBehaviour
     public Transform bigAttackPoint;
     public GameObject bigAttackPlatforms;
 
-        [Header("Item Drop Settings")]
+    [Header("Item Drop Settings")]
     public GameObject[] healthBoxPrefabs;  // Multiple health box prefabs
     public GameObject[] ammoBoxPrefabs;    // Multiple ammo box prefabs
     public Transform[] itemSpawnPoints;    // Multiple spawn points
@@ -52,6 +52,8 @@ public class GPUBoss : MonoBehaviour
 
     [Header("Attack Timing Settings")]
     public float attackCooldown = 5f; // Delay between each attack
+    private int lastAttackIndex = -1;
+    private bool hasActivated = false;
 
     void Start()
     {
@@ -60,18 +62,27 @@ public class GPUBoss : MonoBehaviour
         currentHealth = maxHealth;
 
         PlayIdleAnimation();
-        itemSpawnRoutine = StartCoroutine(ItemSpawnRoutine()); // Start item spawn loop
     }
 
     void Update()
     {
-        if (player == null || isAttacking) return;
+        if (player == null || isAttacking || hasActivated) return;
 
         if (turretHolder.transform.childCount <= 0 && 
             Vector3.Distance(transform.position, player.position) <= detectionRange)
         {
-            StartAttackSequence();
+            hasActivated = true;
+            StartCoroutine(ActivateAndStartAttack());
         }
+    }
+
+    IEnumerator ActivateAndStartAttack()
+    {
+        animator.Play("Activate"); // Make sure you have an "Activate" animation in Animator
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length); // Wait for animation to finish
+
+        StartAttackSequence();
+        itemSpawnRoutine = StartCoroutine(ItemSpawnRoutine()); // Start item spawn loop
     }
 
     void StartAttackSequence()
@@ -103,19 +114,24 @@ public class GPUBoss : MonoBehaviour
                     StartRightAttack();
                     break;
                 case 3:
-                    StartBigAttack();
+                    yield return StartCoroutine(BigAttackRoutine());
                     break;
             }
 
-            yield return new WaitForSeconds(attackDuration); // Wait for attack duration
-            StopAllAttackRoutines(); // Ensure attack stops before cooldown
+            // Wait for duration unless BigAttack already waited
+            if (attackIndex != 3)
+            {
+                yield return new WaitForSeconds(attackDuration);
+            }
 
-            yield return new WaitForSeconds(attackCooldown); // Wait before the next attack
+            StopAllAttackRoutines();
+            yield return new WaitForSeconds(attackCooldown);
 
             if (Vector3.Distance(transform.position, player.position) > detectionRange)
             {
                 isAttacking = false;
                 PlayIdleAnimation();
+                hasActivated = false; // optional reset
                 yield break;
             }
         }
@@ -123,14 +139,27 @@ public class GPUBoss : MonoBehaviour
 
     int WeightedAttackSelection()
     {
-        int[] weights = { 4, 4, 4, 4 };
-        int totalWeight = 4 + 4 + 4 + 4;
-        int randomValue = Random.Range(0, totalWeight);
+        // Weights: Main, Left, Right, Big
+        int[] weights = { 4, 4, 4, 1 }; // Big attack is less likely (1/13 total weight)
+        int totalWeight = weights.Sum();
 
-        if (randomValue < weights[0]) return 0;
-        if (randomValue < weights[0] + weights[1]) return 1;
-        if (randomValue < weights[0] + weights[1] + weights[2]) return 2;
-        return 3;
+        // Create a list of possible indices, excluding the last used one
+        var validIndices = new System.Collections.Generic.List<int>();
+
+        for (int i = 0; i < weights.Length; i++)
+        {
+            if (i != lastAttackIndex || weights[i] == 1) // Allow rare Big Attack to occasionally repeat
+            {
+                for (int j = 0; j < weights[i]; j++)
+                {
+                    validIndices.Add(i);
+                }
+            }
+        }
+
+        int selected = validIndices[Random.Range(0, validIndices.Count)];
+        lastAttackIndex = selected;
+        return selected;
     }
 
     void StopAllAttackRoutines()
@@ -185,25 +214,6 @@ public class GPUBoss : MonoBehaviour
         }
     }
 
-
-    Transform GetNearestAttackPoint()
-    {
-        Transform nearest = mainAttackPoints[0];
-        float minDistance = Vector3.Distance(player.position, nearest.position);
-
-        foreach (Transform point in mainAttackPoints)
-        {
-            float distance = Vector3.Distance(player.position, point.position);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                nearest = point;
-            }
-        }
-
-        return nearest;
-    }
-
     void StartLeftAttack()
     {
         animator.Play("LeftAttack");
@@ -232,25 +242,16 @@ public class GPUBoss : MonoBehaviour
         }
     }
 
-    void StartBigAttack()
-    {
-        StopAllAttackRoutines();
-        animator.Play("BigAttack");
-        StartCoroutine(BigAttackRoutine());
-    }
-
     IEnumerator BigAttackRoutine()
     {
+        animator.Play("BigAttack");
         Instantiate(bigAttackPrefab, bigAttackPoint.position, bigAttackPoint.rotation);
         bigAttackPlatforms.SetActive(true);
-        
-        yield return new WaitForSeconds(5f); // Reduced platform active time
 
+        yield return new WaitForSeconds(5f); // Platform duration
         bigAttackPlatforms.SetActive(false);
 
-        yield return new WaitForSeconds(attackCooldown); // Wait for attack cooldown before the next attack
-
-        StartAttackSequence(); // Start the next attack
+        yield return new WaitForSeconds(attackCooldown); // Optional cooldown, or let main loop handle
     }
     #endregion
 
@@ -270,7 +271,6 @@ public class GPUBoss : MonoBehaviour
             Debug.Log("Cannot take damage because turret holder has children.");
         }
     }
-
 
     void Die()
     {

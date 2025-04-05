@@ -32832,7 +32832,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1722713534922984776}
+  playerHealth: {fileID: 0}
   spawnPoint: {fileID: 219270493}
+  damageAmount: 20
 --- !u!1 &696727714
 GameObject:
   m_ObjectHideFlags: 0
@@ -49375,7 +49377,8 @@ MonoBehaviour:
   currentHealth: 0
   cameraTransform: {fileID: 5740552065152619842}
   shakeDuration: 0.1
-  shakeMagnitude: 0.1
+  baseShakeMagnitude: 0.1
+  highDamageShakeMagnitude: 0.2
   healthBar: {fileID: 3863075478671423052}
 --- !u!82 &895580523309698547
 AudioSource:
@@ -57838,7 +57841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52d4261673519a4e94fc61d2f7256e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 7
+  walkSpeed: 8
   sprintSpeed: 10
   slideSpeed: 30
   speedIncreaseMultiplier: 1.5
@@ -57865,7 +57868,7 @@ MonoBehaviour:
   landSound: {fileID: 8300000, guid: 8dd846573884a884f850b227391e307f, type: 3}
   footstepRate: 0.5
   fpsCam: {fileID: 8306456709186270140}
-  sprintFov: 105
+  sprintFov: 110
   changeFovSpeed: 8
   orientation: {fileID: 5352673209296848190}
   state: 0
