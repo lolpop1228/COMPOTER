@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LookAtButton : MonoBehaviour
+public class OpenVent : MonoBehaviour
 {
-    public Camera playerCamera;
+    public Camera playerCamera; 
     public GameObject uiPanel;
     public float maxDistance = 3f;
-    public string buttonTag = "Button";
+    public string ventTag = "Vent";
 
-    private void Update()
+       private void Update()
     {
         RaycastHit hit;
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
-            if (hit.collider.CompareTag(buttonTag))
+            if (hit.collider.CompareTag(ventTag))
             {
                 if (!uiPanel.activeSelf)
                 {
