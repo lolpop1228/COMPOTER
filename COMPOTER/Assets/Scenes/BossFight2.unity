@@ -19762,6 +19762,7 @@ MonoBehaviour:
   baseShakeMagnitude: 0.1
   highDamageShakeMagnitude: 0.2
   healthBar: {fileID: 3863075478671423052}
+  healsound: {fileID: 0}
 --- !u!4 &885813954451169825
 Transform:
   m_ObjectHideFlags: 0
@@ -33794,7 +33795,7 @@ Transform:
   m_GameObject: {fileID: 8772606673755837396}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.38, y: 8.5, z: 44.16}
+  m_LocalPosition: {x: 0, y: 1.759, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

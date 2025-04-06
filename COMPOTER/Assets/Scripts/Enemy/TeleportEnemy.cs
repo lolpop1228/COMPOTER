@@ -24,6 +24,8 @@ public class TeleportEnemy : MonoBehaviour
     public AudioClip teleportSound;
     [Range(0, 1)] public float patrolSoundVolume = 0.5f;
     [Range(0, 1)] public float teleportSoundVolume = 1f;
+    public AudioClip explosionSound;
+    public float explosionVolume = 1f;
 
     [Header("Animation")]
     public Animator animator;
@@ -57,6 +59,9 @@ public class TeleportEnemy : MonoBehaviour
     public GameObject healthBox;
     public GameObject ammoBox;
     [Range(0f, 1f)] public float dropChance = 0.3f;
+    [Header("Effects")]
+    public GameObject explosionEffect; // Assign a particle system prefab
+
 
     private void Start()
     {
@@ -196,10 +201,22 @@ public class TeleportEnemy : MonoBehaviour
 
     private void Die()
     {
+        // Play explosion sound
+        if (explosionSound != null)
+        {
+            AudioSource.PlayClipAtPoint(explosionSound, transform.position, explosionVolume);
+        }
+
+        // Spawn explosion particle effect
+        if (explosionEffect != null)
+        {
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        }
+
         // Drop items before destroying
         if (Random.value <= dropChance) DropItem(healthBox);
         if (Random.value <= dropChance) DropItem(ammoBox);
-        
+
         Destroy(gameObject);
     }
 

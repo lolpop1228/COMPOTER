@@ -10085,7 +10085,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10532,7 +10532,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10871,8 +10871,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: detectRange
@@ -10881,7 +10893,7 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: d4aee29185389894b9cc0d8873904a49, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
@@ -11065,7 +11077,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11418,7 +11430,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13401,7 +13413,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14024,7 +14036,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14792,13 +14804,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: maxAmmo
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: projectile
       value: 
       objectReference: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 7
@@ -14810,14 +14842,14 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
       objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: obstacleMask.m_Bits
@@ -14890,13 +14922,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: maxAmmo
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: projectile
       value: 
       objectReference: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 7
@@ -14908,14 +14960,14 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
       objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: obstacleMask.m_Bits
@@ -15363,6 +15415,124 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &938938241
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1519697502}
+    m_Modifications:
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3758523545968201386, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_Name
+      value: NormalRobot (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2649428690116513094}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: maxAmmo
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackRange
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: detectRange
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+--- !u!4 &938938242 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+  m_PrefabInstance: {fileID: 938938241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &961559789
 GameObject:
   m_ObjectHideFlags: 0
@@ -16343,7 +16513,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16983,7 +17153,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17336,7 +17506,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17854,7 +18024,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18627,13 +18797,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: maxAmmo
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: projectile
       value: 
       objectReference: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 7
@@ -18645,14 +18835,14 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
       objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: obstacleMask.m_Bits
@@ -18819,13 +19009,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: maxAmmo
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: projectile
       value: 
       objectReference: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 7
@@ -18837,14 +19047,14 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
       objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: obstacleMask.m_Bits
@@ -19096,7 +19306,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19449,7 +19659,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19953,8 +20163,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: detectRange
@@ -19963,7 +20185,7 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: d4aee29185389894b9cc0d8873904a49, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
@@ -20175,8 +20397,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: detectRange
@@ -20185,7 +20419,7 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: d4aee29185389894b9cc0d8873904a49, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
@@ -20390,6 +20624,9 @@ Transform:
   - {fileID: 843125991}
   - {fileID: 1305986265}
   - {fileID: 839113411}
+  - {fileID: 2002102208}
+  - {fileID: 1824680592}
+  - {fileID: 938938242}
   m_Father: {fileID: 1061126946}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1519697503
@@ -20405,6 +20642,104 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToActive: {fileID: 855805709}
+--- !u!1001 &1535259677
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2033649635}
+    m_Modifications:
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.202
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.117622
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3758523545968201386, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_Name
+      value: NormalRobot (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2649428690116513094}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: detectRange
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+--- !u!4 &1535259678 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+  m_PrefabInstance: {fileID: 1535259677}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1547592123
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20462,13 +20797,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: maxAmmo
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: projectile
       value: 
       objectReference: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: attackRange
       value: 7
@@ -20480,14 +20835,14 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: f01c623f724825e44a923d1ae50256f2, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
       objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: timeBetweenAttacks
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: obstacleMask.m_Bits
@@ -20574,7 +20929,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21213,6 +21568,124 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &1824680591
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1519697502}
+    m_Modifications:
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3758523545968201386, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_Name
+      value: NormalRobot (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2649428690116513094}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: maxAmmo
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackRange
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: detectRange
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+--- !u!4 &1824680592 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+  m_PrefabInstance: {fileID: 1824680591}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1856707137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21270,8 +21743,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: detectRange
@@ -21280,7 +21765,7 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: d4aee29185389894b9cc0d8873904a49, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
@@ -21691,7 +22176,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 231412e9a34cc424ebdcbb4ffcde2ba2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21973,6 +22458,124 @@ Transform:
   m_Children: []
   m_Father: {fileID: 46290227}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2002102207
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1519697502}
+    m_Modifications:
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3758523545968201386, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: m_Name
+      value: NormalRobot (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2649428690116513094}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: maxAmmo
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackAnim
+      value: QuickAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: dropChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 878140907975776315, guid: dc04bc0924bbca04a945571091078dc5, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: attackRange
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: detectRange
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+--- !u!4 &2002102208 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 173829843150844378, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+  m_PrefabInstance: {fileID: 2002102207}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2011164437
 GameObject:
   m_ObjectHideFlags: 0
@@ -22163,8 +22766,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2649428690116513094}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: ammoBox
+      value: 
+      objectReference: {fileID: 765809171772924411, guid: e26628cb8488a804ab7bf4eac088a3bb, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: healthBox
+      value: 
+      objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: dropChance
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: reloadTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: detectRange
@@ -22173,7 +22788,7 @@ PrefabInstance:
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionSound
       value: 
-      objectReference: {fileID: 8300000, guid: d4aee29185389894b9cc0d8873904a49, type: 3}
+      objectReference: {fileID: 8300000, guid: f0bba60dd1813bd40af826dbaa99b983, type: 3}
     - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
       propertyPath: explosionEffect
       value: 
@@ -22223,6 +22838,7 @@ Transform:
   m_Children:
   - {fileID: 1414715503}
   - {fileID: 1856707138}
+  - {fileID: 1535259678}
   - {fileID: 1402379391}
   - {fileID: 330768245}
   - {fileID: 2028114095}
@@ -22595,7 +23211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2649428690116513094}
-  playerHealth: {fileID: 0}
+  playerHealth: {fileID: 4044411861657018685}
   spawnPoint: {fileID: 206446398}
   damageAmount: 20
 --- !u!95 &2088025129 stripped
@@ -30071,7 +30687,7 @@ MonoBehaviour:
   maxSlideTime: 1
   slideForce: 200
   slideYScale: 0.5
-  slideCooldown: 0.5
+  slideCooldown: 0.3
   playerCamera: {fileID: 4641682688564868018}
   slideFOV: 120
   fovChangeSpeed: 10
@@ -30451,6 +31067,7 @@ MonoBehaviour:
   baseShakeMagnitude: 0.1
   highDamageShakeMagnitude: 0.2
   healthBar: {fileID: 482027135514670658}
+  healsound: {fileID: 0}
 --- !u!1 &4121452304477366191
 GameObject:
   m_ObjectHideFlags: 0

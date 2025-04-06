@@ -13,6 +13,8 @@ public class PlayerHealth : MonoBehaviour
     public float baseShakeMagnitude = 0.1f;
     public float highDamageShakeMagnitude = 0.2f; // Increased shake for 20+ damage
     public HealthBar healthBar;
+    private AudioSource audioSource;
+    public AudioClip healsound;
 
     // Start is called before the first frame update
     void Start()

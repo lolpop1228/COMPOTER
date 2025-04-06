@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoAmount: 30
+  pickupSound: {fileID: 8300000, guid: b0e62ed71b1538648b719821f4f63b4c, type: 3}
+  soundVolume: 1
 --- !u!54 &2584608572496639491
 Rigidbody:
   m_ObjectHideFlags: 0
