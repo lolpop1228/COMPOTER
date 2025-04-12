@@ -26,12 +26,15 @@ public class HomingTurret : MonoBehaviour
     public Transform explosionPoint;
     public GameObject explosionEffect;
     public AudioClip explosionSound;
+    [Header("Particle")]
+    public GameObject particleEffect;
 
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         currentHealth = maxHealth;
+        particleEffect.SetActive(false);
     }
 
     private void Update()
@@ -71,6 +74,14 @@ public class HomingTurret : MonoBehaviour
     {
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
+        if (currentHealth <= maxHealth * 0.5)
+        {
+            if (particleEffect != null)
+            {
+                particleEffect.SetActive(true);
+            }
+        }
 
         if (currentHealth <= 0f) Die();
     }

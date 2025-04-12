@@ -4,6 +4,8 @@ public class Bullet : MonoBehaviour
 {
     public GameObject impactEffect;
     public float damage = 10f;
+    private AudioSource audioSource;
+    public AudioClip bulletSound;
 
     private void Start()
     {
