@@ -19,7 +19,7 @@ public class LookAtTutorialBook : MonoBehaviour
     private void Update()
     {
         RaycastHit hit;
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward); // Cast a ray from the camera's position forward
+        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
         // Cast the ray to detect objects within maxDistance
         if (Physics.Raycast(ray, out hit, maxDistance))
