@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerHealth : MonoBehaviour
     public HealthBar healthBar;
     private AudioSource audioSource;
     public AudioClip healsound;
+    public GameObject hurtPanel; // Reference to the red screen panel
+    public float hurtScreenDuration = 0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +38,24 @@ public class PlayerHealth : MonoBehaviour
             StartCoroutine(ShakeCamera(shakeIntensity));
         }
 
+        // Show red screen briefly
+        if (hurtPanel != null)
+        {
+            hurtPanel.SetActive(true);
+            StartCoroutine(HideHurtPanel());
+        }
+
         if (currentHealth <= 0f)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             Debug.Log("Dead");
         }
+    }
+
+    IEnumerator HideHurtPanel()
+    {
+        yield return new WaitForSeconds(hurtScreenDuration);
+        hurtPanel.SetActive(false);
     }
 
     IEnumerator ShakeCamera(float magnitude)
