@@ -5452,7 +5452,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 335825525}
-  - component: {fileID: 335825526}
   - component: {fileID: 335825527}
   - component: {fileID: 335825530}
   - component: {fileID: 335825531}
@@ -5479,22 +5478,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &335825526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335825524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 380d4cb1558f9114a9bb1c0df249400c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCamera: {fileID: 1389780566327241481}
-  uiPanel: {fileID: 1734315890}
-  maxDistance: 3
-  buttonTag: Button
 --- !u!114 &335825527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10963,7 +10946,7 @@ GameObject:
   - component: {fileID: 555892523}
   - component: {fileID: 555892524}
   - component: {fileID: 555892525}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trigger
   m_TagString: Button
   m_Icon: {fileID: 0}
@@ -71741,7 +71724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cc5580dbc990a104ab8340fcc2628908, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cc5580dbc990a104ab8340fcc2628908, type: 3}
       propertyPath: m_TagString
@@ -74514,7 +74497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cc5580dbc990a104ab8340fcc2628908, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cc5580dbc990a104ab8340fcc2628908, type: 3}
       propertyPath: m_TagString
