@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
     private bool wasGrounded; // For detecting landings
 
     [Header("Slope Handling")]
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
-    Vector3 moveDirection;
+    public Vector3 moveDirection;
 
     Rigidbody rb;
 
