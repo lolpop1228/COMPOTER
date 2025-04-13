@@ -31554,6 +31554,8 @@ MonoBehaviour:
   highDamageShakeMagnitude: 0.2
   healthBar: {fileID: 3863075478671423052}
   healsound: {fileID: 0}
+  hurtPanel: {fileID: 0}
+  hurtScreenDuration: 0.3
 --- !u!4 &885813954451169825
 Transform:
   m_ObjectHideFlags: 0
@@ -39118,6 +39120,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1088
+  grounded: 0
   maxSlopeAngle: 80
   audioSource: {fileID: 895580523309698547}
   walkSound: {fileID: 8300000, guid: 4c22718dfabd13d498537044c3df808b, type: 3}
@@ -39130,6 +39133,7 @@ MonoBehaviour:
   sprintFov: 110
   changeFovSpeed: 8
   orientation: {fileID: 5352673209296848190}
+  moveDirection: {x: 0, y: 0, z: 0}
   state: 0
   sliding: 0
 --- !u!222 &4798789392482189958
@@ -40629,7 +40633,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 512
-  maxHealth: 100
+  maxHealth: 8000
   bossHealthBar: {fileID: 334084166}
   turretHolder: {fileID: 1275182538}
   attackDuration: 5
