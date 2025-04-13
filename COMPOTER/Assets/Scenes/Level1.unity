@@ -19998,7 +19998,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1706174476}
-  - {fileID: 2031530981}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &674720845
@@ -78269,13 +78268,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1706174472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a7eafedd9f5bf46af4c176400d8268, type: 3}
+  m_Script: {fileID: 11500000, guid: 6126bdb803633a7438f2fef6c71eb4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2792752854184760515}
-  playerHealth: {fileID: 0}
   spawnPoint: {fileID: 2031530981}
-  damageAmount: 0
 --- !u!1 &1731766906
 GameObject:
   m_ObjectHideFlags: 0
@@ -88925,11 +88922,11 @@ Transform:
   m_GameObject: {fileID: 2031530980}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.037867, y: -0.8910074, z: 24.802526}
+  m_LocalPosition: {x: -25.5, y: 1.4310074, z: -23.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 669756503}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2043271052
 GameObject:
@@ -94466,7 +94463,7 @@ GameObject:
   - component: {fileID: 224000558883525813}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95567,7 +95564,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &8816644752341299574
 MonoBehaviour:
@@ -95860,3 +95857,4 @@ SceneRoots:
   - {fileID: 1287059264}
   - {fileID: 1693355077}
   - {fileID: 2140074598}
+  - {fileID: 2031530981}
