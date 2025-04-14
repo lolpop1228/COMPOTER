@@ -66,6 +66,10 @@ public class PSUBoss : MonoBehaviour
     public float knockbackForce = 10f;
     public float knockbackUpwardForce = 5f;
     public float knockbackDuration = 0.5f;
+    [Header("Explosion")]
+    public GameObject explosionEffect;
+    public Transform explosionPoint;
+    public AudioClip explosionSound;
 
     private void Start()
     {
@@ -292,6 +296,27 @@ public class PSUBoss : MonoBehaviour
         DropItem(ammoBox);
         Destroy(gameObject);
     }
+
+    private void OnDestroy()
+    {
+        if (explosionEffect != null && explosionPoint != null)
+        {
+            Instantiate(explosionEffect, explosionPoint.position, Quaternion.identity);
+        }
+
+        if (explosionSound != null && explosionPoint != null)
+        {
+            GameObject soundObj = new GameObject("ExplosionSound");
+            soundObj.transform.position = explosionPoint.position;
+
+            AudioSource tempSource = soundObj.AddComponent<AudioSource>();
+            tempSource.clip = explosionSound;
+            tempSource.Play();
+
+            Destroy(soundObj, explosionSound.length);
+        }
+    }
+
 
     private void DropItem(GameObject item)
     {
