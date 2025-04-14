@@ -8,6 +8,7 @@ public class BossClear : MonoBehaviour
     public GameObject dropSpawn;
     public Animator animator;
     public string animToPlay;
+    public GameObject BGM;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class BossClear : MonoBehaviour
                 animator.Play(animToPlay);
                 bossBar.SetActive(false);
                 dropSpawn.SetActive(false);
+                BGM.SetActive(false);
             }
         }
     }
