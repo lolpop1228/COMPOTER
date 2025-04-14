@@ -6,7 +6,7 @@ public class CubeInteractDialogue : MonoBehaviour
     public float activationRange = 3f;
     private Transform playerTransform;
 
-    private bool hasActivated = false;  // Flag to track if the object has been activated
+    private bool hasActivated = false;
 
     private void Start()
     {
@@ -17,11 +17,10 @@ public class CubeInteractDialogue : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            // Only activate the object if the player is close enough and the object hasn't been activated
             if (Vector3.Distance(transform.position, playerTransform.position) <= activationRange && !hasActivated)
             {
                 SetActiveObject();
-                hasActivated = true;  // Prevent further activations
+                hasActivated = true;
             }
         }
     }
@@ -30,7 +29,7 @@ public class CubeInteractDialogue : MonoBehaviour
     {
         if (objectToActivate != null)
         {
-            objectToActivate.SetActive(true);  // Activate the object
+            objectToActivate.SetActive(true);
         }
     }
 }

@@ -5,9 +5,10 @@ using TMPro;
 public class DoorPIN : MonoBehaviour, IInteractable
 {
     public GameObject uiPIN;
+    public GameObject unlockedDialogue;
     public float activationRange = 3f;
     [SerializeField] private TMP_Text Ans;
-    private string Answer = "269";
+    private string Answer = "265";
     public PlayerMovement playerMovement;
     public CameraMovement cameraMovement;
     private bool isInteracting = false;
@@ -16,6 +17,8 @@ public class DoorPIN : MonoBehaviour, IInteractable
     public PlayableDirector playableDirector;
 
     public AudioClip successSound;
+    public AudioClip invalidSound;
+    public AudioClip clickSound;
     private AudioSource audioSource;
 
     void Start()
@@ -57,6 +60,7 @@ public class DoorPIN : MonoBehaviour, IInteractable
         if (Ans.text.Length < 3)
         {
             Ans.text += number.ToString();
+            PlaySound(clickSound);
         }
     }
 
@@ -66,13 +70,19 @@ public class DoorPIN : MonoBehaviour, IInteractable
         {
             Ans.text = "CORRECT";
             PlayTimeline();
-            PlaySuccessSound();
+            PlaySound(successSound);
             UnlockPlayerControls();
             isUnlocked = true;
+
+            if (unlockedDialogue != null)
+            {
+                unlockedDialogue.SetActive(true); 
+            }
         }
         else
         {
             Ans.text = "INVALID";
+            PlaySound(invalidSound);
             Invoke("ClearInput", 1f);
         }
     }
@@ -85,11 +95,11 @@ public class DoorPIN : MonoBehaviour, IInteractable
         }
     }
 
-    private void PlaySuccessSound()
+    private void PlaySound(AudioClip clip)
     {
-        if (audioSource != null && successSound != null)
+        if (audioSource != null && clip != null)
         {
-            audioSource.PlayOneShot(successSound);
+            audioSource.PlayOneShot(clip);
         }
     }
 

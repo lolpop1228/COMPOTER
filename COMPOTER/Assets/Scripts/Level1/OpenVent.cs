@@ -12,6 +12,7 @@ public class OpenVent : MonoBehaviour
 
     private bool hasInteractedWithLeftVent = false;
     private bool hasInteractedWithRightVent = false;
+    private bool hasShownDialogue = false;
 
     public PlayableDirector rightVentDirector;
     public PlayableDirector leftVentDirector;
@@ -76,6 +77,11 @@ public class OpenVent : MonoBehaviour
                 hasInteractedWithRightVent = true;
                 uiPanel.SetActive(false);
                 isUIPanelActive = false;
+
+                if (!hasShownDialogue)
+                {
+                    hasShownDialogue = true;
+                }
             }
 
             if (hit.collider.CompareTag("LeftVent") && Input.GetKeyDown(KeyCode.E) && !hasInteractedWithLeftVent)
@@ -85,6 +91,11 @@ public class OpenVent : MonoBehaviour
                 hasInteractedWithLeftVent = true;
                 uiPanel.SetActive(false);
                 isUIPanelActive = false;
+
+                if (!hasShownDialogue)
+                {
+                    hasShownDialogue = true;
+                }
             }
         }
         else
