@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Playables;
 
 public class GPUBoss : MonoBehaviour
 {
@@ -55,11 +56,27 @@ public class GPUBoss : MonoBehaviour
     private int lastAttackIndex = -1;
     private bool hasActivated = false;
 
+    [Header("Audio Settings")]
+    private AudioSource audioSource;
+    public AudioClip mainAttackSound;
+    public AudioClip sideAttackSound;
+    public AudioClip bigAttackSound;
+    public AudioClip activateSound;
+    public AudioClip dieSound;
+    public GameObject BGM;
+    [Header("Explosion Settings")]
+    public GameObject explosionEffectPrefab;
+    public AudioClip explosionSound;
+    public Transform explosionPoint;
+    [Header("Ending")]
+    public PlayableDirector endingDialouge;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
+        audioSource = GetComponent<AudioSource>();
 
         PlayIdleAnimation();
     }
@@ -73,6 +90,10 @@ public class GPUBoss : MonoBehaviour
         {
             hasActivated = true;
             StartCoroutine(ActivateAndStartAttack());
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(activateSound);
+            }
         }
     }
 
@@ -209,6 +230,10 @@ public class GPUBoss : MonoBehaviour
             // Instantiate at selected points
             Instantiate(prefab1, point1.position, point1.rotation);
             Instantiate(prefab2, point2.position, point2.rotation);
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(mainAttackSound);
+            }
 
             yield return new WaitForSeconds(mainSpawnInterval);
         }
@@ -217,12 +242,20 @@ public class GPUBoss : MonoBehaviour
     void StartLeftAttack()
     {
         animator.Play("LeftAttack");
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(sideAttackSound);
+        }
         leftAttackRoutine = StartCoroutine(SideAttackRoutine(leftAttackPrefabs, leftAttackPoints, leftSpawnDelay));
     }
 
     void StartRightAttack()
     {
         animator.Play("RightAttack");
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(sideAttackSound);
+        }
         rightAttackRoutine = StartCoroutine(SideAttackRoutine(rightAttackPrefabs, rightAttackPoints, rightSpawnDelay));
     }
 
@@ -245,13 +278,15 @@ public class GPUBoss : MonoBehaviour
     IEnumerator BigAttackRoutine()
     {
         animator.Play("BigAttack");
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(bigAttackSound);
+        }
         Instantiate(bigAttackPrefab, bigAttackPoint.position, bigAttackPoint.rotation);
         bigAttackPlatforms.SetActive(true);
 
         yield return new WaitForSeconds(5f); // Platform duration
         bigAttackPlatforms.SetActive(false);
-
-        yield return new WaitForSeconds(attackCooldown); // Optional cooldown, or let main loop handle
     }
     #endregion
 
@@ -275,8 +310,45 @@ public class GPUBoss : MonoBehaviour
     void Die()
     {
         animator.Play("Die");
+        BGM.SetActive(false);
         StopAllCoroutines();
-        Destroy(gameObject, 3f);
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(dieSound);
+        }
+        Destroy(gameObject, 9f);
+    }
+
+    void EndingScene()
+    {
+        if (endingDialouge != null)
+        {
+            endingDialouge.Play();
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Explosion effect at a specific point
+        if (explosionEffectPrefab != null && explosionPoint != null)
+        {
+            Instantiate(explosionEffectPrefab, explosionPoint.position, explosionPoint.rotation);
+        }
+        else if (explosionEffectPrefab != null)
+        {
+            Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
+        }
+
+        // Explosion sound (separate audio object so it doesn't get cut off)
+        if (explosionSound != null)
+        {
+            GameObject soundObj = new GameObject("ExplosionSound");
+            AudioSource tempAudio = soundObj.AddComponent<AudioSource>();
+            tempAudio.clip = explosionSound;
+            tempAudio.Play();
+            Destroy(soundObj, explosionSound.length);
+        }
+        EndingScene();
     }
 
     void PlayIdleAnimation()

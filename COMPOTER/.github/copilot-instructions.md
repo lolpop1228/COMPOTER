@@ -4,11 +4,11 @@
 - Active scene:
   - Name: BossFight2
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Enemy, ThrowObject, Breaker, Box, Button, TutorialBook, RightVent, LeftVent, Key
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Enemy, ThrowObject, Breaker, Box, Button, TutorialBook, RightVent, LeftVent
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable, EnemyArea, Pillar
 - Active game object:
-  - Name: BOSSGPU
+  - Name: BGM
   - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
