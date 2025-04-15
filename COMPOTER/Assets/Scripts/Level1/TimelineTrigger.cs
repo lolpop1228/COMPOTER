@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class OuterDoorOpens : MonoBehaviour
+public class TimelineTrigger : MonoBehaviour
 {
     public PlayableDirector playableDirector;
     public AudioClip doorSound;
