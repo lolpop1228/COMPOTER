@@ -8,11 +8,13 @@ public class Button : MonoBehaviour
     public string animToPlay1;
     public string animToPlay2;
     public GameObject[] objectsToEnable;
+    private AudioSource audioSource;
+    public AudioClip pressSound;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,6 +30,11 @@ public class Button : MonoBehaviour
             if (doorAnim != null)
             {
                 doorAnim.Play(animToPlay1);
+            }
+
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(pressSound);
             }
 
             if (objectsToEnable[0] != null)
