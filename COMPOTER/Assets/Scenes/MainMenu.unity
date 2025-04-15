@@ -10461,32 +10461,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52d4261673519a4e94fc61d2f7256e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  runSpeed: 7
+  walkSpeed: 0
+  sprintSpeed: 0
+  slideSpeed: 0
+  speedIncreaseMultiplier: 0
+  slopeIncreaseMultiplier: 0
   groundDrag: 5
   jumpForce: 10
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 0
+  crouchYScale: 0
   jumpKey: 32
   sprintKey: 304
+  crouchKey: 306
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  orientation: {fileID: 5814664624971831190}
-  cameraHolder: {fileID: 882994010961567907}
-  bobbingSpeed: 14
-  bobbingAmount: 0.03
-  bobLerpSpeed: 8
-  footstepSource: {fileID: 145186264653393985}
-  footstepClips:
-  - {fileID: 8300000, guid: 6c55998353e231d48911f7afd45d2720, type: 3}
-  - {fileID: 8300000, guid: 4c22718dfabd13d498537044c3df808b, type: 3}
-  walkStepInterval: 0.5
-  runStepInterval: 0.3
+  grounded: 0
+  maxSlopeAngle: 0
   audioSource: {fileID: 145186264653393985}
+  walkSound: {fileID: 0}
+  sprintSound: {fileID: 0}
+  crouchSound: {fileID: 0}
   jumpSound: {fileID: 8300000, guid: 12caadb1b697fe446a493645164ad639, type: 3}
   landSound: {fileID: 8300000, guid: 8dd846573884a884f850b227391e307f, type: 3}
+  footstepRate: 0.5
+  fpsCam: {fileID: 0}
+  sprintFov: 100
+  changeFovSpeed: 8
+  orientation: {fileID: 5814664624971831190}
+  moveDirection: {x: 0, y: 0, z: 0}
+  state: 0
+  sliding: 0
 --- !u!224 &2836017254382589691
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10996,6 +11004,7 @@ MonoBehaviour:
   reloadTime: 2.5
   isReloading: 0
   muzzleFlash: {fileID: 5950945279355142353}
+  audioSource: {fileID: 0}
   fireSound: {fileID: 8300000, guid: 68a6a5550c5475e49a6232994d1dd7c7, type: 3}
   reloadSound: {fileID: 8300000, guid: 12caadb1b697fe446a493645164ad639, type: 3}
   cameraTransform: {fileID: 882994010961567907}
@@ -16679,7 +16688,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  healthText: {fileID: 4346448257652095152}
+  cameraTransform: {fileID: 0}
+  shakeDuration: 0.1
+  baseShakeMagnitude: 0.1
+  highDamageShakeMagnitude: 0.2
+  healthBar: {fileID: 0}
+  healsound: {fileID: 0}
+  hurtPanel: {fileID: 0}
+  hurtScreenDuration: 0.3
 --- !u!114 &6936813117505492591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17043,6 +17059,7 @@ MonoBehaviour:
   reloadTime: 2
   isReloading: 0
   muzzleFlash: {fileID: 246159117906301026}
+  audioSource: {fileID: 0}
   fireSound: {fileID: 8300000, guid: 68a6a5550c5475e49a6232994d1dd7c7, type: 3}
   reloadSound: {fileID: 8300000, guid: 12caadb1b697fe446a493645164ad639, type: 3}
   cameraTransform: {fileID: 882994010961567907}
@@ -17578,7 +17595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &8986719791380531012
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class OpenCutscene : MonoBehaviour
     public GameObject objectToEnable1;
     public GameObject objectToEnable2; // UI Text
     public GameObject objectToEnable3;
+    public GameObject objectToEnable4;
     public float delayBeforeActivate = 1f; // Delay before making objectToEnable2 active
     public float fadeDuration = 1f; // Duration of the fade effect
 
@@ -35,6 +36,11 @@ public class OpenCutscene : MonoBehaviour
         {
             objectToEnable3.SetActive(false);
         }
+
+        if (objectToEnable4 != null)
+        {
+            objectToEnable4.SetActive(false);
+        }
     }
 
     void OnTimelineEnd(PlayableDirector director)
@@ -59,6 +65,11 @@ public class OpenCutscene : MonoBehaviour
         if (objectToEnable3 != null)
         {
             objectToEnable3.SetActive(true);
+        }
+
+        if (objectToEnable4 != null)
+        {
+            objectToEnable4.SetActive(false);
         }
 
         // Unsubscribe from the event to prevent multiple calls
