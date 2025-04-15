@@ -4098,6 +4098,14 @@ PrefabInstance:
       propertyPath: sceneToGo
       value: GunFight3
       objectReference: {fileID: 0}
+    - target: {fileID: 1594817040537611355, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: fadeAnimator
+      value: 
+      objectReference: {fileID: 1988904060}
+    - target: {fileID: 1594817040537611355, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: fadeAnimationName
+      value: WhiteFadeIn
+      objectReference: {fileID: 0}
     - target: {fileID: 2098801649753067592, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
       propertyPath: m_Name
       value: Portal
@@ -8345,6 +8353,130 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1001 &1988904057
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587434615703299295, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423534408578066988, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      propertyPath: m_Name
+      value: WarpScreen
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6423534408578066988, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1988904059}
+  m_SourcePrefab: {fileID: 100100000, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+--- !u!1 &1988904058 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6423534408578066988, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+  m_PrefabInstance: {fileID: 1988904057}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1988904059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988904058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e28c86fd7f5a44cadd2a3906064467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1988904060}
+  animToPlay: WhiteFadeOut
+--- !u!95 &1988904060 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2118622802988243316, guid: a5789278eb4a70942b77ffaa49a4bd4b, type: 3}
+  m_PrefabInstance: {fileID: 1988904057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2021127818
 GameObject:
   m_ObjectHideFlags: 0
@@ -9285,3 +9417,4 @@ SceneRoots:
   - {fileID: 1922455113}
   - {fileID: 780666200}
   - {fileID: 707225693}
+  - {fileID: 1988904057}
