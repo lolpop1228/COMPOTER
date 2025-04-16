@@ -5,6 +5,7 @@ public class TriggerData : MonoBehaviour, IInteractable
 {
     public PlayableDirector playableDirector;
     public AudioClip soundEffect;
+    public AudioClip moreSoundEffect;
     private bool hasTriggered = false;
     public AudioSource audioSource;
 
@@ -14,6 +15,7 @@ public class TriggerData : MonoBehaviour, IInteractable
         {
             playableDirector.Play();
             audioSource.PlayOneShot(soundEffect);
+            audioSource.PlayOneShot(moreSoundEffect);
             hasTriggered = true;
             Destroy(gameObject);
         }
