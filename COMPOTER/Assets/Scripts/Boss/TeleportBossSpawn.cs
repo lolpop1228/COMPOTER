@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportBossSpawn : MonoBehaviour, IInteractable
+public class TeleportBossSpawn : MonoBehaviour
 {
     public Transform teleportPoint;
     public Transform player;
     public GameObject[] objectToEnable;
-
-    public void Interact()
-    {
-        BossTeleport();
-    }
 
     void Start()
     {
@@ -21,6 +16,14 @@ public class TeleportBossSpawn : MonoBehaviour, IInteractable
             {
                 obj.SetActive(false);
             }
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            BossTeleport();
         }
     }
 
