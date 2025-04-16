@@ -5,15 +5,22 @@ public class ResetButton : MonoBehaviour, IInteractable
 {
     public TextMeshProUGUI uiText;
     private GameManager gameManager;
+    public AudioClip interactionSound;
+    private AudioSource audioSource;
 
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Interact()
     {
-        // Reset the binary input in GameManager
+        if (interactionSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(interactionSound);
+        }
+        
         gameManager.ResetBinaryInput();
     }
 }

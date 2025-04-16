@@ -16,7 +16,13 @@ public class uiTrigger : MonoBehaviour
     {
         if (Vector3.Distance(player.position, transform.position) <= triggerDistance)
         {
-            uiBinary.SetActive(true);
+            if (!uiBinary.activeSelf)
+                uiBinary.SetActive(true);
+        }
+        else
+        {
+            if (uiBinary.activeSelf)
+                uiBinary.SetActive(false);
         }
     }
 }

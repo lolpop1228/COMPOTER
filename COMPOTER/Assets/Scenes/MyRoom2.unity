@@ -766,7 +766,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 100663295
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1177,7 +1177,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Objective:
 
-    - Sit on your chair and turn the pc on'
+    - Turn the PC on and then sit on your chair'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1876,32 +1876,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52d4261673519a4e94fc61d2f7256e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  runSpeed: 7
+  walkSpeed: 0
+  sprintSpeed: 0
+  slideSpeed: 0
+  speedIncreaseMultiplier: 0
+  slopeIncreaseMultiplier: 0
   groundDrag: 5
   jumpForce: 10
   jumpCooldown: 0.25
   airMultiplier: 0.4
+  crouchSpeed: 0
+  crouchYScale: 0
   jumpKey: 32
   sprintKey: 304
+  crouchKey: 306
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  orientation: {fileID: 7717429223488975008}
-  cameraHolder: {fileID: 8308569387399242286}
-  bobbingSpeed: 14
-  bobbingAmount: 0.03
-  bobLerpSpeed: 8
-  footstepSource: {fileID: 3885793910121913724}
-  footstepClips:
-  - {fileID: 8300000, guid: 6c55998353e231d48911f7afd45d2720, type: 3}
-  - {fileID: 8300000, guid: 4c22718dfabd13d498537044c3df808b, type: 3}
-  walkStepInterval: 0.5
-  runStepInterval: 0.3
+  grounded: 0
+  maxSlopeAngle: 0
   audioSource: {fileID: 3885793910121913724}
+  walkSound: {fileID: 0}
+  sprintSound: {fileID: 0}
+  crouchSound: {fileID: 0}
   jumpSound: {fileID: 0}
   landSound: {fileID: 0}
+  footstepRate: 0.5
+  fpsCam: {fileID: 0}
+  sprintFov: 100
+  changeFovSpeed: 8
+  orientation: {fileID: 7717429223488975008}
+  moveDirection: {x: 0, y: 0, z: 0}
+  state: 0
+  sliding: 0
 --- !u!82 &3885793910121913724
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2040,6 +2048,8 @@ MonoBehaviour:
   sensX: 400
   sensY: 400
   orientation: {fileID: 7717429223488975008}
+  sensXSlider: {fileID: 0}
+  sensYSlider: {fileID: 0}
 --- !u!1 &5959548219518232039
 GameObject:
   m_ObjectHideFlags: 0

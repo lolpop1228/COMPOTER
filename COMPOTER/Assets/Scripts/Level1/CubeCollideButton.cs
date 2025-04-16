@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Playables;
-using TMPro;  // Make sure to include this for TextMeshPro
+using TMPro;
 
 public class ButtonTrigger : MonoBehaviour
 {
@@ -10,8 +10,6 @@ public class ButtonTrigger : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip collisionSound1;
     public AudioClip collisionSound2;
-    public GameObject textToDeactivate;
-    public GameObject textToActivate;
 
     private void Start()
     {
@@ -37,8 +35,6 @@ public class ButtonTrigger : MonoBehaviour
             playableDirector.Play();
             buttonRenderer.enabled = false;
             newButton.SetActive(true);
-            textToDeactivate.SetActive(false);
-            textToActivate.SetActive(true);
 
             GetComponent<Collider>().enabled = false;
         }

@@ -5,10 +5,9 @@ using TMPro;
 public class DoorPIN : MonoBehaviour, IInteractable
 {
     public GameObject uiPIN;
-    public GameObject unlockedDialogue;
     public float activationRange = 3f;
     [SerializeField] private TMP_Text Ans;
-    private string Answer = "265";
+    private string Answer = "254";
     public PlayerMovement playerMovement;
     public CameraMovement cameraMovement;
     private bool isInteracting = false;
@@ -73,11 +72,6 @@ public class DoorPIN : MonoBehaviour, IInteractable
             PlaySound(successSound);
             UnlockPlayerControls();
             isUnlocked = true;
-
-            if (unlockedDialogue != null)
-            {
-                unlockedDialogue.SetActive(true); 
-            }
         }
         else
         {
