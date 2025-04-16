@@ -1,14 +1,16 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Playables;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI uiText;
     public GameObject altar;
-
+    public PlayableDirector playableDirector;
     private string binaryInput = "";
     private readonly string[] targetSequence = { "01010000", "01010011", "01010101" };
+    // "01010000", "01010011", "01010101"
     private int currentTargetIndex = 0;
 
     // Method to update the UI when a cube collides with the button
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
             if (currentTargetIndex == targetSequence.Length)
             {
                 altar.SetActive(true);
+                playableDirector.Play();
                 uiText.text = "Puzzle complete!";
             }
             else
