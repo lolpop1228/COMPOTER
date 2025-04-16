@@ -5,6 +5,7 @@ using UnityEngine;
 public class ClearEnemyBGMOff : MonoBehaviour
 {
     public GameObject BGM;
+    public GameObject ambient;
     private bool canControlBGM = true;
 
     // Start is called before the first frame update
@@ -21,6 +22,11 @@ public class ClearEnemyBGMOff : MonoBehaviour
             if (BGM != null)
             {
                 BGM.SetActive(false);
+            }
+
+            if (ambient != null)
+            {
+                ambient.SetActive(true);
             }
         }
     }
