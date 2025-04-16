@@ -946,7 +946,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ff7863468f5950648bccfbd33ccbac34, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5549,7 +5549,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: aadc76126ebccb64b9b8ce655c7acf75, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -13070,7 +13070,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ff7863468f5950648bccfbd33ccbac34, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -34107,7 +34107,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: aadc76126ebccb64b9b8ce655c7acf75, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -51713,12 +51713,12 @@ MonoBehaviour:
   maxAmmo: 10
   currentAmmo: 0
   reserveAmmo: 30
-  reloadTime: 2
+  reloadTime: 1
   isReloading: 0
   muzzleFlash: {fileID: 4268770044255514552}
   audioSource: {fileID: 2303222366223558899}
   fireSound: {fileID: 8300000, guid: 68a6a5550c5475e49a6232994d1dd7c7, type: 3}
-  reloadSound: {fileID: 8300000, guid: 12caadb1b697fe446a493645164ad639, type: 3}
+  reloadSound: {fileID: 8300000, guid: 54da2d9ed1f83e04088a6c66ce99bcb9, type: 3}
   cameraTransform: {fileID: 5740552065152619842}
   shakeDuration: 0.1
   shakeMagnitude: 0.08
@@ -58182,7 +58182,7 @@ MonoBehaviour:
   muzzleFlash: {fileID: 6749933275476485666}
   audioSource: {fileID: 294231762978041144}
   fireSound: {fileID: 8300000, guid: 0f7cc8e6f3bb7f644bbf8823f08412e9, type: 3}
-  reloadSound: {fileID: 8300000, guid: 12caadb1b697fe446a493645164ad639, type: 3}
+  reloadSound: {fileID: 8300000, guid: 0eb93ffa9a21c9147bb74519065e9343, type: 3}
   cameraTransform: {fileID: 5740552065152619842}
   shakeDuration: 0.1
   shakeMagnitude: 0.05
