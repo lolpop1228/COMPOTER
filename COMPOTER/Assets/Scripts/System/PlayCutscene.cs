@@ -9,7 +9,6 @@ public class TimelineAutoPlayer : MonoBehaviour
 
     void OnEnable()
     {
-        director.Play();
         Time.timeScale = 1.0f;
     }
 }

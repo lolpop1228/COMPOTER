@@ -6493,7 +6493,6 @@ MonoBehaviour:
   objectTags:
   - RightVent
   - LeftVent
-  dialogueUI: {fileID: 2069459293}
   rightVentDirector: {fileID: 1586378550}
   leftVentDirector: {fileID: 1615010965}
   rightVentSound: {fileID: 8300000, guid: 0cc3fe3ef97ec1f4eaef9e143c56352a, type: 3}
@@ -56958,6 +56957,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866101085}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &869358657
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2098801649753067592, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_Name
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0893605
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.113
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777417748467682006, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 863983acca47ec34b9e190b4dec69062, type: 3}
 --- !u!1 &891763470
 GameObject:
   m_ObjectHideFlags: 0
@@ -95531,6 +95587,7 @@ MonoBehaviour:
   objectToEnable1: {fileID: 8187941536131572298}
   objectToEnable2: {fileID: 2140074593}
   objectToEnable3: {fileID: 0}
+  objectToEnable4: {fileID: 0}
   delayBeforeActivate: 2
   fadeDuration: 1
 --- !u!1 &2111146683 stripped
@@ -96923,7 +96980,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 90
   orthographic: 0
@@ -99249,10 +99306,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 7717429223488975008}
   playerObj: {fileID: 2792752854184760515}
-  maxSlideTime: 0.75
+  maxSlideTime: 1
   slideForce: 200
   slideYScale: 0.5
-  slideCooldown: 1
+  slideCooldown: 0.3
   playerCamera: {fileID: 1389780566327241481}
   slideFOV: 120
   fovChangeSpeed: 8
@@ -99938,3 +99995,4 @@ SceneRoots:
   - {fileID: 1693355077}
   - {fileID: 2140074598}
   - {fileID: 1631908683}
+  - {fileID: 869358657}
