@@ -6,6 +6,8 @@ public class ButtonToAnim : MonoBehaviour
 {
     public Animator animator;
     public string animToPlay;
+    private AudioSource audioSource;
+    public AudioClip pressSound;
 
     void OnCollisionEnter(Collision collision)
     {
@@ -14,6 +16,11 @@ public class ButtonToAnim : MonoBehaviour
             if (animator != null)
             {
                 animator.Play(animToPlay);
+            }
+
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(pressSound);
             }
         }
     }

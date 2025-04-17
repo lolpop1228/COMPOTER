@@ -6,6 +6,14 @@ public class KeyPad : MonoBehaviour
 {
     public Animator doorAnim;
     public string animToPlay;
+    private AudioSource audioSource;
+    public AudioClip activateSound;
+    public AudioClip doorSound;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -14,6 +22,12 @@ public class KeyPad : MonoBehaviour
             if (doorAnim != null)
             {
                 doorAnim.Play(animToPlay);
+            }
+
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(activateSound);
+                audioSource.PlayOneShot(doorSound);
             }
         }
     }
