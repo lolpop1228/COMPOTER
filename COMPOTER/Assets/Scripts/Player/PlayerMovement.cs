@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
+
+    public float fallThreshold = -50f;
 
     public float groundDrag;
 
@@ -117,6 +120,17 @@ public class PlayerMovement : MonoBehaviour
             PlaySound(landSound);
         }
         wasGrounded = grounded;
+
+        if (transform.position.y < fallThreshold)
+        {
+            ReloadScene();
+        }
+    }
+
+    void ReloadScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 
     private void HandleFOV()
