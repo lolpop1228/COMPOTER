@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
             {
                 altar.SetActive(true);
                 playableDirector.Play();
-                uiText.text = "COMPLETED";
+                uiText.text = "COMPLETE";
             }
             else
             {

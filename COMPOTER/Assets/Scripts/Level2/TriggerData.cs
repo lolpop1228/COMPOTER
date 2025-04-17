@@ -8,6 +8,7 @@ public class TriggerData : MonoBehaviour, IInteractable
     public AudioClip moreSoundEffect;
     private bool hasTriggered = false;
     public AudioSource audioSource;
+    public GameObject dialoguePanel;
 
     public void Interact()
     {
@@ -18,6 +19,7 @@ public class TriggerData : MonoBehaviour, IInteractable
             audioSource.PlayOneShot(moreSoundEffect);
             hasTriggered = true;
             Destroy(gameObject);
+            dialoguePanel.SetActive(true);
         }
     }
 }
