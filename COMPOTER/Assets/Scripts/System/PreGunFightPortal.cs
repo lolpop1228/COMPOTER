@@ -7,14 +7,11 @@ public class PreGunFightPortal : MonoBehaviour
     public string animationToPlay;
     public Animator animator;
 
-    void Start()
+    void OnEnable()
     {
-        StartCoroutine(PlayAnimationAfterDelay(18f));
-    }
-
-    private IEnumerator PlayAnimationAfterDelay(float delayTime)
-    {
-        yield return new WaitForSeconds(delayTime);
-        animator.Play(animationToPlay);
+        if (animator != null)
+        {
+            animator.Play(animationToPlay);
+        }
     }
 }
