@@ -44,15 +44,15 @@ public class GPUBoss : MonoBehaviour
     public GameObject bigAttackPlatforms;
 
     [Header("Item Drop Settings")]
-    public GameObject[] healthBoxPrefabs;  // Multiple health box prefabs
-    public GameObject[] ammoBoxPrefabs;    // Multiple ammo box prefabs
-    public Transform[] itemSpawnPoints;    // Multiple spawn points
+    public GameObject[] healthBoxPrefabs;
+    public GameObject[] ammoBoxPrefabs;
+    public Transform[] itemSpawnPoints;
     public float minSpawnInterval = 15f;
     public float maxSpawnInterval = 30f;
     private Coroutine itemSpawnRoutine;
 
     [Header("Attack Timing Settings")]
-    public float attackCooldown = 5f; // Delay between each attack
+    public float attackCooldown = 5f;
     private int lastAttackIndex = -1;
     private bool hasActivated = false;
 
@@ -64,10 +64,12 @@ public class GPUBoss : MonoBehaviour
     public AudioClip activateSound;
     public AudioClip dieSound;
     public GameObject BGM;
+
     [Header("Explosion Settings")]
     public GameObject explosionEffectPrefab;
     public AudioClip explosionSound;
     public Transform explosionPoint;
+
     [Header("Ending")]
     public PlayableDirector endingDialouge;
 
@@ -85,7 +87,7 @@ public class GPUBoss : MonoBehaviour
     {
         if (player == null || isAttacking || hasActivated) return;
 
-        if (turretHolder.transform.childCount <= 0 && 
+        if (turretHolder.transform.childCount <= 0 &&
             Vector3.Distance(transform.position, player.position) <= detectionRange)
         {
             hasActivated = true;
@@ -99,11 +101,11 @@ public class GPUBoss : MonoBehaviour
 
     IEnumerator ActivateAndStartAttack()
     {
-        animator.Play("Activate"); // Make sure you have an "Activate" animation in Animator
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length); // Wait for animation to finish
+        animator.Play("Activate");
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
         StartAttackSequence();
-        itemSpawnRoutine = StartCoroutine(ItemSpawnRoutine()); // Start item spawn loop
+        itemSpawnRoutine = StartCoroutine(ItemSpawnRoutine());
     }
 
     void StartAttackSequence()
@@ -139,7 +141,6 @@ public class GPUBoss : MonoBehaviour
                     break;
             }
 
-            // Wait for duration unless BigAttack already waited
             if (attackIndex != 3)
             {
                 yield return new WaitForSeconds(attackDuration);
@@ -147,29 +148,19 @@ public class GPUBoss : MonoBehaviour
 
             StopAllAttackRoutines();
             yield return new WaitForSeconds(attackCooldown);
-
-            if (Vector3.Distance(transform.position, player.position) > detectionRange)
-            {
-                isAttacking = false;
-                PlayIdleAnimation();
-                hasActivated = false; // optional reset
-                yield break;
-            }
         }
     }
 
     int WeightedAttackSelection()
     {
-        // Weights: Main, Left, Right, Big
-        int[] weights = { 4, 4, 4, 1 }; // Big attack is less likely (1/13 total weight)
+        int[] weights = { 4, 4, 4, 1 };
         int totalWeight = weights.Sum();
 
-        // Create a list of possible indices, excluding the last used one
         var validIndices = new System.Collections.Generic.List<int>();
 
         for (int i = 0; i < weights.Length; i++)
         {
-            if (i != lastAttackIndex || weights[i] == 1) // Allow rare Big Attack to occasionally repeat
+            if (i != lastAttackIndex || weights[i] == 1)
             {
                 for (int j = 0; j < weights[i]; j++)
                 {
@@ -209,11 +200,9 @@ public class GPUBoss : MonoBehaviour
                 .OrderBy(point => Vector3.Distance(player.position, point.position))
                 .ToArray();
 
-            // Get the two closest points
             Transform point1 = sortedPoints[0];
             Transform point2 = sortedPoints[1];
 
-            // 50% chance to use the closest point, otherwise pick a random one
             if (Random.value > 0.5f)
             {
                 point1 = mainAttackPoints[Random.Range(0, mainAttackPoints.Length)];
@@ -223,11 +212,9 @@ public class GPUBoss : MonoBehaviour
                 point2 = mainAttackPoints[Random.Range(0, mainAttackPoints.Length)];
             }
 
-            // Select random attack prefabs
             GameObject prefab1 = mainAttackPrefabs[Random.Range(0, mainAttackPrefabs.Length)];
             GameObject prefab2 = mainAttackPrefabs[Random.Range(0, mainAttackPrefabs.Length)];
 
-            // Instantiate at selected points
             Instantiate(prefab1, point1.position, point1.rotation);
             Instantiate(prefab2, point2.position, point2.rotation);
             if (audioSource != null)
@@ -261,7 +248,7 @@ public class GPUBoss : MonoBehaviour
 
     IEnumerator SideAttackRoutine(GameObject[] prefabs, Transform[] points, float delay)
     {
-        if (prefabs.Length == 0 || points.Length == 0) 
+        if (prefabs.Length == 0 || points.Length == 0)
             yield break;
 
         while (true)
@@ -285,14 +272,13 @@ public class GPUBoss : MonoBehaviour
         Instantiate(bigAttackPrefab, bigAttackPoint.position, bigAttackPoint.rotation);
         bigAttackPlatforms.SetActive(true);
 
-        yield return new WaitForSeconds(5f); // Platform duration
+        yield return new WaitForSeconds(5f);
         bigAttackPlatforms.SetActive(false);
     }
     #endregion
 
     public void TakeDamage(float amount)
     {
-        // Check if the turret holder has no children before allowing damage
         if (turretHolder.transform.childCount == 0)
         {
             currentHealth -= amount;
@@ -329,7 +315,6 @@ public class GPUBoss : MonoBehaviour
 
     void OnDestroy()
     {
-        // Explosion effect at a specific point
         if (explosionEffectPrefab != null && explosionPoint != null)
         {
             Instantiate(explosionEffectPrefab, explosionPoint.position, explosionPoint.rotation);
@@ -339,7 +324,6 @@ public class GPUBoss : MonoBehaviour
             Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
         }
 
-        // Explosion sound (separate audio object so it doesn't get cut off)
         if (explosionSound != null)
         {
             GameObject soundObj = new GameObject("ExplosionSound");
@@ -362,7 +346,6 @@ public class GPUBoss : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 
-    // 🔹 Randomly Spawn Items
     IEnumerator ItemSpawnRoutine()
     {
         while (true)
@@ -372,14 +355,11 @@ public class GPUBoss : MonoBehaviour
             if (healthBoxPrefabs.Length == 0 || ammoBoxPrefabs.Length == 0 || itemSpawnPoints.Length == 0)
                 yield break;
 
-            // Pick a random item type (health or ammo)
             GameObject[] selectedArray = (Random.value > 0.5f) ? healthBoxPrefabs : ammoBoxPrefabs;
             GameObject itemToSpawn = selectedArray[Random.Range(0, selectedArray.Length)];
 
-            // Pick a random spawn point
             Transform spawnPoint = itemSpawnPoints[Random.Range(0, itemSpawnPoints.Length)];
 
-            // Spawn the item
             Instantiate(itemToSpawn, spawnPoint.position, spawnPoint.rotation);
         }
     }
