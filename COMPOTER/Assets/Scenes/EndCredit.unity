@@ -2258,6 +2258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1084282502}
   - component: {fileID: 1084282503}
+  - component: {fileID: 1084282504}
   m_Layer: 0
   m_Name: CutScene
   m_TagString: Untagged
@@ -2297,6 +2298,19 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References: []
+--- !u!114 &1084282504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084282501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7d4b9ff243f9b49a75f316312c9426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  director: {fileID: 1084282503}
 --- !u!1 &1092190518
 GameObject:
   m_ObjectHideFlags: 0

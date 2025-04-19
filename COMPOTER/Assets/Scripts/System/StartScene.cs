@@ -11,6 +11,7 @@ public class StartScene : MonoBehaviour
     void Start()
     {
         animator.Play(animToPlay);
+        Time.timeScale = 1.0f;
     }
 
     // Update is called once per frame

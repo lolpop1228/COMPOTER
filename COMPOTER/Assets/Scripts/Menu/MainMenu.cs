@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     public GameObject menu;
     public GameObject controls;
     public GameObject credits;
+    public GameObject playCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class MainMenu : MonoBehaviour
         settings.SetActive(false);
         controls.SetActive(false);
         credits.SetActive(false);
+        playCheck.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,11 +35,24 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
     }
 
+    public void PlayCheck()
+    {
+        playCheck.SetActive(true);
+        settings.SetActive(false);
+        controls.SetActive(false);
+        credits.SetActive(false);
+    }
+    public void ClosePlayCheck()
+    {
+        playCheck.SetActive(false);
+    }
+
     public void Settings()
     {
         settings.SetActive(true);
         controls.SetActive(false);
         credits.SetActive(false);
+        playCheck.SetActive(false);
     }
 
     public void CloseSettings()
@@ -50,6 +65,7 @@ public class MainMenu : MonoBehaviour
         controls.SetActive(true);
         settings.SetActive(false);
         credits.SetActive(false);
+        playCheck.SetActive(false);
     }
 
     public void CloseControls()
@@ -62,6 +78,7 @@ public class MainMenu : MonoBehaviour
         credits.SetActive(true);
         controls.SetActive(false);
         settings.SetActive(false);
+        playCheck.SetActive(false);
     }
 
     public void CloseCredits()

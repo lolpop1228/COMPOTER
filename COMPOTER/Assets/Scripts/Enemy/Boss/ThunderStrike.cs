@@ -56,7 +56,7 @@ public class ThunderStrike : MonoBehaviour
         }
 
         // Destroy the ThunderStrike object after explosion
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject);
         Destroy(explosion, 2f);
     }
 

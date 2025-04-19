@@ -27,14 +27,6 @@ public class DoorPIN : MonoBehaviour, IInteractable
 
     void Update()
     {
-        if (!isUnlocked && Vector3.Distance(transform.position, playerMovement.transform.position) < activationRange)
-        {
-            if (Input.GetKeyDown(KeyCode.E) && !isInteracting)
-            {
-                Interact();
-            }
-        }
-
         if (isInteracting && Input.GetKeyDown(KeyCode.Backspace))
         {
             UnlockPlayerControls();

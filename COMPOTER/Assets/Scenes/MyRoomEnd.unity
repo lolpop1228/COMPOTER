@@ -4257,6 +4257,7 @@ GameObject:
   - component: {fileID: 1032344693}
   - component: {fileID: 1032344694}
   - component: {fileID: 1032344695}
+  - component: {fileID: 1032344696}
   m_Layer: 0
   m_Name: CutsceneManager
   m_TagString: Untagged
@@ -4323,6 +4324,19 @@ MonoBehaviour:
   objectToEnable4: {fileID: 1895409700}
   delayBeforeActivate: 1
   fadeDuration: 1
+--- !u!114 &1032344696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032344692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7d4b9ff243f9b49a75f316312c9426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  director: {fileID: 1032344694}
 --- !u!1 &1160790762 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -516098083770646512, guid: 853b0907b55cd70458fc65785a384b6b, type: 3}
@@ -15431,6 +15445,7 @@ MonoBehaviour:
   slideSpeed: 30
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
+  fallThreshold: -50
   groundDrag: 4
   jumpForce: 10
   jumpCooldown: 0.25

@@ -2426,6 +2426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 746037138}
   - component: {fileID: 746037139}
+  - component: {fileID: 746037140}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2466,6 +2467,19 @@ MonoBehaviour:
   scriptToDisable:
   - {fileID: 3701846194418053432}
   isPaused: 0
+--- !u!114 &746037140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746037137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7d4b9ff243f9b49a75f316312c9426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  director: {fileID: 1032344694}
 --- !u!43 &856325183
 Mesh:
   m_ObjectHideFlags: 0
@@ -14979,6 +14993,7 @@ MonoBehaviour:
   slideSpeed: 30
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
+  fallThreshold: -50
   groundDrag: 4
   jumpForce: 10
   jumpCooldown: 0.25

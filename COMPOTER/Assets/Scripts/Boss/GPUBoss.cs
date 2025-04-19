@@ -153,7 +153,7 @@ public class GPUBoss : MonoBehaviour
 
     int WeightedAttackSelection()
     {
-        int[] weights = { 4, 4, 4, 1 };
+        int[] weights = { 6, 3, 3, 1 };
         int totalWeight = weights.Sum();
 
         var validIndices = new System.Collections.Generic.List<int>();
