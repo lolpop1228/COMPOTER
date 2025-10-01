@@ -264,7 +264,19 @@ public class ProjectileEnemy : MonoBehaviour
     {
         if (item != null)
         {
-            Vector3 dropPosition = transform.position + new Vector3(Random.Range(-1f, 1f), 0.5f, Random.Range(-1f, 1f));
+            // Random offset around enemy
+            Vector3 dropPosition = transform.position + new Vector3(Random.Range(-1f, 1f), 1f, Random.Range(-1f, 1f));
+
+            // Raycast downward to find ground
+            if (Physics.Raycast(dropPosition, Vector3.down, out RaycastHit hit, 10f, groundLayer))
+            {
+                dropPosition = hit.point; // Place on ground
+            }
+            else
+            {
+                dropPosition.y = transform.position.y; // Fallback
+            }
+
             Instantiate(item, dropPosition, Quaternion.identity);
         }
     }

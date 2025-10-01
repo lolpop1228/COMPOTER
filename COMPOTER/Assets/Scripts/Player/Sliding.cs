@@ -1,23 +1,24 @@
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
 public class Sliding : MonoBehaviour
 {
     [Header("References")]
     public Transform orientation;
-    public Transform playerObj;
-    private Rigidbody rb;
     private PlayerMovement pm;
+    private CharacterController controller;
 
     [Header("Sliding")]
-    public float maxSlideTime;
-    public float slideForce;
+    public float maxSlideTime = 1f;
+    public float slideSpeed = 12f;
     private float slideTimer;
 
-    public float slideYScale;
-    private float startYScale;
+    public float slideHeight = 1f; // CharacterController height when sliding
+    private float standHeight;
+    private Vector3 standCenter;
 
     [Header("Cooldown")]
-    public float slideCooldown = 1f; // Cooldown duration in seconds
+    public float slideCooldown = 1f; 
     private float cooldownTimer;
     private bool isOnCooldown;
 
@@ -32,15 +33,17 @@ public class Sliding : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
-    // Audio
+    [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip slideSound;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
-        startYScale = playerObj.localScale.y;
+        controller = GetComponent<CharacterController>();
+
+        standHeight = controller.height;
+        standCenter = controller.center;
 
         if (playerCamera != null)
             normalFOV = playerCamera.fieldOfView;
@@ -51,17 +54,15 @@ public class Sliding : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // Update cooldown timer
+        // Update cooldown
         if (isOnCooldown)
         {
             cooldownTimer -= Time.deltaTime;
-            if (cooldownTimer <= 0f)
-                isOnCooldown = false;
+            if (cooldownTimer <= 0f) isOnCooldown = false;
         }
 
         if (Input.GetKeyDown(slideKey))
         {
-            // Only start slide if not already sliding, not on cooldown, and has movement input
             if (!pm.sliding && !isOnCooldown && (horizontalInput != 0 || verticalInput != 0))
                 StartSlide();
         }
@@ -69,57 +70,59 @@ public class Sliding : MonoBehaviour
         if (Input.GetKeyUp(slideKey) && pm.sliding)
             StopSlide();
 
-        // Smooth FOV transition
+        // Smooth FOV
         if (playerCamera != null)
         {
             float targetFOV = pm.sliding ? slideFOV : normalFOV;
             playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovChangeSpeed);
         }
+
+        // Auto-stop if timer runs out
+        if (pm.sliding)
+        {
+            slideTimer -= Time.deltaTime;
+            if (slideTimer <= 0) StopSlide();
+        }
     }
 
     private void FixedUpdate()
     {
-        if (pm.sliding)
-            SlidingMovement();
+        if (pm.sliding) SlidingMovement();
     }
 
     private void StartSlide()
     {
         pm.sliding = true;
-        isOnCooldown = false; // Reset cooldown when starting new slide
 
-        audioSource.PlayOneShot(slideSound);
-        playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
-        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        if (audioSource && slideSound)
+            audioSource.PlayOneShot(slideSound);
+
+        // Adjust CharacterController for slide
+        controller.height = slideHeight;
+        controller.center = new Vector3(standCenter.x, slideHeight / 2f, standCenter.z);
 
         slideTimer = maxSlideTime;
     }
 
     private void SlidingMovement()
     {
-        Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        if (inputDir.magnitude < 0.1f) inputDir = orientation.forward; // force slide forward if no input
 
-        if (!pm.OnSlope() || rb.velocity.y > -0.1f)
-        {
-            rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
-            slideTimer -= Time.deltaTime;
-        }
-        else
-        {
-            rb.AddForce(pm.GetSlopeMoveDirection(inputDirection) * slideForce, ForceMode.Force);
-        }
-
-        if (slideTimer <= 0)
-            StopSlide();
+        // Apply CharacterController movement
+        Vector3 slideMove = inputDir.normalized * slideSpeed * Time.fixedDeltaTime;
+        controller.Move(slideMove + Vector3.up * pm.verticalVelocity * Time.fixedDeltaTime); // integrate vertical movement
     }
 
     private void StopSlide()
     {
         pm.sliding = false;
-        audioSource.Stop();
-        playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
-        
-        // Start cooldown when slide ends
+
+        // Reset CharacterController height
+        controller.height = standHeight;
+        controller.center = standCenter;
+
+        // Start cooldown
         isOnCooldown = true;
         cooldownTimer = slideCooldown;
     }

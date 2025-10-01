@@ -10,9 +10,6 @@ public class HeadBobbing : MonoBehaviour
     public float walkBobSpeed = 8f;
     public float walkBobAmount = 0.05f;
 
-    public float sprintBobSpeed = 14f;
-    public float sprintBobAmount = 0.1f;
-
     public float crouchBobSpeed = 4f;
     public float crouchBobAmount = 0.025f;
 
@@ -32,7 +29,7 @@ public class HeadBobbing : MonoBehaviour
         if (playerMovement == null || cameraHolder == null)
             return;
 
-        // Determine if the player is moving and grounded
+        // Moving only when input + grounded
         bool isMoving = playerMovement.moveDirection.magnitude > 0.1f && playerMovement.grounded;
 
         if (isMoving)
@@ -40,29 +37,31 @@ public class HeadBobbing : MonoBehaviour
             float bobSpeed = walkBobSpeed;
             float bobAmount = walkBobAmount;
 
-            switch (playerMovement.state)
+            if (playerMovement.state == PlayerMovement.MovementState.crouching)
             {
-                case PlayerMovement.MovementState.sprinting:
-                    bobSpeed = sprintBobSpeed;
-                    bobAmount = sprintBobAmount;
-                    break;
-                case PlayerMovement.MovementState.crouching:
-                    bobSpeed = crouchBobSpeed;
-                    bobAmount = crouchBobAmount;
-                    break;
+                bobSpeed = crouchBobSpeed;
+                bobAmount = crouchBobAmount;
             }
 
             timer += Time.deltaTime * bobSpeed;
             float bobOffset = Mathf.Sin(timer) * bobAmount;
-            Vector3 newPos = new Vector3(cameraHolder.localPosition.x, defaultYPos + bobOffset, cameraHolder.localPosition.z);
+            Vector3 newPos = new Vector3(
+                cameraHolder.localPosition.x,
+                defaultYPos + bobOffset,
+                cameraHolder.localPosition.z
+            );
             cameraHolder.localPosition = newPos;
         }
         else
         {
-            // Always return to default position smoothly
-            Vector3 targetPosition = new Vector3(cameraHolder.localPosition.x, defaultYPos, cameraHolder.localPosition.z);
+            // Reset smoothly to default position
+            Vector3 targetPosition = new Vector3(
+                cameraHolder.localPosition.x,
+                defaultYPos,
+                cameraHolder.localPosition.z
+            );
             cameraHolder.localPosition = Vector3.Lerp(cameraHolder.localPosition, targetPosition, Time.deltaTime * 6f);
-            timer = 0f; // Reset timer so bob starts clean next time
+            timer = 0f;
         }
     }
 }

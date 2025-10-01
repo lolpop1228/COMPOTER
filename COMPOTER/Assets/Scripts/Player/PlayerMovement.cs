@@ -1,83 +1,78 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    private float moveSpeed;
-    public float walkSpeed;
-    public float sprintSpeed;
-    public float slideSpeed;
+    public float walkSpeed = 6f;
+    public float crouchSpeed = 3f;
+    public float slideSpeed = 12f;
 
+    private float moveSpeed;
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
 
-    public float speedIncreaseMultiplier;
-    public float slopeIncreaseMultiplier;
+    public float speedIncreaseMultiplier = 2f;
+    public float slopeIncreaseMultiplier = 2f;
 
-    public float fallThreshold = -50f;
+    [Header("Jumping & Gravity")]
+    public float jumpHeight = 2f;
+    public float gravity = -20f;
+    public float verticalVelocity;
+    private bool readyToJump = true;
+    public float jumpCooldown = 0.2f;
 
-    public float groundDrag;
-
-    [Header("Jumping")]
-    public float jumpForce;
-    public float jumpCooldown;
-    public float airMultiplier;
-    bool readyToJump;
+    [Header("Ground Check")]
+    public float playerHeight = 2f;
+    public LayerMask whatIsGround;
+    public bool grounded;
+    private bool wasGrounded;
 
     [Header("Crouching")]
-    public float crouchSpeed;
-    public float crouchYScale;
+    public float crouchYScale = 0.5f;
     private float startYScale;
+    public KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode sprintKey = KeyCode.LeftShift;
-    public KeyCode crouchKey = KeyCode.LeftControl;
 
-    [Header("Ground Check")]
-    public float playerHeight;
-    public LayerMask whatIsGround;
-    public bool grounded;
-    private bool wasGrounded; // For detecting landings
+    [Header("FOV")]
+    public Camera fpsCam;
+    private float normalFov;
+    public float changeFovSpeed = 8f;
 
-    [Header("Slope Handling")]
-    public float maxSlopeAngle;
-    private RaycastHit slopeHit;
-    private bool exitingSlope;
-    
     [Header("Sounds")]
     public AudioSource audioSource;
     public AudioClip walkSound;
-    public AudioClip sprintSound;
     public AudioClip crouchSound;
     public AudioClip jumpSound;
     public AudioClip landSound;
 
+    [Header("Crouching")]
+    public float crouchHeight = 1f; // Height when crouching
+    private float standHeight;
+    private Vector3 standCenter;
+
     private float footstepTimer;
     public float footstepRate = 0.5f;
 
-    public Camera fpsCam;
-    public float sprintFov = 100;
-    private float normalFov;
-    public float changeFovSpeed = 8f;
-
+    private CharacterController controller;
     public Transform orientation;
 
     float horizontalInput;
     float verticalInput;
-
     public Vector3 moveDirection;
 
-    Rigidbody rb;
+    // 🔹 New smoothed velocity
+    private Vector3 currentVelocity;
+    public float smoothMoveSpeed = 10f; // Higher = snappier, lower = smoother
 
     public MovementState state;
     public enum MovementState
     {
         walking,
-        sprinting,
         crouching,
         sliding,
         air
@@ -87,61 +82,42 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-
-        readyToJump = true;
-
+        controller = GetComponent<CharacterController>();
         startYScale = transform.localScale.y;
-
-        if (fpsCam != null)
-        {
-            normalFov = fpsCam.fieldOfView;
-        }
+        if (fpsCam != null) normalFov = fpsCam.fieldOfView;
+        standHeight = controller.height;
+        standCenter = controller.center;
     }
 
     private void Update()
     {
-        // Ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
+        GroundCheck();
         MyInput();
-        SpeedControl();
         StateHandler();
         HandleMovementSounds();
-        HandleFOV(); // New method for handling FOV changes
+        HandleFOV();
 
-        // Handle drag
-        rb.drag = grounded ? groundDrag : 0;
+        // Apply gravity
+        if (grounded && verticalVelocity < 0)
+            verticalVelocity = -2f; // stick to ground
+        verticalVelocity += gravity * Time.deltaTime;
 
-        // Landing sound
+        // 🔹 Smooth velocity blending
+        Vector3 targetVelocity = moveDirection * moveSpeed;
+        currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, Time.deltaTime * smoothMoveSpeed);
+
+        // Apply final move
+        Vector3 velocity = currentVelocity + Vector3.up * verticalVelocity;
+        controller.Move(velocity * Time.deltaTime);
+
         if (!wasGrounded && grounded)
-        {
             PlaySound(landSound);
-        }
+
         wasGrounded = grounded;
 
-        if (transform.position.y < fallThreshold)
-        {
+        // Respawn if fall
+        if (transform.position.y < -50f)
             ReloadScene();
-        }
-    }
-
-    void ReloadScene()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
-    }
-
-    private void HandleFOV()
-    {
-        float targetFOV = (state == MovementState.sprinting) ? sprintFov : normalFov;
-        fpsCam.fieldOfView = Mathf.Lerp(fpsCam.fieldOfView, targetFOV, Time.deltaTime * changeFovSpeed);
-    }
-
-    private void FixedUpdate()
-    {
-        MovePlayer();
     }
 
     private void MyInput()
@@ -149,25 +125,27 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // Jumping
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        moveDirection = (orientation.forward * verticalInput + orientation.right * horizontalInput).normalized;
+
+        // Jump
+        if (Input.GetKey(jumpKey) && grounded && readyToJump)
         {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        // Crouching
+        // Crouch
         if (Input.GetKeyDown(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            controller.height = crouchHeight;
+            controller.center = new Vector3(standCenter.x, crouchHeight / 2f, standCenter.z);
             PlaySound(crouchSound);
         }
-
         if (Input.GetKeyUp(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            controller.height = standHeight;
+            controller.center = standCenter;
         }
     }
 
@@ -176,17 +154,12 @@ public class PlayerMovement : MonoBehaviour
         if (sliding)
         {
             state = MovementState.sliding;
-            desiredMoveSpeed = (OnSlope() && rb.velocity.y < 0.1f) ? slideSpeed : sprintSpeed;
+            desiredMoveSpeed = slideSpeed;
         }
         else if (Input.GetKey(crouchKey))
         {
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
-        }
-        else if (grounded && Input.GetKey(sprintKey))
-        {
-            state = MovementState.sprinting;
-            desiredMoveSpeed = sprintSpeed;
         }
         else if (grounded)
         {
@@ -198,6 +171,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.air;
         }
 
+        // Smooth transition for speed
         if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
         {
             StopAllCoroutines();
@@ -220,103 +194,43 @@ public class PlayerMovement : MonoBehaviour
         while (time < difference)
         {
             moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
-
-            if (OnSlope())
-            {
-                float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
-                float slopeAngleIncrease = 1 + (slopeAngle / 90f);
-                time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
-            }
-            else
-            {
-                time += Time.deltaTime * speedIncreaseMultiplier;
-            }
-
+            time += Time.deltaTime * speedIncreaseMultiplier;
             yield return null;
         }
 
         moveSpeed = desiredMoveSpeed;
     }
 
-    private void MovePlayer()
+    private void GroundCheck()
     {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-        if (OnSlope() && !exitingSlope)
-        {
-            rb.AddForce(GetSlopeMoveDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
-            if (rb.velocity.y > 0)
-                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-        }
-        else if (grounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        }
-        else if (!grounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-        }
-
-        rb.useGravity = !OnSlope();
-    }
-
-    private void SpeedControl()
-    {
-        if (OnSlope() && !exitingSlope)
-        {
-            if (rb.velocity.magnitude > moveSpeed)
-                rb.velocity = rb.velocity.normalized * moveSpeed;
-        }
-        else
-        {
-            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            if (flatVel.magnitude > moveSpeed)
-            {
-                Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-            }
-        }
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
     }
 
     private void Jump()
     {
-        exitingSlope = true;
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
         PlaySound(jumpSound);
     }
 
     private void ResetJump()
     {
         readyToJump = true;
-        exitingSlope = false;
     }
 
-    public bool OnSlope()
+    private void HandleFOV()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
-        {
-            float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return angle < maxSlopeAngle && angle != 0;
-        }
-        return false;
-    }
-
-    public Vector3 GetSlopeMoveDirection(Vector3 direction)
-    {
-        return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+        // Only uses normal FOV now
+        fpsCam.fieldOfView = Mathf.Lerp(fpsCam.fieldOfView, normalFov, Time.deltaTime * changeFovSpeed);
     }
 
     private void HandleMovementSounds()
     {
-        if (grounded && moveDirection.magnitude > 0)
+        if (grounded && moveDirection.magnitude > 0.1f)
         {
-            float currentFootstepRate = state == MovementState.sprinting ? footstepRate * 0.5f : footstepRate;
-
             if (footstepTimer <= 0)
             {
                 PlaySound(walkSound);
-                footstepTimer = currentFootstepRate;
+                footstepTimer = footstepRate;
             }
             else
             {
@@ -328,8 +242,12 @@ public class PlayerMovement : MonoBehaviour
     private void PlaySound(AudioClip clip)
     {
         if (clip != null && audioSource)
-        {
             audioSource.PlayOneShot(clip);
-        }
+    }
+
+    private void ReloadScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 }

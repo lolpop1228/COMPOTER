@@ -2164,7 +2164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6a3c76954d2c1ad4394999d233db82d0, type: 3}
       propertyPath: m_Layer
-      value: 12
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6a3c76954d2c1ad4394999d233db82d0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -51038,6 +51038,9 @@ MonoBehaviour:
     m_Bits: 1088
   grounded: 0
   maxSlopeAngle: 80
+  wallDetectionRange: 0.6
+  wallStickForce: 20
+  wallStickAngle: 75
   audioSource: {fileID: 895580523309698547}
   walkSound: {fileID: 8300000, guid: 4c22718dfabd13d498537044c3df808b, type: 3}
   sprintSound: {fileID: 8300000, guid: 4c22718dfabd13d498537044c3df808b, type: 3}

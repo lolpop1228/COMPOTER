@@ -2,33 +2,73 @@ using UnityEngine;
 
 public class AmmoPickup : MonoBehaviour
 {
+    [Header("Ammo Settings")]
     public int ammoAmount = 15; // Amount of ammo to add
-    public AudioClip pickupSound; // Assign this in the Inspector
+    public AudioClip pickupSound;
     public float soundVolume = 1f;
 
-    private GunController rifle; // Reference to the gun
+    [Header("Pickup Attraction Settings")]
+    public float attractionRange = 5f;   // Distance at which pickup starts moving toward player
+    public float attractionSpeed = 8f;   // Speed of movement toward player
+    public float pickupDistance = 1f;    // Distance to auto-pickup if close
+
+    private GunController rifle;
+    private Transform player;
+
+    private void Start()
+    {
+        rifle = FindObjectOfType<GunController>();
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
+    }
 
     private void Update()
     {
-        rifle = FindObjectOfType<GunController>(); // Find the gun in the scene
+        if (player == null) return;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        // If within attraction range, move toward player
+        if (distance <= attractionRange)
+        {
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                player.position,
+                attractionSpeed * Time.deltaTime
+            );
+        }
+
+        // Auto-pickup when close enough
+        if (distance <= pickupDistance)
+        {
+            CollectAmmo();
+        }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void CollectAmmo()
     {
-        if (collision.gameObject.CompareTag("Player")) // Check if the object has the Player tag
+        if (rifle != null)
         {
-            if (rifle != null)
-            {
-                rifle.AddReserveAmmo(ammoAmount); // Apply ammo change directly to GunController
-            }
+            rifle.AddReserveAmmo(ammoAmount);
+        }
 
-            // Play sound without cutting off on destroy
-            if (pickupSound != null)
-            {
-                AudioSource.PlayClipAtPoint(pickupSound, transform.position, soundVolume);
-            }
+        if (pickupSound != null)
+        {
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position, soundVolume);
+        }
 
-            Destroy(gameObject); // Destroy the pickup after collecting
+        Destroy(gameObject);
+    }
+
+    // Optional: keep trigger support for walking over it
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            CollectAmmo();
         }
     }
 }

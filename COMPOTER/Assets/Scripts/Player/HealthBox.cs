@@ -1,36 +1,74 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthBox : MonoBehaviour
 {
-    public float healthAmount = 20;
-    public AudioClip healingSound; // Add this in the Inspector
+    [Header("Health Settings")]
+    public float healthAmount = 20f;
+    public AudioClip healingSound;
     public float soundVolume = 1f;
 
+    [Header("Pickup Attraction Settings")]
+    public float attractionRange = 5f;   // Distance at which pickup starts moving toward player
+    public float attractionSpeed = 8f;   // Speed of movement toward player
+    public float pickupDistance = 1f;    // Distance to auto-pickup if close
+
     private PlayerHealth playerHealth;
+    private Transform player;
 
     void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+        }
     }
 
-    void OnCollisionEnter(Collision collision)
+    void Update()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (player == null) return;
+
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        // If within attraction range, move toward player
+        if (distance <= attractionRange)
         {
-            if (playerHealth != null)
-            {
-                playerHealth.HealPlayer(healthAmount);
-            }
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                player.position,
+                attractionSpeed * Time.deltaTime
+            );
+        }
 
-            // Play healing sound at this position, allow it to finish
-            if (healingSound != null)
-            {
-                AudioSource.PlayClipAtPoint(healingSound, transform.position, soundVolume);
-            }
+        // Auto-pickup when close enough
+        if (distance <= pickupDistance)
+        {
+            CollectHealth();
+        }
+    }
 
-            Destroy(gameObject);
+    private void CollectHealth()
+    {
+        if (playerHealth != null)
+        {
+            playerHealth.HealPlayer(healthAmount);
+        }
+
+        if (healingSound != null)
+        {
+            AudioSource.PlayClipAtPoint(healingSound, transform.position, soundVolume);
+        }
+
+        Destroy(gameObject);
+    }
+
+    // Optional: also allow pickup via trigger (if using colliders set as trigger)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            CollectHealth();
         }
     }
 }

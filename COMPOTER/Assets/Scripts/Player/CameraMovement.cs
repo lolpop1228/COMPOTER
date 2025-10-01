@@ -14,6 +14,9 @@ public class CameraMovement : MonoBehaviour
     public Slider sensXSlider;
     public Slider sensYSlider;
 
+    // Reference to recoil script
+    private CameraRecoil cameraRecoil;
+
     private void Start()
     {
         HideMouseCursor();
@@ -29,9 +32,12 @@ public class CameraMovement : MonoBehaviour
             sensXSlider.onValueChanged.AddListener(UpdateSensX);
             sensYSlider.onValueChanged.AddListener(UpdateSensY);
         }
+
+        // Get the CameraRecoil component if it exists
+        cameraRecoil = GetComponent<CameraRecoil>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
@@ -41,21 +47,32 @@ public class CameraMovement : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        // Get recoil offset if the component exists
+        Vector3 recoilOffset = Vector3.zero;
+        if (cameraRecoil != null)
+        {
+            recoilOffset = cameraRecoil.GetRecoilOffset();
+        }
 
+        // Apply mouse look + recoil offset
+        transform.localRotation = Quaternion.Euler(
+            xRotation + recoilOffset.x, 
+            yRotation + recoilOffset.y, 
+            recoilOffset.z
+        );
+        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
     public void UpdateSensX(float newSensX)
     {
         sensX = newSensX;
-        PlayerPrefs.SetFloat("SensX", sensX); // Save the new sensitivity
+        PlayerPrefs.SetFloat("SensX", sensX);
     }
 
     public void UpdateSensY(float newSensY)
     {
         sensY = newSensY;
-        PlayerPrefs.SetFloat("SensY", sensY); // Save the new sensitivity
+        PlayerPrefs.SetFloat("SensY", sensY);
     }
 
     public void HideMouseCursor()

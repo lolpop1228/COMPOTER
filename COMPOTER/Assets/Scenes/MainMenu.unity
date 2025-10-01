@@ -3410,7 +3410,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: V.5
+  m_text: 'V.6
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 639d3e33e7a2bb042b482eb6736456dd, type: 2}
   m_sharedMaterial: {fileID: 6374421340624540812, guid: 639d3e33e7a2bb042b482eb6736456dd, type: 2}
@@ -11834,6 +11836,9 @@ MonoBehaviour:
     m_Bits: 64
   grounded: 0
   maxSlopeAngle: 0
+  wallDetectionRange: 0.6
+  wallStickForce: 20
+  wallStickAngle: 75
   audioSource: {fileID: 145186264653393985}
   walkSound: {fileID: 0}
   sprintSound: {fileID: 0}

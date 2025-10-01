@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Import TextMeshPro
+using TMPro;
 using System.Collections;
 
 public class GunController : MonoBehaviour
@@ -16,6 +16,7 @@ public class GunController : MonoBehaviour
     public int maxAmmo = 10;
     public int currentAmmo;
     public int reserveAmmo = 30;
+    public int maxReserveAmmo = 90; // 🔹 Maximum reserve you can carry
     public float reloadTime = 2f;
     public bool isReloading = false;
 
@@ -26,17 +27,29 @@ public class GunController : MonoBehaviour
     public AudioClip reloadSound;
     private Animator animator;
 
-    [Header("Camera Shake Settings")]
-    public Transform cameraTransform;
-    public float shakeDuration = 0.1f;
-    public float shakeMagnitude = 0.1f;
+    [Header("Camera Recoil Settings")]
+    public CameraRecoil cameraRecoil;
+
+    // Expose all recoil variables from CameraRecoil
+    public float recoilX = 2f;
+    public float recoilY = 1f;
+    public float recoilZ = 0.5f;
+
+    public float recoilSpeed = 10f;
+    public float returnSpeed = 5f;
+    public float maxRecoil = 15f;
+
+    public AnimationCurve recoilCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    public float recoilDecay = 3f;
+    public float randomnessFactor = 0.3f;
+
+    public float weaponRecoilMultiplier = 1f;
 
     [Header("UI Elements")]
-    public TextMeshProUGUI ammoText; // Reference for the UI text
+    public TextMeshProUGUI ammoText;
     public GameObject ammmoTextObject;
 
     private float nextTimeToFire;
-    private Vector3 originalCameraPosition; // Save the original camera position
 
     private void Start()
     {
@@ -45,16 +58,28 @@ public class GunController : MonoBehaviour
         currentAmmo = maxAmmo;
         UpdateAmmoUI();
 
-        // Save the original camera position for camera shake reset
-        if (cameraTransform != null)
+        // 🔹 Apply recoil settings to the CameraRecoil script
+        if (cameraRecoil != null)
         {
-            originalCameraPosition = cameraTransform.localPosition;
+            cameraRecoil.SetWeaponRecoil(recoilX, recoilY, recoilZ, weaponRecoilMultiplier);
+            cameraRecoil.recoilSpeed = recoilSpeed;
+            cameraRecoil.returnSpeed = returnSpeed;
+            cameraRecoil.maxRecoil = maxRecoil;
+            cameraRecoil.recoilCurve = recoilCurve;
+            cameraRecoil.recoilDecay = recoilDecay;
+            cameraRecoil.randomnessFactor = randomnessFactor;
         }
     }
 
     private void Update()
     {
         if (isReloading) return;
+
+        if (currentAmmo <= 0 && reserveAmmo > 0)
+        {
+            StartCoroutine(Reload());
+            return;
+        }
 
         if (isAutomatic)
         {
@@ -90,32 +115,29 @@ public class GunController : MonoBehaviour
         if (currentAmmo <= 0) return;
 
         currentAmmo--;
-        UpdateAmmoUI(); // Update UI
+        UpdateAmmoUI();
 
         if (animator != null)
-        {
             animator.SetTrigger("Fire");
-        }
 
         if (audioSource != null && fireSound != null)
-        {
             audioSource.PlayOneShot(fireSound);
-        }
 
-        muzzleFlash.Play();
+        if (muzzleFlash != null)
+            muzzleFlash.Play();
 
-        // Adjust spawn position slightly forward to prevent collision with player
         Vector3 spawnPosition = muzzlePoint.position + muzzlePoint.forward * 0.5f;
         GameObject bullet = Instantiate(bulletPrefab, spawnPosition, muzzlePoint.rotation);
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         if (rb != null)
-        {
             rb.velocity = muzzlePoint.forward * bulletSpeed;
-        }
 
         Destroy(bullet, 2f);
-        StartCoroutine(CameraShake());
+
+        // 🔹 Apply recoil when shooting
+        if (cameraRecoil != null)
+            cameraRecoil.FireRecoil();
     }
 
     IEnumerator Reload()
@@ -123,14 +145,10 @@ public class GunController : MonoBehaviour
         isReloading = true;
 
         if (animator != null)
-        {
             animator.SetTrigger("Reload");
-        }
 
         if (audioSource != null && reloadSound != null)
-        {
             audioSource.PlayOneShot(reloadSound);
-        }
 
         yield return new WaitForSeconds(reloadTime);
 
@@ -140,52 +158,35 @@ public class GunController : MonoBehaviour
         currentAmmo += ammoToReload;
         reserveAmmo -= ammoToReload;
 
+        // 🔹 Ensure reserve never exceeds cap
+        reserveAmmo = Mathf.Clamp(reserveAmmo, 0, maxReserveAmmo);
+
         isReloading = false;
-        UpdateAmmoUI(); // Update UI after reloading
-    }
-
-    IEnumerator CameraShake()
-    {
-        if (cameraTransform == null) yield break;
-
-        Vector3 originalPosition = originalCameraPosition; // Use saved original position
-        float elapsedTime = 0f;
-
-        while (elapsedTime < shakeDuration)
-        {
-            float x = Random.Range(-1f, 1f) * shakeMagnitude;
-            float y = Random.Range(-1f, 1f) * shakeMagnitude;
-
-            cameraTransform.localPosition = originalPosition + new Vector3(x, y, 0);
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        cameraTransform.localPosition = originalPosition; // Reset to original position
+        UpdateAmmoUI();
     }
 
     public void UpdateAmmoUI()
     {
         if (ammoText != null)
-        {
             ammoText.text = $"{currentAmmo} / {reserveAmmo}";
-        }
     }
 
     void OnEnable()
     {
-        ammmoTextObject.SetActive(true);
+        if (ammmoTextObject != null)
+            ammmoTextObject.SetActive(true);
     }
 
     void OnDisable()
     {
-        ammmoTextObject.SetActive(false);
+        if (ammmoTextObject != null)
+            ammmoTextObject.SetActive(false);
     }
 
+    // 🔹 Add ammo but clamp to max reserve
     public void AddReserveAmmo(int amount)
     {
-        reserveAmmo += amount;
+        reserveAmmo = Mathf.Min(reserveAmmo + amount, maxReserveAmmo);
         UpdateAmmoUI();
     }
 }
