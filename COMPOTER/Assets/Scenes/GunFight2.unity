@@ -8059,8 +8059,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a7eafedd9f5bf46af4c176400d8268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerHealth: {fileID: 0}
+  player: {fileID: 1850015280}
+  playerHealth: {fileID: 1850015272}
   spawnPoint: {fileID: 1115316358}
   damageAmount: 20
 --- !u!82 &274365533
@@ -39845,6 +39845,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849297625}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1850015272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6135659309253268276, guid: df9620a3341617d4b9c2359a157c042d, type: 3}
+  m_PrefabInstance: {fileID: 1420182692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d6093c7a679e27458df445c95a88761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1850015280 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3283586489918282001, guid: df9620a3341617d4b9c2359a157c042d, type: 3}
+  m_PrefabInstance: {fileID: 1420182692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1869464200
 Mesh:
   m_ObjectHideFlags: 0
