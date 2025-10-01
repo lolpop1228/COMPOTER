@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TeleportBossSpawn : MonoBehaviour
@@ -8,8 +6,13 @@ public class TeleportBossSpawn : MonoBehaviour
     public Transform player;
     public GameObject[] objectToEnable;
 
+    private CharacterController playerController;
+
     void Start()
     {
+        if (player != null)
+            playerController = player.GetComponent<CharacterController>();
+
         foreach (GameObject obj in objectToEnable)
         {
             if (obj != null)
@@ -27,11 +30,30 @@ public class TeleportBossSpawn : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            BossTeleport();
+        }
+    }
+
     public void BossTeleport()
     {
         if (player != null && teleportPoint != null)
         {
-            player.position = teleportPoint.position;
+            if (playerController != null)
+            {
+                // Disable CharacterController before teleport
+                playerController.enabled = false;
+                player.position = teleportPoint.position;
+                playerController.enabled = true;
+            }
+            else
+            {
+                // If no CharacterController, just move normally
+                player.position = teleportPoint.position;
+            }
 
             foreach (GameObject obj in objectToEnable)
             {
