@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         wasGrounded = grounded;
 
         // Respawn if fall
-        if (transform.position.y < -50f)
+        if (transform.position.y < -100f)
             ReloadScene();
     }
 
