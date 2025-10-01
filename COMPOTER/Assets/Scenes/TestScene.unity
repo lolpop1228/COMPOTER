@@ -3310,6 +3310,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: NormalRobot (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: chaseSpeed
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: detectRange
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: patrolRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174190462408652407, guid: 66e1246485a0b434eb668ba282f4e9f7, type: 3}
+      propertyPath: patrolSpeed
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
