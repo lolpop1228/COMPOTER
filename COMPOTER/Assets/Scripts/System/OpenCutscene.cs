@@ -13,6 +13,7 @@ public class OpenCutscene : MonoBehaviour
     public GameObject objectToEnable4;
     public float delayBeforeActivate = 1f; // Delay before making objectToEnable2 active
     public float fadeDuration = 1f; // Duration of the fade effect
+    public MonoBehaviour[] scriptToEnable;
 
     private void Start()
     {
@@ -40,6 +41,11 @@ public class OpenCutscene : MonoBehaviour
         if (objectToEnable4 != null)
         {
             objectToEnable4.SetActive(false);
+        }
+
+        foreach (MonoBehaviour script in scriptToEnable)
+        {
+            script.enabled = false;
         }
     }
 
@@ -70,6 +76,11 @@ public class OpenCutscene : MonoBehaviour
         if (objectToEnable4 != null)
         {
             objectToEnable4.SetActive(false);
+        }
+
+        foreach (MonoBehaviour script in scriptToEnable)
+        {
+            script.enabled = true;
         }
 
         // Unsubscribe from the event to prevent multiple calls
