@@ -10,24 +10,24 @@ public class PSUBoss : MonoBehaviour
     public float patrolRange = 10f;
     public float detectRange = 15f;
     public float attackRange = 5f;
-    public float meleeRange = 2f; // Added melee range
+    public float meleeRange = 2f;
     public float timeBetweenAttacks = 1f;
-    public float meleeDamage = 20f; // Added melee damage
-    public float meleeCooldown = 2f; // Added melee cooldown
+    public float meleeDamage = 20f;
+    public float meleeCooldown = 2f;
     public GameObject projectile;
     public float bulletSpeed = 100f;
 
     private Vector3 patrolPoint;
     private bool patrolPointSet;
     private bool alreadyAttacked;
-    private bool canMelee = true; // Added melee cooldown check
+    private bool canMelee = true;
 
     public Animator animator;
     public string patrolAnim;
     public string attackAnim;
     public string chaseAnim;
     public string reloadAnim;
-    public string meleeAnim; // Added melee animation
+    public string meleeAnim;
 
     // Ammo System
     public int maxAmmo = 10;
@@ -52,7 +52,7 @@ public class PSUBoss : MonoBehaviour
     public AudioClip fireSound;
     public AudioClip patrolSound;
     public AudioClip chaseSound;
-    public AudioClip meleeSound; // Added melee sound
+    public AudioClip meleeSound;
 
     private string currentState = "";
     public GameObject BossHpBar;
@@ -63,9 +63,11 @@ public class PSUBoss : MonoBehaviour
     private bool isSpawning = false;
     public Transform spawnTransform;
 
+    // Knockback
     public float knockbackForce = 10f;
     public float knockbackUpwardForce = 5f;
     public float knockbackDuration = 0.5f;
+
     [Header("Explosion")]
     public GameObject explosionEffect;
     public Transform explosionPoint;
@@ -82,6 +84,7 @@ public class PSUBoss : MonoBehaviour
         {
             Debug.LogError("FirePoint is not assigned in " + gameObject.name);
         }
+
         currentHealth = maxHealth;
         if (bossHealthBar != null)
         {
@@ -109,22 +112,20 @@ public class PSUBoss : MonoBehaviour
         if (!playerInDetectRange && !playerInAttackRange)
         {
             Patrol();
-            ChangeState(patrolAnim, patrolSound); // Explicitly set patrol animation
+            ChangeState(patrolAnim, patrolSound);
         }
         else if (playerInDetectRange && !playerInAttackRange)
         {
             ChasePlayer();
-            ChangeState(chaseAnim, chaseSound); // Explicitly set chase animation
+            ChangeState(chaseAnim, chaseSound);
         }
         else if (playerInAttackRange && !playerInMeleeRange)
         {
             AttackPlayer();
-            // Attack animation set in Shoot()
         }
         else if (playerInMeleeRange)
         {
             MeleeAttack();
-            // Melee animation set in MeleeAttack()
         }
 
         if (currentHealth < maxHealth / 2 && !isSpawning)
@@ -140,7 +141,7 @@ public class PSUBoss : MonoBehaviour
 
         if (canMelee)
         {
-            ChangeState(meleeAnim, meleeSound); // Explicitly set melee animation
+            ChangeState(meleeAnim, meleeSound);
             canMelee = false;
             Invoke(nameof(ResetMelee), meleeCooldown);
             StartCoroutine(DelayedKnockback(0.2f));
@@ -150,8 +151,7 @@ public class PSUBoss : MonoBehaviour
     private IEnumerator DelayedKnockback(float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
-        
-        // Only apply if player is still in range after delay
+
         if (Physics.CheckSphere(transform.position, meleeRange, playerLayer))
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
@@ -165,23 +165,45 @@ public class PSUBoss : MonoBehaviour
 
     private void ApplyKnockback()
     {
-        Rigidbody playerRb = player.GetComponent<Rigidbody>();
-        if (playerRb != null)
+        Vector3 knockbackDirection = (player.position - transform.position).normalized;
+        knockbackDirection.y = 0.2f;
+
+        CharacterController controller = player.GetComponent<CharacterController>();
+
+        if (controller != null)
         {
-            Vector3 knockbackDirection = (player.position - transform.position).normalized;
-            knockbackDirection.y = knockbackUpwardForce / knockbackForce;
-            
-            playerRb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
-            StartCoroutine(HandleKnockback(playerRb));
+            StartCoroutine(HandleKnockbackCharacterController(controller, knockbackDirection));
+        }
+        else
+        {
+            Rigidbody playerRb = player.GetComponent<Rigidbody>();
+            if (playerRb != null)
+            {
+                playerRb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+                StartCoroutine(HandleKnockbackRigidbody(playerRb));
+            }
         }
     }
-    private IEnumerator HandleKnockback(Rigidbody playerRb)
+
+    private IEnumerator HandleKnockbackCharacterController(CharacterController controller, Vector3 direction)
     {
-        // Optional: You can add visual/audio effects here at knockback start
-        
+        PlayerMovement movement = controller.GetComponent<PlayerMovement>();
+        if (movement != null) movement.enabled = false;
+
+        float elapsed = 0f;
+        while (elapsed < knockbackDuration)
+        {
+            controller.Move(direction * knockbackForce * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        if (movement != null) movement.enabled = true;
+    }
+
+    private IEnumerator HandleKnockbackRigidbody(Rigidbody playerRb)
+    {
         yield return new WaitForSeconds(knockbackDuration);
-        
-        // Optional: Reset velocity or add effects at knockback end
         if (playerRb != null)
         {
             playerRb.velocity = Vector3.zero;
@@ -239,7 +261,7 @@ public class PSUBoss : MonoBehaviour
     private void AttackPlayer()
     {
         agent.SetDestination(player.position);
-        ChangeState(attackAnim, null); // Explicitly set attack animation
+        ChangeState(attackAnim, null);
         transform.LookAt(player);
 
         if (!alreadyAttacked && currentAmmo > 0)
@@ -257,11 +279,11 @@ public class PSUBoss : MonoBehaviour
         if (firePoint == null) return;
 
         Rigidbody rb = Instantiate(projectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
-
         currentAmmo--;
         alreadyAttacked = true;
-        
-        audioSource.PlayOneShot(fireSound);
+
+        if (fireSound != null)
+            audioSource.PlayOneShot(fireSound);
 
         Invoke(nameof(ResetAttack), timeBetweenAttacks);
     }
@@ -269,12 +291,11 @@ public class PSUBoss : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
-        ChangeState(reloadAnim, null); // Explicitly set reload animation
+        ChangeState(reloadAnim, null);
         yield return new WaitForSeconds(reloadTime);
         currentAmmo = maxAmmo;
         isReloading = false;
-        
-        // Return to appropriate state after reload
+
         if (Physics.CheckSphere(transform.position, attackRange, playerLayer))
         {
             ChangeState(attackAnim, null);
@@ -317,7 +338,6 @@ public class PSUBoss : MonoBehaviour
         }
     }
 
-
     private void DropItem(GameObject item)
     {
         if (item != null)
@@ -334,37 +354,11 @@ public class PSUBoss : MonoBehaviour
         {
             currentState = newState;
             animator.Play(newState);
-            
+
             if (sound != null && audioSource != null && !audioSource.isPlaying)
             {
                 audioSource.PlayOneShot(sound);
             }
-        }
-    }
-
-    private void PlaySound(AudioClip clip)
-    {
-        if (clip != null && audioSource != null && !audioSource.isPlaying)
-        {
-            audioSource.PlayOneShot(clip);
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, patrolRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectRange);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, meleeRange); // Draw melee range
-
-        if (firePoint != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawSphere(firePoint.position, 0.1f);
         }
     }
 
@@ -379,5 +373,23 @@ public class PSUBoss : MonoBehaviour
         }
 
         isSpawning = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, patrolRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, meleeRange);
+
+        if (firePoint != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(firePoint.position, 0.1f);
+        }
     }
 }
