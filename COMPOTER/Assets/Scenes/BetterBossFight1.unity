@@ -782,7 +782,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1586153797}
+  m_Mesh: {fileID: 759470007}
 --- !u!33 &450936396
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -1444,7 +1444,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1586153797}
+  m_Mesh: {fileID: 176238836}
 --- !u!33 &707902589
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -4502,7 +4502,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 759470007}
+  m_Mesh: {fileID: 900841483}
 --- !u!33 &1743936154
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -5221,7 +5221,7 @@ PrefabInstance:
       objectReference: {fileID: 67919542388792989, guid: fee229eb67d657f42be1451a3779b982, type: 3}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: maxHealth
-      value: 6500
+      value: 6000
       objectReference: {fileID: 0}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: meleeAnim
@@ -5261,7 +5261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: patrolRange
-      value: 15
+      value: 55.6
       objectReference: {fileID: 0}
     - target: {fileID: 141044346756081755, guid: 68ecda1c40be3774fadef8923629d362, type: 3}
       propertyPath: strafeSpeed
