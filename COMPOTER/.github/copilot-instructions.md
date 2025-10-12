@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, PostProcessing, Interactable, Player, Grabbable, EnemyArea, Pillar
 - Active game object:
-  - Name: Bossver2
+  - Name: Cube
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Pillar
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
