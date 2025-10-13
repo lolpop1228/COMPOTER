@@ -12,8 +12,14 @@ public class AmmoPickup : MonoBehaviour
     public float attractionSpeed = 8f;   // Speed of movement toward player
     public float pickupDistance = 1f;    // Distance to auto-pickup if close
 
+    [Header("Visual Settings")]
+    public float spinSpeed = 90f;        // Degrees per second
+    public float bobAmplitude = 0.25f;   // Optional: floating up-down motion
+    public float bobFrequency = 2f;
+
     private GunController rifle;
     private Transform player;
+    private Vector3 startPos;
 
     private void Start()
     {
@@ -23,15 +29,24 @@ public class AmmoPickup : MonoBehaviour
         {
             player = playerObj.transform;
         }
+
+        startPos = transform.position;
     }
 
     private void Update()
     {
         if (player == null) return;
 
+        // --- Spin effect ---
+        transform.Rotate(Vector3.up * spinSpeed * Time.deltaTime, Space.World);
+
+        // --- Floating bob effect (optional) ---
+        float newY = startPos.y + Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+
+        // --- Attraction toward player ---
         float distance = Vector3.Distance(transform.position, player.position);
 
-        // If within attraction range, move toward player
         if (distance <= attractionRange)
         {
             transform.position = Vector3.MoveTowards(
@@ -41,7 +56,7 @@ public class AmmoPickup : MonoBehaviour
             );
         }
 
-        // Auto-pickup when close enough
+        // --- Auto-pickup ---
         if (distance <= pickupDistance)
         {
             CollectAmmo();
@@ -63,7 +78,6 @@ public class AmmoPickup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Optional: keep trigger support for walking over it
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
