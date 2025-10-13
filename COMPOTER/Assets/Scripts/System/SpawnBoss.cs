@@ -7,6 +7,7 @@ public class SpawnBoss : MonoBehaviour
     public GameObject[] objectsToSpawn;
     public Animator doorAnim;
     public string animToPlay;
+    public BossFightController bossFightController;
 
     void Start()
     {
@@ -19,6 +20,10 @@ public class SpawnBoss : MonoBehaviour
         if (doorAnim != null)
         {
             doorAnim.Play(animToPlay);
+        }
+        if (bossFightController != null)
+        {
+            bossFightController.StartTimer();
         }
     }
 
