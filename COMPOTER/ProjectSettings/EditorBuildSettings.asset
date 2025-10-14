@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: eaffc498f9445cf41a2e00b73ee739c3
   - enabled: 0
@@ -38,7 +38,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Level2.unity
     guid: cf5441bf1011b0c41bee3b03235d1b29
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/BetterBossFight2.unity
     guid: e7a47a871a4c2604eb6c3187b7d42b2c
   - enabled: 0
@@ -68,4 +68,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BetterBossFight1.unity
     guid: a0604c581005dcd4a99fecd2d35e0067
+  - enabled: 1
+    path: Assets/Scenes/ScenesMenu.unity
+    guid: 2533629ce581a274c90d5ad5245174b4
   m_configObjects: {}
