@@ -9,6 +9,13 @@ public class LavaFloor : MonoBehaviour
     public Transform spawnPoint;
     public int damageAmount = 20; // Adjust damage as needed
 
+    private CharacterController controller;
+
+    void Start()
+    {
+        controller = player.GetComponent<CharacterController>();
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -26,7 +33,9 @@ public class LavaFloor : MonoBehaviour
     {
         if (player != null && spawnPoint != null)
         {
+            controller.enabled = false;
             player.position = spawnPoint.position;
+            controller.enabled = true;
         }
     }
 }
