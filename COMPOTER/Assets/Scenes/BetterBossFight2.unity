@@ -6263,8 +6263,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 542405097149969644}
     - target: {fileID: 3926446922720099671, guid: c479ca3777efd1a47b6fe32d35f6c12b, type: 3}
+      propertyPath: m_text
+      value: 'Ammo and Health will drop around the scene.
+
+        Shoot the turrets
+        to activate boss'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926446922720099671, guid: c479ca3777efd1a47b6fe32d35f6c12b, type: 3}
       propertyPath: m_margin.w
       value: -1.6413164
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926446922720099671, guid: c479ca3777efd1a47b6fe32d35f6c12b, type: 3}
+      propertyPath: m_margin.z
+      value: -3.012123
       objectReference: {fileID: 0}
     - target: {fileID: 4164062449431547984, guid: c479ca3777efd1a47b6fe32d35f6c12b, type: 3}
       propertyPath: m_Mesh
@@ -6282,6 +6293,14 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 17b78ac1656542b4592c648a581fa0b0, type: 2}
+    - target: {fileID: 7691539398036875324, guid: c479ca3777efd1a47b6fe32d35f6c12b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691539398036875324, guid: c479ca3777efd1a47b6fe32d35f6c12b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.82
+      objectReference: {fileID: 0}
     - target: {fileID: 8110875203853283735, guid: c479ca3777efd1a47b6fe32d35f6c12b, type: 3}
       propertyPath: m_Name
       value: StartRoom
@@ -34895,11 +34914,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5271677290647779005, guid: b2e45051ba05cf7489e30b81ee87c4a5, type: 3}
       propertyPath: m_Value
-      value: 8000
+      value: 14000
       objectReference: {fileID: 0}
     - target: {fileID: 5271677290647779005, guid: b2e45051ba05cf7489e30b81ee87c4a5, type: 3}
       propertyPath: m_MaxValue
-      value: 8000
+      value: 14000
       objectReference: {fileID: 0}
     - target: {fileID: 5276116885679688630, guid: b2e45051ba05cf7489e30b81ee87c4a5, type: 3}
       propertyPath: m_AnchorMax.x
@@ -49952,7 +49971,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 512
-  maxHealth: 8000
+  maxHealth: 14000
   bossHealthBar: {fileID: 1524743913}
   turretHolder: {fileID: 1275182538}
   attackDuration: 5
