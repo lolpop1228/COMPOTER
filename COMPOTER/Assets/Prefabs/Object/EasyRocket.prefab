@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 17f9265fb9dcc3e4d9e1fca1b763e6d5, type: 2}
     - target: {fileID: 919132149155446097, guid: ae1f07a142f640f4e8a5f7161df67383, type: 3}
       propertyPath: m_Name
-      value: rocket2
+      value: EasyRocket
       objectReference: {fileID: 0}
     - target: {fileID: 7071182760956848314, guid: ae1f07a142f640f4e8a5f7161df67383, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -249,11 +249,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99cfaa026fe16c499799c94775f4ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  rotateSpeed: 10
+  speed: 18
+  rotateSpeed: 16
   followingSound: {fileID: 8300000, guid: e6b729937dc7950458764415be225b9f, type: 3}
   explosionSound: {fileID: 8300000, guid: fde52204569e7334aa8d7b612b6bbc17, type: 3}
-  damage: 20
+  damage: 12
   impactEffect: {fileID: 4769700670324858029, guid: 7a7f66786b102c34a973504410613c07, type: 3}
 --- !u!82 &7069128395966261126
 AudioSource:

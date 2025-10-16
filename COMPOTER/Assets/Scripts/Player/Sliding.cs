@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro; // ✅ Add this for TextMeshPro
 
 [RequireComponent(typeof(PlayerMovement))]
 public class Sliding : MonoBehaviour
@@ -21,6 +22,9 @@ public class Sliding : MonoBehaviour
     public float slideCooldown = 1f; 
     private float cooldownTimer;
     private bool isOnCooldown;
+
+    [Header("UI")]
+    public TextMeshProUGUI slideCooldownText; // ✅ Assign in Inspector
 
     [Header("Camera Effects")]
     public Camera playerCamera;
@@ -47,6 +51,9 @@ public class Sliding : MonoBehaviour
 
         if (playerCamera != null)
             normalFOV = playerCamera.fieldOfView;
+
+        if (slideCooldownText != null)
+            slideCooldownText.text = "";
     }
 
     private void Update()
@@ -54,30 +61,41 @@ public class Sliding : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // Update cooldown
+        // --- Cooldown Update ---
         if (isOnCooldown)
         {
             cooldownTimer -= Time.deltaTime;
-            if (cooldownTimer <= 0f) isOnCooldown = false;
+            if (cooldownTimer <= 0f)
+            {
+                isOnCooldown = false;
+                if (slideCooldownText != null)
+                    slideCooldownText.text = ""; // Clear text when ready
+            }
+            else if (slideCooldownText != null)
+            {
+                slideCooldownText.text = $"Slide: {cooldownTimer:F1}s";
+            }
         }
 
+        // --- Start Slide ---
         if (Input.GetKeyDown(slideKey))
         {
             if (!pm.sliding && !isOnCooldown && (horizontalInput != 0 || verticalInput != 0))
                 StartSlide();
         }
 
+        // --- Stop Slide ---
         if (Input.GetKeyUp(slideKey) && pm.sliding)
             StopSlide();
 
-        // Smooth FOV
+        // --- Smooth FOV ---
         if (playerCamera != null)
         {
             float targetFOV = pm.sliding ? slideFOV : normalFOV;
             playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovChangeSpeed);
         }
 
-        // Auto-stop if timer runs out
+        // --- Auto-stop slide ---
         if (pm.sliding)
         {
             slideTimer -= Time.deltaTime;
@@ -109,16 +127,15 @@ public class Sliding : MonoBehaviour
         Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
         if (inputDir.magnitude < 0.1f) inputDir = orientation.forward; // force slide forward if no input
 
-        // Apply CharacterController movement
         Vector3 slideMove = inputDir.normalized * slideSpeed * Time.fixedDeltaTime;
-        controller.Move(slideMove + Vector3.up * pm.verticalVelocity * Time.fixedDeltaTime); // integrate vertical movement
+        controller.Move(slideMove + Vector3.up * pm.verticalVelocity * Time.fixedDeltaTime);
     }
 
     private void StopSlide()
     {
         pm.sliding = false;
 
-        // Reset CharacterController height
+        // Reset CharacterController
         controller.height = standHeight;
         controller.center = standCenter;
 

@@ -22,19 +22,27 @@ public class HomingTurret : MonoBehaviour
     [Header("Health")]
     public float maxHealth = 1000f;
     public float currentHealth;
+    public BossHealthBar healthBar;
+    public GameObject turretHealthBar; // ✅ reference to the UI object
+
     [Header("Explosion Settings")]
     public Transform explosionPoint;
     public GameObject explosionEffect;
     public AudioClip explosionSound;
+
     [Header("Particle")]
     public GameObject particleEffect;
-
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         currentHealth = maxHealth;
         particleEffect.SetActive(false);
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+        }
     }
 
     private void Update()
@@ -59,14 +67,7 @@ public class HomingTurret : MonoBehaviour
         if (player != null)
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
-            if (distance <= detectionRange)
-            {
-                target = player.transform;
-            }
-            else
-            {
-                target = null;
-            }
+            target = distance <= detectionRange ? player.transform : null;
         }
     }
 
@@ -75,29 +76,30 @@ public class HomingTurret : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
-        if (currentHealth <= maxHealth * 0.5)
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
+
+        if (currentHealth <= maxHealth * 0.5f)
         {
             if (particleEffect != null)
-            {
                 particleEffect.SetActive(true);
-            }
         }
 
-        if (currentHealth <= 0f) Die();
+        if (currentHealth <= 0f)
+            Die();
     }
 
     void Die()
     {
-        // Use the explosionPoint position if it's assigned, otherwise fallback to turret position
+        // ✅ Disable turret health bar before destruction
+        if (turretHealthBar != null)
+            turretHealthBar.SetActive(false);
+
         Vector3 spawnPosition = explosionPoint != null ? explosionPoint.position : transform.position;
 
-        // Spawn explosion effect
         if (explosionEffect != null)
-        {
             Instantiate(explosionEffect, spawnPosition, Quaternion.identity);
-        }
 
-        // Play explosion sound from a temporary GameObject
         if (explosionSound != null)
         {
             GameObject tempAudio = new GameObject("TempExplosionSound");
@@ -106,11 +108,9 @@ public class HomingTurret : MonoBehaviour
             AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
             tempSource.clip = explosionSound;
             tempSource.Play();
-
             Destroy(tempAudio, explosionSound.length);
         }
 
-        // Destroy the turret
         Destroy(gameObject);
     }
 
@@ -125,7 +125,7 @@ public class HomingTurret : MonoBehaviour
     {
         if (bulletPrefab != null && firePoint != null)
         {
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         }
         if (audioSource != null)
         {
