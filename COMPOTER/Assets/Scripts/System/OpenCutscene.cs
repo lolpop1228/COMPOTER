@@ -47,6 +47,8 @@ public class OpenCutscene : MonoBehaviour
         {
             script.enabled = false;
         }
+
+        Cursor.visible = false;
     }
 
     void OnTimelineEnd(PlayableDirector director)

@@ -25512,6 +25512,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5649378922033329642, guid: 44aacc71d0764df47893cefee354caf7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1275256264}
+    - targetCorrespondingSourceObject: {fileID: 5649378922033329642, guid: 44aacc71d0764df47893cefee354caf7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1275256265}
   m_SourcePrefab: {fileID: 100100000, guid: 44aacc71d0764df47893cefee354caf7, type: 3}
 --- !u!114 &1275256262 stripped
 MonoBehaviour:
@@ -25542,6 +25545,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   director: {fileID: 3933473846742069214}
+--- !u!114 &1275256265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275256263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b8b11d27c0fc4479f206878561619d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1280104620
 GameObject:
   m_ObjectHideFlags: 0
@@ -28549,18 +28564,18 @@ PrefabInstance:
     - target: {fileID: 895971931028119333, guid: 9a5c070bfb2c5564e979c69a7e1bbf4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1275256262}
+      objectReference: {fileID: 1275256265}
     - target: {fileID: 895971931028119333, guid: 9a5c070bfb2c5564e979c69a7e1bbf4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 895971931028119333, guid: 9a5c070bfb2c5564e979c69a7e1bbf4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Menu
+      value: BackToMenu
       objectReference: {fileID: 0}
     - target: {fileID: 895971931028119333, guid: 9a5c070bfb2c5564e979c69a7e1bbf4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PauseMenu, Assembly-CSharp
+      value: BetterBossMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 895971931028119333, guid: 9a5c070bfb2c5564e979c69a7e1bbf4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -42001,6 +42016,7 @@ MonoBehaviour:
   slideSpeed: 10
   slideHeight: 1
   slideCooldown: 0.5
+  slideCooldownText: {fileID: 0}
   playerCamera: {fileID: 6691396813939218434}
   slideFOV: 120
   fovChangeSpeed: 8
@@ -48867,7 +48883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 6285269814438787113}
   cameraTransform: {fileID: 6911110938990202291}
   shakeDuration: 0.1
   baseShakeMagnitude: 0.1
