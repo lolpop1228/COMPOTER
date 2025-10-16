@@ -35635,11 +35635,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5271677290647779005, guid: b2e45051ba05cf7489e30b81ee87c4a5, type: 3}
       propertyPath: m_Value
-      value: 10000
+      value: 8000
       objectReference: {fileID: 0}
     - target: {fileID: 5271677290647779005, guid: b2e45051ba05cf7489e30b81ee87c4a5, type: 3}
       propertyPath: m_MaxValue
-      value: 10000
+      value: 8000
       objectReference: {fileID: 0}
     - target: {fileID: 5276116885679688630, guid: b2e45051ba05cf7489e30b81ee87c4a5, type: 3}
       propertyPath: m_AnchorMax.x
@@ -51036,7 +51036,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 512
-  maxHealth: 10000
+  maxHealth: 8000
   bossHealthBar: {fileID: 1524743913}
   healthBar: {fileID: 1289234317}
   turretHolder: {fileID: 1275182538}
@@ -51081,8 +51081,8 @@ MonoBehaviour:
   - {fileID: 759357161}
   - {fileID: 795186412}
   - {fileID: 1985366589}
-  minSpawnInterval: 2
-  maxSpawnInterval: 2.5
+  minSpawnInterval: 1.5
+  maxSpawnInterval: 2
   attackCooldown: 0.8
   mainAttackSound: {fileID: 8300000, guid: fd25a15f9797641458336cccfb445343, type: 3}
   sideAttackSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
