@@ -124,9 +124,12 @@ MonoBehaviour:
   healthAmount: 20
   healingSound: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
   soundVolume: 1
-  attractionRange: 5
+  attractionRange: 8
   attractionSpeed: 50
-  pickupDistance: 1
+  pickupDistance: 2.5
+  spinSpeed: 90
+  bobAmplitude: 0.25
+  bobFrequency: 2
 --- !u!82 &292508298299838971
 AudioSource:
   m_ObjectHideFlags: 0
